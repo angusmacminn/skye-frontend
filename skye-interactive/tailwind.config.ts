@@ -17,7 +17,7 @@ const config: Config = {
         'skye-white': '#F5F5F5',
       },
       fontFamily: {
-        'radio-grotesk': ['Radio Grotesk', 'sans-serif'],
+        'radio-grotesk': ['var(--font-radio-grotesk)', 'sans-serif'],
       },
       spacing: {
         

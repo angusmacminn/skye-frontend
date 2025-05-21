@@ -1,9 +1,5 @@
-@font-face {
-  font-family: 'Radio Grotesk';
-  src: url('/fonts/RadioGrotesk-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+html {
+  font-family: var(--font-radio-grotesk), sans-serif;
 }
 
 @tailwind base;
