@@ -9,5 +9,6 @@
 body {
   background: var(--background);
   font-family: var(--font-radio-grotesk), sans-serif;
-
+  margin-left: 10px;
+  margin-right: 10px;
 }
