@@ -17,7 +17,7 @@ const GET_WORKS_DATA = gql`
       workAcf {
         thumbnailImage {
           node {
-            sourceUrl(size: THUMBNAIL)
+            sourceUrl
             altText
           }
         }
@@ -84,7 +84,12 @@ export default function Works() {
                 </h2>
 
                 <div id='works-grid'
-                    className='flex flex-col gap-2'>
+                    className='flex flex-row gap-8 overflow-x-auto overflow-y-hidden w-full px-4 pb-4 scrollbar-hide'
+                    style={{
+                        scrollbarWidth: 'none', // Firefox
+                        msOverflowStyle: 'none', // IE and Edge
+                    }}
+                >
                     {workItems && workItems.map((workItem, index) => {
                         const currentThumbnailUrl = workItem?.workAcf?.thumbnailImage?.node?.sourceUrl;
                         const currentThumbnailAlt = workItem?.workAcf?.thumbnailImage?.node?.altText;
@@ -92,23 +97,39 @@ export default function Works() {
 
                         return (
                             <div id='work-card'
-                                className=" border p-4"
+                                className="rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80"
+                                style={{
+                                    background: 'linear-gradient(310deg, #F87171 5.38%, #EF4444 100%)'
+                                }}
                                 key={workItem?.slug || index}>
                                 <div id='work-card-content'
-                                    className='flex flex-col gap-2'>
-                                    <h3 className="text-xl">{currentTitle || 'Untitled Work'}</h3>
+                                    className='flex flex-col gap-4'>
+                                    <div className='flex flex-row justify-between items-center'>
+                                        
+                                      <h3 className="text-2xl text-white">
+                                        {currentTitle || 'Untitled Work'}
+                                      </h3>
+
+                                      <img 
+                                      src="/assets/icons/project-arrow.svg" 
+                                      alt='Project Arrow' 
+                                      className='w-4 h-4'
+                                      />
+                                    </div>
 
                                     <div id='work-categories'
                                     className='flex flex-row gap-2'>
                                         {workItem?.workCategories?.nodes?.map((category: WorkCategoryNode) => (
-                                            <p key={category.name}>{category.name}</p>
+                                            <p 
+                                            className='text-white border border-white bg-red-400 px-3.5 py-1 rounded-[40px] '
+                                            key={category.name}>{category.name}</p>
                                         ))}
                                     </div>
 
                                     <div id='work-thumbnail'
                                         className='w-full h-full'>
                                             {currentThumbnailUrl && (
-                                                <img 
+                                                <img className='rounded-bl-[40px] w-full object-cover'
                                                     src={currentThumbnailUrl} 
                                                     alt={currentThumbnailAlt || currentTitle || 'Work thumbnail'} 
                                                 />

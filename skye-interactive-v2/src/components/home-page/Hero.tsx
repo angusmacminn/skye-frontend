@@ -1,6 +1,8 @@
 'use client'
 
 import { gql, useQuery } from '@apollo/client'
+import gsap from 'gsap'
+import { useEffect, useRef } from 'react';
 
 const GET_HERO_DATA = gql`
     query GetHeroData ($id: ID!, $idType: PageIdType!) {
@@ -16,6 +18,12 @@ const GET_HERO_DATA = gql`
                 aboutCard {
                     aboutCardHeading
                     aboutCardContent
+                    aboutCardBackground {
+                        node {
+                            sourceUrl(size: THUMBNAIL)
+                            altText
+                        }
+                    }
                 }
             }
         }
@@ -25,7 +33,13 @@ const GET_HERO_DATA = gql`
 // Interface for each item (row) in the 'aboutCard' repeater
 interface AboutCardData {
     aboutCardHeading?: string;
-    aboutCardContent?: string; // Ensure this field exists in your ACF repeater
+    aboutCardContent?: string;
+    aboutCardBackground?: {
+        node?: {
+            sourceUrl?: string;
+            altText?: string;
+        };
+    };
 }
 
 // Interface for the 'homePage' ACF field group
@@ -48,6 +62,13 @@ interface PageData {
 interface QueryData {
     page?: PageData;
 }
+
+
+
+
+
+
+
 
 export default function Hero() {
 
@@ -74,10 +95,13 @@ export default function Hero() {
     const h1TextHighlight2 = acfData?.h1TextHighlight2
     const aboutCardItems = acfData?.aboutCard
 
+
     // defensive checks
     if (!acfData && !loading) {
         return <p className="p-8 text-center">Hero content not found. Check ACF and query.</p>;
     } 
+    
+
 
     return (
         <>
@@ -104,18 +128,24 @@ export default function Hero() {
     
             <section id='about-section'>
                 <div id='about-section-content'
-                     className='flex flex-col items-center justify-center gap-4 mt-10'>
+                     className='flex flex-col items-center justify-center gap-4 mt-40'>
                     {acfData &&
                         aboutCardItems?.map((item, index) => (
                             <div
                              id='about-card'
                              key={index}
-                             className='ml-4 mr-4'
+                             className='ml-4 mr-4 rounded-bl-[40px] rounded-br-[40px] p-4'
+                            //  style={{
+                            //     backgroundImage: `url(${item.aboutCardBackground?.node?.sourceUrl})`,
+                            //     backgroundSize: '',
+                            //     backgroundPosition: 'center',
+                            //     backgroundRepeat: 'no-repeat'
+                            //  }}
                              >
-                                <h2 className='text-lg'>
+                                <h2 className='text-lg text-424141'>
                                     {item.aboutCardHeading}
                                 </h2>
-                                <p className='text-2xl'>
+                                <p className='text-2xl text-424141'>
                                     {item.aboutCardContent}
                                 </p>
                             </div>
