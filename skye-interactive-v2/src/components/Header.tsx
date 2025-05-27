@@ -2,13 +2,15 @@ import Link from "next/link";
 import MobileNav from "./MobileNav";
 
 
+
 function Header() {
     return (
-        <header>
-            <div className="header-nav-container">
-                    <MobileNav />
-            </div>
-        </header>
+        <div 
+            className="z-50 bg-transparent"
+            style={{ position: 'sticky', top: '1.25rem '}}
+        >
+            <MobileNav />
+        </div>
     )
 }
 

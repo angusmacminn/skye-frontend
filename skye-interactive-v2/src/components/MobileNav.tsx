@@ -18,169 +18,187 @@ function MobileNav() {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    // Refs for GSAP animations
     const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
-    const expandingBgRef = useRef<HTMLDivElement>(null);   // Ref for the element that will expand
-    const menuPanelRef = useRef<HTMLDivElement>(null);     // Ref for the menu content panel
-    const navLinksRef = useRef<HTMLDivElement>(null);      // Ref for the container of nav links (for staggered animation)
-
-    const tl = useRef<gsap.core.Timeline | null>(null); // GSAP Timeline
+    const expandingBgRef = useRef<HTMLDivElement>(null);
+    const menuPanelRef = useRef<HTMLDivElement>(null);
+    const navLinksRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Initialize the timeline
-        // We create it here so it persists across re-renders
-        if (!tl.current) {
-            tl.current = gsap.timeline({ paused: true });
+        if (mobileMenuButtonRef.current && expandingBgRef.current && menuPanelRef.current && navLinksRef.current) {
+            // Set initial states
+            gsap.set(expandingBgRef.current, { display: 'none' });
+            gsap.set(menuPanelRef.current, { display: 'none', opacity: 0 });
+            gsap.set(navLinksRef.current.children, { opacity: 0, y: 20 });
+        }
+    }, []);
 
-            // Define the animation - initially hidden and matching the button
-            if (mobileMenuButtonRef.current && expandingBgRef.current && menuPanelRef.current && navLinksRef.current) {
+    useEffect(() => {
+        if (mobileMenuButtonRef.current && expandingBgRef.current && menuPanelRef.current && navLinksRef.current) {
+            if (isMobileMenuOpen) {
+                // Get the button's current position and size
                 const buttonRect = mobileMenuButtonRef.current.getBoundingClientRect();
                 
-                // Initial state of the expanding background (matching the button)
-                gsap.set(expandingBgRef.current, {
-                    width: buttonRect.width,
-                    height: buttonRect.height,
-                    top: buttonRect.top,
-                    left: buttonRect.left,
-                    borderRadius: window.getComputedStyle(mobileMenuButtonRef.current).borderRadius, // Get button's current border radius
-                    backgroundColor: window.getComputedStyle(mobileMenuButtonRef.current).backgroundColor, // Get button's current bg color
-                    display: 'block', // Make it visible for animation
-                    opacity: 0,
-                });
+                // Get the computed styles from the actual button
+                const buttonStyles = window.getComputedStyle(mobileMenuButtonRef.current);
                 
-                // Initial state of menu panel (for fade-in)
-                gsap.set(menuPanelRef.current, { display: 'none', opacity: 0 });
-                gsap.set(navLinksRef.current.children, { opacity: 0, y: 20 });
+                console.log('Button rect:', buttonRect); // Debug
+                console.log('Button bg color:', buttonStyles.backgroundColor); // Debug
 
+                // Set up the expanding background to exactly match the button
+                gsap.set(expandingBgRef.current, {
+                    display: 'block',
+                    position: 'fixed',
+                    width: buttonRect.width + 'px',
+                    height: buttonRect.height + 'px',
+                    backgroundColor: buttonStyles.backgroundColor, // Get the actual button's background color
+                    borderRadius: buttonStyles.borderTopLeftRadius, // Match the button's border radius
+                    left: buttonRect.left + 'px',
+                    top: buttonRect.top + 'px',
+                    transformOrigin: 'center center',
+                    scale: 1,
+                    opacity: 1,
+                    zIndex: 55,
+                });
 
-                tl.current
+                // Calculate scale needed to cover screen
+                const scaleX = window.innerWidth / buttonRect.width;
+                const scaleY = window.innerHeight / buttonRect.height;
+                const finalScale = Math.max(scaleX, scaleY) * 1.5; // Add extra to ensure full coverage
+
+                console.log('Final scale:', finalScale); // Debug
+                
+                // Create animation timeline
+                const openTl = gsap.timeline();
+                
+                openTl
+                    // Expand the background
                     .to(expandingBgRef.current, {
-                        top: 0,
-                        left: 0,
-                        width: '100vw',
-                        height: '100vh',
-                        borderRadius: '0px', // Expand to be rectangular
-                        duration: 0.5,
+                        scale: finalScale,
+                        borderRadius: 0, // Remove border radius as it expands
+                        duration: 0.8,
                         ease: 'power3.inOut',
                     })
-                    .to(mobileMenuButtonRef.current, { // Hide original button quickly
+                    // Hide the original button
+                    .to(mobileMenuButtonRef.current, { 
                         opacity: 0,
-                        duration: 0.1,
-                    }, "<0.1") // Start slightly after bg expansion starts
-                    .set(menuPanelRef.current, { display: 'flex' }) // Show panel before link animation
+                        scale: 0.8,
+                        duration: 0.3,
+                    }, "<0.2") 
+                    // Show menu panel
+                    .set(menuPanelRef.current, { display: 'flex' }, "-=0.3")
                     .to(menuPanelRef.current, {
                         opacity: 1,
-                        duration: 0.3,
-                    }, "-=0.2") // Overlap with end of bg expansion
-                    .to(navLinksRef.current.children, { // Stagger links
+                        duration: 0.4,
+                    }, "-=0.3") 
+                    // Animate in navigation links
+                    .to(navLinksRef.current.children, { 
                         opacity: 1,
                         y: 0,
+                        duration: 0.5,
+                        stagger: 0.1,
+                        ease: 'power2.out',
+                    }, "-=0.2");
+                
+            } else {
+                // Close animation
+                const closeTl = gsap.timeline();
+                
+                closeTl
+                    .to(navLinksRef.current.children, { 
+                        opacity: 0,
+                        y: 20,
                         duration: 0.3,
                         stagger: 0.05,
-                        ease: 'power2.out',
-                    }, "-=0.1"); // Start animation of links
-            }
-        }
-    }, []); // Empty dependency array: setup GSAP timeline once on mount
-
-    useEffect(() => {
-        // Play or reverse the timeline based on isMobileMenuOpen state
-        if (tl.current) {
-            if (isMobileMenuOpen) {
-                // Before playing, ensure the expandingBg has the button's current properties
-                if (mobileMenuButtonRef.current && expandingBgRef.current) {
-                    const buttonRect = mobileMenuButtonRef.current.getBoundingClientRect();
-                    gsap.set(expandingBgRef.current, {
-                        width: buttonRect.width,
-                        height: buttonRect.height,
-                        top: buttonRect.top,
-                        left: buttonRect.left,
-                        borderRadius: window.getComputedStyle(mobileMenuButtonRef.current).borderRadius,
-                        backgroundColor: window.getComputedStyle(mobileMenuButtonRef.current).backgroundColor,
-                        opacity: 1, // Make sure it's visible before animation
-                        display: 'block',
-                    });
-                    gsap.set(mobileMenuButtonRef.current, { opacity: 1 }); // Ensure original button is visible
-                }
-                tl.current.play();
-            } else {
-                // Before reversing, ensure the original button is ready to reappear
-                gsap.set(mobileMenuButtonRef.current, { opacity: 1 });
-                tl.current.reverse();
+                    })
+                    .to(menuPanelRef.current, {
+                        opacity: 0,
+                        duration: 0.3,
+                    }, "<0.1")
+                    .set(menuPanelRef.current, { display: 'none' })
+                    .to(mobileMenuButtonRef.current, { 
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.3,
+                    }, "<")
+                    .to(expandingBgRef.current, {
+                        scale: 1,
+                        duration: 0.6,
+                        ease: 'power3.inOut',
+                    }, "<")
+                    .set(expandingBgRef.current, { display: 'none' });
             }
         }
     }, [isMobileMenuOpen]);
 
-    
     return (
-        <div className="md:hidden"> {/* This div is for md:hidden logic */}
-            {/* Actual Menu Button */}
-                <div className="m-5 flex justify-end"> {/* Wrapper for button positioning */}
-                    <button
-                        ref={mobileMenuButtonRef}
-                        id="mobile-menu-button"
-                        onClick={toggleMobileMenu}
-                        className="bg-red-400 text-white p-2 rounded-tl-[20px] relative z-[60]" // Ensure button is initially on top
-                        aria-expanded={isMobileMenuOpen}
-                        aria-controls="mobile-menu-panel" // This should point to the ID of the panel holding the links
-                        aria-label="Open main menu"
-                    >
-                        <span className="sr-only">Open main menu</span>
-                        <div className="space-y-1.5 p-1"> {/* Hamburger icon lines */}
-                            <span className={`block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                            <span className={`block w-5 h-0.5 bg-current transition duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-                            <span className={`block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-                        </div>
-                    </button>
-                </div>
-    
-                {/* Expanding Background Element - Positioned fixed to cover screen */}
-                <div
-                    ref={expandingBgRef}
-                    className="fixed top-0 left-0 z-[50] hidden" // Initially hidden, GSAP will show it. High z-index but below menu content.
-                    // Initial style will be set by GSAP to match the button
-                ></div>
-                
-                {/* Menu Panel - This will contain the links and appear ON TOP of the expanding background */}
-                {/* We use GSAP to control its display and opacity instead of isMobileMenuOpen directly for smoother transitions */}
-                <div
-                    ref={menuPanelRef}
-                    id="mobile-menu-panel" // For aria-controls
-                    className="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none" // Higher z-index, initially hidden by GSAP
+        <div className="md:hidden">
+            {/* Sticky button */}
+            <div className="m-5 flex justify-end">
+                <button
+                    ref={mobileMenuButtonRef}
+                    onClick={toggleMobileMenu}
+                    className="bg-red-400 text-white p-2 rounded-tl-[20px] relative z-[60]"
+                    aria-expanded={isMobileMenuOpen}
+                    aria-controls="mobile-menu-panel" 
+                    aria-label="Open main menu"
                 >
-                    <div 
-                        // This inner div is for styling the actual content area if needed,
-                        // or the links can be direct children of menuPanelRef.
-                        // For simplicity, let's put nav links directly in navLinksRef.
-                        className="relative flex flex-col w-auto max-w-xs p-4 pointer-events-auto" // Make content area interactive
-                    >
-                        {/* Close button inside the menu (optional, if you want one here) */}
-                        <div className="flex justify-end mb-4">
-                            <button
-                                onClick={toggleMobileMenu}
-                                className={`p-2 rounded-md text-gray-700 hover:text-skye-primary-blue ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`} // Example for a close button within the panel
-                                aria-label="Close menu"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                        <nav ref={navLinksRef}> {/* Ref for staggering link animations */}
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-skye-primary-blue hover:bg-gray-50"
-                                    onClick={toggleMobileMenu}
-                                >
-                                    {link.label}
-                                </Link>
-                            ))}
-                        </nav>
+                    <span className="sr-only">Open main menu</span>
+                    <div className="space-y-1.5 p-1">
+                        <span className={`block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+                        <span className={`block w-5 h-0.5 bg-current transition duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                        <span className={`block w-5 h-0.5 bg-current transform transition duration-300 ease-in-out ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
                     </div>
+                </button>
+            </div>
+    
+            {/* Expanding Background */}
+            <div
+                ref={expandingBgRef}
+                className="fixed"
+                style={{ 
+                    pointerEvents: 'none',
+                    backgroundColor: '#f87171', // Fallback color
+                }}
+            ></div>
+            
+            {/* Menu Panel */}
+            <div
+                ref={menuPanelRef}
+                id="mobile-menu-panel"
+                className="fixed inset-0 z-[70] flex items-center justify-center pointer-events-none"
+            >
+                <div className="relative flex flex-col w-auto max-w-xs p-6 pointer-events-auto">
+                    {/* Close button */}
+                    <div className="flex justify-end mb-6">
+                        <button
+                            onClick={toggleMobileMenu}
+                            className="p-2 rounded-md text-white hover:text-gray-200 transition-colors"
+                            aria-label="Close menu"
+                        >
+                            <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    {/* Navigation links */}
+                    <nav ref={navLinksRef} className="space-y-2">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className="block px-4 py-3 rounded-md text-lg font-medium text-white hover:text-gray-200 hover:bg-white hover:bg-opacity-10 transition-all duration-200"
+                                onClick={toggleMobileMenu}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                    </nav>
                 </div>
             </div>
-        );
+        </div>
+    );
 }
 
-export default MobileNav;   
+export default MobileNav;
