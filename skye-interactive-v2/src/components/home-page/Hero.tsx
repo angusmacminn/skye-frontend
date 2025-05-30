@@ -105,7 +105,8 @@ export default function Hero() {
 
     return (
         <>
-            <section id='hero-section'>
+            <section id='hero-section'
+                     className='ml-[10px] mr-[10px]'>
                 <div id='hero'
                      className='flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
                     {acfData && 
@@ -126,7 +127,8 @@ export default function Hero() {
                 </div>
             </section>
     
-            <section id='about-section'>
+            <section id='about-section'
+                     className='ml-[10px] mr-[10px]'>
                 <div id='about-section-content'
                      className='flex flex-col items-center justify-center gap-4 mt-40'>
                     {acfData &&

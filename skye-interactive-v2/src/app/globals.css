@@ -2,6 +2,7 @@
 
 :root {
   --background: #ffffff;
+  --color-skye-black: #1C1414;
 }
 
 
@@ -9,6 +10,6 @@
 body {
   background: var(--background);
   font-family: var(--font-radio-grotesk), sans-serif;
-  margin-left: 10px;
-  margin-right: 10px;
+  /* margin-left: 10px;
+  margin-right: 10px; */
 }

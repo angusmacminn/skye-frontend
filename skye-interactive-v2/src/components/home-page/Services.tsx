@@ -1,6 +1,7 @@
 'use client'
 
 import { gql, useQuery } from '@apollo/client'
+import { useState } from 'react';
 
 
 const GET_SERVICES_DATA = gql`
@@ -76,6 +77,20 @@ interface QueryData {
 
 
 function Services() {
+    
+    const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+
+    const cardGradientsMobile = [
+        'bg-gradient-to-b from-[#FCA5A5] to-red-400', // Card 1
+        'bg-gradient-to-b from-red-400 to-red-600', // Card 2  
+        'bg-gradient-to-b from-red-600 to-red-400' // Card 3
+    ]
+
+    const cardGradients = [
+        'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
+        'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
+        'bg-gradient-to-r from-red-600 to-red-400' // Card 3
+    ]
 
     const pageId = '2'
     const pageIdType = 'DATABASE_ID'
@@ -112,37 +127,46 @@ function Services() {
 
     return (
         <>
-            <section id='services-section'>
+            <section id='services-section'
+                     className='bg-black py-16'>
                 <div id='services-container'
-                className='flex flex-col items-center gap-4 mt-10 w-full max-w-lg mx-auto px-4'>
-                    <h2 className='text-center text-4xl font-bold'>{servicesHeading}</h2>
+                className='flex flex-col items-center gap-4 w-full max-w-lg mx-auto px-4'>
+                    <h2 className='text-center text-4xl text-white'>{servicesHeading}</h2>
                     {serviceCard?.map((card, index) => (
                         <div key={index}
                              id='service-card'
-                             className='flex flex-col items-center w-full gap-4 border-2 border-gray-300 rounded-lg p-4'>
-                                
-                            <h3 className='text-center text-2xl font-bold'>{card.serviceTitle}</h3>
-                            <ul className='flex flex-col items-start w-full gap-2'>
+                             className={`flex flex-col items-center w-full gap-4 border-red-400 border-r-2 p-4 min-h-[300px] transition-all duration-300 ease-in-out cursor-pointer ${
+                                hoveredCard === index ? 'bg-red-400 rounded-br-[40px]' : 'bg-black'
+                             }`}
+                             onMouseEnter={() => setHoveredCard(index)}
+                             onMouseLeave={() => setHoveredCard(null)}>
+                            <div className='flex flex-col items-start w-full gap-2'>
+                            <h3 className='text-left text-2xl text-white'>{card.serviceTitle}</h3>
+                            <ul className={`flex flex-col items-start w-full gap-2 transition-all duration-300 ${
+                                hoveredCard === index ? 'opacity-100' : 'opacity-0 max-h-0 overflow-hidden'
+                            }`}>
                                 {card.serviceList?.map((item, index) => (
-                                    <li key={index}>{item.serviceItem}</li>
-                                ))}
-                            </ul>
+                                    <li key={index} className='text-left text-white'>{item.serviceItem}</li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     ))}
                 </div>
             </section>
 
 
-            <section id='statistics-section'>
+            <section id='statistics-section'
+                     className='bg-black py-16'>
                 <div id='statistics-container'
-                className='flex flex-col items-center gap-4 mt-10 w-full max-w-lg mx-auto px-4'>
-                    <h2 className='text-center text-4xl font-bold'>{statsHeading}</h2>
+                className='flex flex-col items-center gap-4 w-full max-w-lg mx-auto px-4'>
+                    <h2 className='text-center text-4xl text-white mb-8'>{statsHeading}</h2>
                     {statisticCard?.map((card, index) => (
                         <div key={index}
                              id='statistic-card'
-                             className='flex flex-col items-center gap-4'>
-                            <h3 className='text-center text-2xl font-bold'>{card.statCategory}</h3>
-                            <p className='text-center text-lg'>{card.statNumber}</p>
+                             className={`flex flex-col items-left justify-center w-full gap-4 p-8 min-h-[200px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'}`}>
+                            <h3 className='text-left text-2xl text-white'>{card.statCategory}</h3>
+                            <p className='text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
                         </div>
                     ))}
                 </div>

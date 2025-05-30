@@ -78,8 +78,8 @@ export default function Works() {
     return (
         <section id='works-section'>
             <div id='works-section-content'
-                 className='flex flex-col items-center justify-center gap-4 mt-10'>
-                <h2 className='text-lg'>
+                 className='flex flex-col items-center justify-center gap-4 mt-10 bg-black'>
+                <h2 className='text-2xl '>
                     Works
                 </h2>
 
