@@ -174,12 +174,12 @@ function Services() {
     
             <section id='process-section'>
                 <div id='process-container'
-                className='flex flex-col items-center gap-4 mt-10 w-full max-w-lg mx-auto px-4'>
+                className='flex flex-col items-center gap-16 mt-10 w-full max-w-lg mx-auto px-4'>
                     <h2 className='text-center text-4xl font-bold'>{processHeading}</h2>
                     {processSteps?.map((step, index) => (
                         <div key={index}
                              id='process-step'
-                             className='flex flex-col items-center gap-4'>
+                             className='flex flex-col items-center h-screen gap-4'>
                             <h3 className='text-center text-2xl font-bold'>{step.stepHeading}</h3>
                             <p className='text-center text-lg'>{step.stepDescription}</p>
                         </div>
