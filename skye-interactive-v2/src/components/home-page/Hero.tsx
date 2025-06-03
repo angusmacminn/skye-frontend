@@ -68,9 +68,48 @@ interface QueryData {
 
 
 
-
-
 export default function Hero() {
+
+
+    
+
+// gsap animation
+
+    useEffect(() => {
+        const hero = document.getElementById('hero')
+        const heroText = document.getElementById('hero-text')
+
+        // create timeline for multiple animations
+        const tl = gsap.timeline()
+
+        // set initial state (small and invisible)
+        gsap.set(hero, {
+            opacity: 0,
+            scaleX: 0.2,
+            scaleY: 0.2,
+            y: 0, // center vertically
+        })
+
+        tl
+            // stage 1: fade in with small scale
+            .to(hero, {
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+            })
+            // stage 2: grow horizontally first
+            .to(hero, {
+                scaleX: 1,
+                duration: 0.6,
+                ease: 'power2.out',
+            }, "-=0.1")
+            // stage 3: then grow vertically
+            .to(hero, {
+                scaleY: 1,
+                duration: 0.7,
+                ease: 'power2.out',
+            }, "-=0.2") // Start slightly before horizontal completes
+    })
 
     const pageId = '2'
     const pageIdType = 'DATABASE_ID'
@@ -112,12 +151,12 @@ export default function Hero() {
                     {acfData && 
                         <h1 className='text-left text-5xl'>
                             <div className='flex flex-col gap-4'>
-                                <div>
+                                <div id='hero-text'>
                                     {h1TextBeforeHighLight}
                                     <span className='text-white mb-1'>{h1TextHighlight}</span>
                                 </div>
             
-                                <div>
+                                <div id='hero-text'>
                                     {h1TextAfterHighlight}
                                     <span className='text-white'>{h1TextHighlight2}</span>
                                 </div>
