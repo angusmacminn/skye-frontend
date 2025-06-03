@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MobileNav from "./MobileNav";
-
+import MobileNav2 from "./MobileNav2";
 
 
 function Header() {
@@ -9,7 +9,7 @@ function Header() {
             className="z-50 bg-transparent"
             style={{ position: 'sticky', top: '1.25rem '}}
         >
-            <MobileNav />
+            <MobileNav2 />
         </div>
     )
 }
