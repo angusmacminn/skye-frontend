@@ -2,7 +2,7 @@
 
 import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react';
-
+import ThreeScene from '../r3f/ProcessGeometry';
 
 const GET_SERVICES_DATA = gql`
     query GetServicesData ($id: ID!, $idType: PageIdType!) {
@@ -176,6 +176,9 @@ function Services() {
                 <div id='process-container'
                 className='flex flex-col items-center gap-16 mt-10 w-full max-w-lg mx-auto px-4'>
                     <h2 className='text-center text-4xl font-bold'>{processHeading}</h2>
+
+                    <ThreeScene />
+                    
                     {processSteps?.map((step, index) => (
                         <div key={index}
                              id='process-step'
