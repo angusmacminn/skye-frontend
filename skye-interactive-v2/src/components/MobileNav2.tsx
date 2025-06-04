@@ -180,7 +180,7 @@ function MobileNav2() {
     return (
         <div className="md:hidden">
             {/* Sticky button with SVG logo */}
-            <div className="m-5 flex justify-end">
+            <div className="m-[10px] flex justify-end">
                 <button
                     ref={mobileMenuButtonRef}
                     onClick={toggleMobileMenu}

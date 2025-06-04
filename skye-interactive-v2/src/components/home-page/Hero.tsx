@@ -74,10 +74,12 @@ export default function Hero() {
     
 
 // gsap animation
-
     useEffect(() => {
         const hero = document.getElementById('hero')
-        const heroText = document.getElementById('hero-text')
+        const heroText1 = document.getElementById('hero-text-1')
+        const heroText2 = document.getElementById('hero-text-2')
+        const heroText3 = document.getElementById('hero-text-3')
+        const heroText4 = document.getElementById('hero-text-4')
 
         // create timeline for multiple animations
         const tl = gsap.timeline()
@@ -88,6 +90,26 @@ export default function Hero() {
             scaleX: 0.2,
             scaleY: 0.2,
             y: 0, // center vertically
+        })
+
+        // set text to invisible
+        gsap.set(heroText1, {
+            opacity: 0,
+            y: 30,
+        })
+        gsap.set(heroText2, {
+            opacity: 0,
+            y: 30,
+            filter: 'blur(10px)',
+        })
+        gsap.set(heroText3, {
+            opacity: 0,
+            y: 30,
+        })
+        gsap.set(heroText4, {
+            opacity: 0,
+            y: 30,
+            filter: 'blur(10px)',
         })
 
         tl
@@ -109,6 +131,35 @@ export default function Hero() {
                 duration: 0.7,
                 ease: 'power2.out',
             }, "-=0.2") // Start slightly before horizontal completes
+
+            // stage 4: fade in text
+            .to(heroText1, {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: 'power2.out',
+            })
+            .to(heroText2, {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 0.7,
+                ease: 'power2.out',
+            }, "-=0.1")
+            .to(heroText3, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: 'power2.out',
+            }, "-=0.1")
+            .to(heroText4, {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 0.7,
+                ease: 'power2.out',
+            }, "-=0.1")
+            
     })
 
     const pageId = '2'
@@ -151,14 +202,14 @@ export default function Hero() {
                     {acfData && 
                         <h1 className='text-left text-5xl'>
                             <div className='flex flex-col gap-4'>
-                                <div id='hero-text'>
+                                <div id='hero-text-1'>
                                     {h1TextBeforeHighLight}
-                                    <span className='text-white mb-1'>{h1TextHighlight}</span>
+                                    <span id='hero-text-2' className='text-white mb-1'>{h1TextHighlight}</span>
                                 </div>
             
-                                <div id='hero-text'>
+                                <div id='hero-text-3'>
                                     {h1TextAfterHighlight}
-                                    <span className='text-white'>{h1TextHighlight2}</span>
+                                    <span id='hero-text-4' className='text-white'>{h1TextHighlight2}</span>
                                 </div>
                             </div>
                         </h1>
