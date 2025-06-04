@@ -164,7 +164,6 @@ function MobileNav2() {
                 duration: 0.3,
                 stagger: 0.05,
                 ease: 'power2.out',
-                random: 0.5,
             })
         } else {
             gsap.to('.logo-rect', {
