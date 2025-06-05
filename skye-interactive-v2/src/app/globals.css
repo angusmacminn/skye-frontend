@@ -115,7 +115,7 @@ body {
 
 #service-card {
     position: relative;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, border 0.3s ease, transform 0.3s ease;
 }
 
 #service-card::before {
@@ -134,6 +134,9 @@ body {
 
 #service-card:hover::before {
     opacity: 1;
+    border: 0px;
 }
+
+
 
 

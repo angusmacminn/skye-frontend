@@ -108,7 +108,6 @@ export default function Hero() {
                 return;
             }
 
-            console.log('Hero elements found, starting animation');
 
             // create timeline for multiple animations
             const tl = gsap.timeline()
@@ -202,7 +201,6 @@ export default function Hero() {
     useEffect(() => {
         if (!aboutCardItems || aboutCardItems.length === 0) return;
 
-        console.log('Setting up individual card animations');
 
         const timer = setTimeout(async () => {
             // Wait for fonts to load
@@ -211,7 +209,6 @@ export default function Hero() {
             }
 
             const aboutCards = document.querySelectorAll('.about-card');
-            console.log('Found cards:', aboutCards.length);
             
             aboutCards.forEach((card, index) => {
                 // Set initial state

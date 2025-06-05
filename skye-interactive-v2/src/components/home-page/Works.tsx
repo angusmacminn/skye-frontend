@@ -104,9 +104,7 @@ export default function Works() {
             
             const scrollDistance = totalContentWidth - containerWidth;
             
-            console.log('Container width:', containerWidth);
-            console.log('Total content width:', totalContentWidth);
-            console.log('Scroll distance:', scrollDistance);
+          
 
             // Create the horizontal scroll animation
             const horizontalScroll = gsap.to(worksGrid, {
@@ -125,7 +123,6 @@ export default function Works() {
                 animation: horizontalScroll,
                 markers: false, // Remove this in production
                 onUpdate: (self) => {
-                    console.log('Horizontal scroll progress:', self.progress);
                 }
             });
         };
