@@ -168,7 +168,7 @@ export default function Works() {
     return (
         <section id='works-section'>
             <div id='works-section-content'
-                 className='flex flex-col justify-center items-center gap-16 bg-black h-screen'>
+                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen'>
                 <h2 className='text-2xl text-skye-white mt-10'>
                     Selected Works
                 </h2>
@@ -187,13 +187,10 @@ export default function Works() {
 
                         return (
                             <div id='work-card'
-                                className="rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80"
-                                style={{
-                                    background: 'linear-gradient(310deg, #F87171 5.38%, #EF4444 100%)'
-                                }}
+                                className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative"
                                 key={workItem?.slug || index}>
                                 <div id='work-card-content'
-                                    className='flex flex-col gap-4'>
+                                    className='flex flex-col gap-4 relative z-10'>
                                     <div className='flex flex-row justify-between items-center'>
                                         
                                       <h3 className="text-2xl text-white">

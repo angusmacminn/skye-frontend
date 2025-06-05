@@ -85,4 +85,32 @@ body {
     display: none;
 }
 
+.work-card {
+    position: relative;
+    background: linear-gradient(310deg, #F87171 5.38%, #EF4444 100%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.work-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(134deg, rgb(105, 187, 245) 40.72%, #5A4FF2 100.01%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.work-card:hover::before {
+    opacity: 1;
+}
+
+.work-card:hover {
+    transform: scale(1.05);
+}
+
 
