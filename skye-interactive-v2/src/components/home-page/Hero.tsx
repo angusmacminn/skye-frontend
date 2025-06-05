@@ -2,6 +2,8 @@
 
 import { gql, useQuery } from '@apollo/client'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 import { useEffect, useRef } from 'react';
 
 const GET_HERO_DATA = gql`
@@ -17,6 +19,7 @@ const GET_HERO_DATA = gql`
                 h1TextHighlight2
                 aboutCard {
                     aboutCardHeading
+                    aboutCardNumber
                     aboutCardContent
                     aboutCardBackground {
                         node {
@@ -34,6 +37,7 @@ const GET_HERO_DATA = gql`
 interface AboutCardData {
     aboutCardHeading?: string;
     aboutCardContent?: string;
+    aboutCardNumber?: string;
     aboutCardBackground?: {
         node?: {
             sourceUrl?: string;
@@ -66,6 +70,8 @@ interface QueryData {
 
 
 
+gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(SplitText)
 
 
 export default function Hero() {
@@ -73,7 +79,7 @@ export default function Hero() {
 
     
 
-// gsap animation
+// gsap animation for hero section
     useEffect(() => {
         const hero = document.getElementById('hero')
         const heroText1 = document.getElementById('hero-text-1')
@@ -162,6 +168,43 @@ export default function Hero() {
             
     })
 
+    // gsap animation for about section
+
+    useEffect(() => {
+        // Only run if data is loaded
+        if (!data?.page?.homePage?.aboutCard) return;
+        
+        const aboutCards = document.querySelectorAll('.about-card') // Use class selector
+        const aboutCardHeading = document.querySelectorAll('#about-card-heading')
+        const aboutCardContent = document.querySelectorAll('#about-card-content')
+        
+        aboutCards.forEach((card, index) => {
+            gsap.set(card, {
+                opacity: 0,
+                y: 50,
+                filter: "blur(5px)"
+            })
+            
+            gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                
+
+                duration: 0.8,
+                ease: "power2.out",
+                delay: index * 0.3,
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    markers: true,
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
+                }
+            })
+        })
+    },) 
+
     const pageId = '2'
     const pageIdType = 'DATABASE_ID'
 
@@ -196,11 +239,11 @@ export default function Hero() {
     return (
         <>
             <section id='hero-section'
-                     className='ml-[10px] mr-[10px]'>
+                     className='ml-[10px] mr-[10px] py-[10px] h-[100vh]'>
                 <div id='hero'
                      className='flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
                     {acfData && 
-                        <h1 className='text-left text-5xl'>
+                        <h1 className='text-left text-5xl text-skye-black'>
                             <div className='flex flex-col gap-4'>
                                 <div id='hero-text-1'>
                                     {h1TextBeforeHighLight}
@@ -220,26 +263,33 @@ export default function Hero() {
             <section id='about-section'
                      className='ml-[10px] mr-[10px]'>
                 <div id='about-section-content'
-                     className='flex flex-col items-center justify-center gap-4 mt-40'>
+                     className='flex flex-col items-center justify-center gap-4'>
                     {acfData &&
                         aboutCardItems?.map((item, index) => (
                             <div
-                             id='about-card'
+                             className='about-card p-[4px] rounded-bl-[40px] rounded-br-[40px]'
+                             style={{
+                                 background: "var(--gradient-card-border)"
+                             }}
                              key={index}
-                             className='ml-4 mr-4 rounded-bl-[40px] rounded-br-[40px] p-4'
-                            //  style={{
-                            //     backgroundImage: `url(${item.aboutCardBackground?.node?.sourceUrl})`,
-                            //     backgroundSize: '',
-                            //     backgroundPosition: 'center',
-                            //     backgroundRepeat: 'no-repeat'
-                            //  }}
                              >
-                                <h2 className='text-lg text-424141'>
-                                    {item.aboutCardHeading}
-                                </h2>
-                                <p className='text-2xl text-424141'>
-                                    {item.aboutCardContent}
-                                </p>
+                                <div className='rounded-bl-[38px] rounded-br-[38px] p-4'
+                                style={{
+                                    background: "var(--gradient-card-inner)"
+                                }}
+                                >
+                                    <div className='flex justify-between'>
+                                        <h2 className='about-card-heading text-lg text-skye-gray'>
+                                            {item.aboutCardHeading}
+                                        </h2>
+                                        <h2 className='about-card-number text-lg text-skye-black'>
+                                            {item.aboutCardNumber}
+                                        </h2>
+                                    </div>
+                                    <p className='about-card-content text-2xl text-white drop-shadow-lg'>
+                                        {item.aboutCardContent}
+                                    </p>
+                                </div>
                             </div>
                         ))
                     }

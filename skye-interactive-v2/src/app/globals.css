@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
+@theme {
   --color-skye-black: #1C1414;
+  --color-skye-gray: #323737;
+  --color-skye-primary-red: #EF4444;
+  --color-skye-primary-red-light: #F87171;
+  --color-skye-primary-blue: #5A4FF2;
+  --color-skye-primary-blue-light: #818CF8;
+  --color-skye-white: #F5F5F5;  
 }
 
-
+:root {
+  --background: #ffffff;
+  --gradient-card-border: linear-gradient(256deg, #F87171 8.57%, #FFF 38.49%, #FFF 55.12%, #F87171 94.26%);
+  --gradient-card-inner: linear-gradient(103deg, #F87171 9.21%, #FCA5A5 62.24%, #EF4444 107.69%);
+}
 
 body {
   background: var(--background);
