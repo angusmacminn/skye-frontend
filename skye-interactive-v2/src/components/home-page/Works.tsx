@@ -1,6 +1,10 @@
 'use client'
 
 import { gql, useQuery } from '@apollo/client'
+import { useEffect } from 'react'
+import gsap from 'gsap'
+import { SplitText } from 'gsap/SplitText'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 
 const GET_WORKS_DATA = gql`
@@ -66,25 +70,111 @@ interface GetWorksQueryData {
   works?: WorksConnection;
 }
 
+gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(SplitText)
+
 
 export default function Works() {
     const { loading, error, data } = useQuery<GetWorksQueryData>(GET_WORKS_DATA)
+    
+    const workItems = data?.works?.nodes;
 
+    // Move useEffect BEFORE the early returns
+    useEffect(() => {
+        if (!workItems || workItems.length === 0) return;
+
+        const worksSection = document.getElementById('works-section');
+        const worksGrid = document.getElementById('works-grid');
+
+        if (!worksSection || !worksGrid) return;
+
+        // Wait for images to load and then calculate widths
+        const initHorizontalScroll = () => {
+            // Get all work cards
+            const workCards = worksGrid.querySelectorAll('#work-card');
+            
+            if (workCards.length === 0) return;
+
+            // Calculate total scroll distance
+            // Get the width of container and total content width
+            const containerWidth = worksGrid.offsetWidth;
+            const totalContentWidth = Array.from(workCards).reduce((total, card) => {
+                return total + (card as HTMLElement).offsetWidth + 32; // +32 for gap
+            }, 0);
+            
+            const scrollDistance = totalContentWidth - containerWidth;
+            
+            console.log('Container width:', containerWidth);
+            console.log('Total content width:', totalContentWidth);
+            console.log('Scroll distance:', scrollDistance);
+
+            // Create the horizontal scroll animation
+            const horizontalScroll = gsap.to(worksGrid, {
+                x: -scrollDistance,
+                ease: "none",
+                duration: 1
+            });
+
+            // Create ScrollTrigger
+            ScrollTrigger.create({
+                trigger: worksSection,
+                start: "top top",
+                end: `+=${scrollDistance * 2}`, // Adjust multiplier to control scroll speed
+                pin: true,
+                scrub: 1, // Smooth scrubbing
+                animation: horizontalScroll,
+                markers: false, // Remove this in production
+                onUpdate: (self) => {
+                    console.log('Horizontal scroll progress:', self.progress);
+                }
+            });
+        };
+
+        // Wait for images to load before calculating
+        const images = worksGrid.querySelectorAll('img');
+        if (images.length > 0) {
+            let loadedImages = 0;
+            const totalImages = images.length;
+
+            const onImageLoad = () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    setTimeout(initHorizontalScroll, 100); // Small delay to ensure layout is complete
+                }
+            };
+
+            images.forEach(img => {
+                if (img.complete) {
+                    onImageLoad();
+                } else {
+                    img.addEventListener('load', onImageLoad);
+                }
+            });
+        } else {
+            // No images, init immediately
+            setTimeout(initHorizontalScroll, 100);
+        }
+
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+
+    }, [workItems]);
+
+    // Now the conditional returns come AFTER all hooks
     if (loading) return <p>Loading works...</p>;
     if (error) return <p>Error loading works: {error.message}</p>;
-
-    const workItems = data?.works?.nodes;
 
     return (
         <section id='works-section'>
             <div id='works-section-content'
-                 className='flex flex-col items-center justify-center gap-4 mt-10 bg-black'>
-                <h2 className='text-2xl '>
-                    Works
+                 className='flex flex-col justify-center items-center gap-16 bg-black h-screen'>
+                <h2 className='text-2xl text-skye-white mt-10'>
+                    Selected Works
                 </h2>
 
                 <div id='works-grid'
-                    className='flex flex-row gap-8 overflow-x-auto overflow-y-hidden w-full px-4 pb-4 scrollbar-hide'
+                    className='flex flex-row gap-8 w-full px-4 pb-4'
                     style={{
                         scrollbarWidth: 'none', // Firefox
                         msOverflowStyle: 'none', // IE and Edge

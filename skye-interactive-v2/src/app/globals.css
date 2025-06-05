@@ -21,6 +21,7 @@ body {
   font-family: var(--font-radio-grotesk), sans-serif;
   /* margin-left: 10px;
   margin-right: 10px; */
+  overflow-x: hidden; /* Hide horizontal overflow globally */
 }
 
 /* Fix for SplitText character wrapping */
@@ -32,3 +33,56 @@ body {
   display: inline-block !important;
   
 }
+
+/* Hide scrollbar for works grid */
+#works-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Alternative: Hide all horizontal scrollbars globally */
+::-webkit-scrollbar:horizontal {
+    display: none;
+}
+
+/* Or more specifically for your works section */
+#works-section ::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide all scrollbars globally */
+* {
+    -ms-text-combine-horizontal: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+*::-webkit-scrollbar:horizontal {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Hide only horizontal scrollbars */
+#works-grid::-webkit-scrollbar:horizontal {
+    display: none;
+}
+
+/* For the specific works grid element */
+#works-grid::-webkit-scrollbar {
+    height: 0px; /* Hide horizontal scrollbar */
+    width: auto; /* Keep vertical scrollbar if needed */
+}
+
+/* Alternative: Target the works section specifically */
+#works-section *::-webkit-scrollbar {
+    display: none;
+}
+
+/* Specifically for your works grid */
+#works-grid {
+    /* overflow-x: hidden !important; */
+    overflow-y: visible;
+}
+
+#works-grid::-webkit-scrollbar {
+    display: none;
+}
+
+

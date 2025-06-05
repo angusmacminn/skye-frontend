@@ -230,7 +230,7 @@ export default function Hero() {
                     trigger: card,
                     start: "top 80%",
                     end: "bottom 20%",
-                    markers: true,
+                    markers: false,
                     onEnter: (self) => {
                         console.log(`Animating card ${index}`);
                         
