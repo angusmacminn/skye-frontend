@@ -113,4 +113,27 @@ body {
     transform: scale(1.05);
 }
 
+#service-card {
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #EF4444;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+#service-card:hover::before {
+    opacity: 1;
+}
+
 
