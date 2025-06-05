@@ -221,8 +221,8 @@ export default function Hero() {
                     scale: 0.8,
                     rotation: 10,
                     filter: 'blur(10px)',
-                    scaleX: 0.2,
-                    scaleY: 0.2,
+                    scaleX: 0.0,
+                    scaleY: 0.0,
                 });
 
                 // Create ScrollTrigger for each card
@@ -231,8 +231,7 @@ export default function Hero() {
                     start: "top 80%",
                     end: "bottom 20%",
                     markers: true,
-                    toggleActions: "play none none none",
-                    onEnter: () => {
+                    onEnter: (self) => {
                         console.log(`Animating card ${index}`);
                         
                         // Animate card in
@@ -269,18 +268,21 @@ export default function Hero() {
                             gsap.set([headingSplit.chars, numberSplit.chars], {
                                 display: "inline-block",
                                 opacity: 0,
+                                filter: 'blur(10px)',
                                 y: 30
                             });
 
                             gsap.set(contentSplit.words, {
                                 display: "inline-block",
                                 opacity: 0,
+                                filter: 'blur(10px)',
                                 y: 30
                             });
 
                             gsap.to([headingSplit.chars, numberSplit.chars], {
                                 opacity: 1,
                                 y: 0,
+                                filter: 'blur(0px)',
                                 duration: 0.6,
                                 stagger: 0.02,
                                 ease: "power2.out",
@@ -293,9 +295,12 @@ export default function Hero() {
                                 duration: 0.6,
                                 stagger: 0.08, // Slower stagger for words
                                 ease: "power2.out",
-                                delay: 0.5 // Slightly later delay
+                                delay: 0.5, // Slightly later delay
+                                filter: 'blur(0px)',
                             });
                         }
+                        
+                        self.kill();
                     }
                 });
             });
@@ -350,7 +355,7 @@ export default function Hero() {
                             key={index}
                             className='about-card p-[4px] rounded-bl-[40px] rounded-br-[40px] w-full max-w-md'
                             style={{ background: "var(--gradient-card-border)" }}>
-                            <div className='rounded-bl-[38px] rounded-br-[38px] p-4'
+                            <div className='rounded-bl-[38px] rounded-br-[38px] p-4 flex flex-col justify-center gap-4'
                                 style={{ background: "var(--gradient-card-inner)" }}>
                                 <div className='flex justify-between'>
                                     <h2 className='card-heading text-lg text-skye-gray'>
