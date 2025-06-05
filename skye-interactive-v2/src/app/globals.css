@@ -11,7 +11,7 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #323737;
   --gradient-card-border: linear-gradient(256deg, #F87171 8.57%, #FFF 38.49%, #FFF 55.12%, #F87171 94.26%);
   --gradient-card-inner: linear-gradient(103deg, #F87171 9.21%, #FCA5A5 62.24%, #EF4444 107.69%);
 }
@@ -21,4 +21,14 @@ body {
   font-family: var(--font-radio-grotesk), sans-serif;
   /* margin-left: 10px;
   margin-right: 10px; */
+}
+
+/* Fix for SplitText character wrapping */
+.split-char {
+  display: inline-block !important;
+}
+
+.split-word {
+  display: inline-block !important;
+  
 }

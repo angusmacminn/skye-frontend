@@ -7,7 +7,7 @@ import Link from "next/link";
 // Extract the SVG into a component
 function LogoIcon({ isOpen }: { isOpen: boolean }) {
     return (
-        <svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="40" height="40" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect className="logo-rect" x="39.0411" y="0.96582" width="10.9589" height="10.9589" fill="#ffffff"/>
             <rect className="logo-rect" x="11.387" y="8.92798" width="5.65068" height="5.65068" fill="#ffffff"/>
             <rect className="logo-rect" x="36.387" y="33.8424" width="5.65068" height="5.65068" fill="#ffffff"/>
