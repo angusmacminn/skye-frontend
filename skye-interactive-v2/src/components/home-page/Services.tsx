@@ -397,6 +397,8 @@ function Services() {
 
     }, [serviceCard, statisticCard]); // Updated dependency array
 
+
+    // STATS CARD GRADIENTS
     const cardGradientsMobile = [
         'bg-gradient-to-b from-[#FCA5A5] to-red-400', // Card 1
         'bg-gradient-to-b from-red-400 to-red-600', // Card 2  
