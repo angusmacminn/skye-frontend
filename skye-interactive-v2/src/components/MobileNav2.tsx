@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Link from "next/link";
 
 // Extract the SVG into a component
-function LogoIcon({ isOpen }: { isOpen: boolean }) {
+function LogoIcon() {
     return (
         <svg width="40" height="40" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect className="logo-rect" x="39.0411" y="0.96582" width="10.9589" height="10.9589" fill="#ffffff"/>
@@ -190,7 +190,7 @@ function MobileNav2() {
                     aria-label="Open main menu"
                 >
                     <span className="sr-only">Open main menu</span>
-                    <LogoIcon isOpen={isMobileMenuOpen} />
+                    <LogoIcon />
                 </button>
             </div>
     
