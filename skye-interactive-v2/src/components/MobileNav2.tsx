@@ -4,6 +4,21 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import Link from "next/link";
 
+// Add CSS to prevent flash
+const initialStyles = `
+    .mobile-menu-bg-hidden {
+        display: none !important;
+    }
+    .mobile-menu-panel-hidden {
+        display: none !important;
+        opacity: 0;
+    }
+    .mobile-nav-link-hidden {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+`;
+
 // Extract the SVG into a component
 function LogoIcon() {
     return (
@@ -49,7 +64,16 @@ function MobileNav2() {
 
     useEffect(() => {
         if (mobileMenuButtonRef.current && expandingBgRef.current && menuPanelRef.current && navLinksRef.current) {
-            // Set initial states
+            // Remove CSS classes and let GSAP take control
+            expandingBgRef.current.classList.remove('mobile-menu-bg-hidden');
+            menuPanelRef.current.classList.remove('mobile-menu-panel-hidden');
+            
+            // Remove individual link classes
+            Array.from(navLinksRef.current.children).forEach(child => {
+                child.classList.remove('mobile-nav-link-hidden');
+            });
+            
+            // Set initial states with GSAP
             gsap.set(expandingBgRef.current, { display: 'none' });
             gsap.set(menuPanelRef.current, { display: 'none', opacity: 0 });
             gsap.set(navLinksRef.current.children, { opacity: 0, y: 20 });
@@ -197,10 +221,10 @@ function MobileNav2() {
             {/* Expanding Background */}
             <div id="nav-menu-bg"
                 ref={expandingBgRef}
-                className="fixed rounded-tl-[20px] "
+                className="mobile-menu-bg-hidden fixed rounded-tl-[20px]"
                 style={{ 
                     pointerEvents: 'none',
-                    backgroundColor: '#f87171', // Fallback color
+                    backgroundColor: '#f87171',
                 }}
             ></div>
             
@@ -208,7 +232,7 @@ function MobileNav2() {
             <div
                 ref={menuPanelRef}
                 id="mobile-menu-panel"
-                className="fixed rounded-tl-[20px] inset-0 z-[70] flex items-center justify-center pointer-events-none"
+                className="mobile-menu-panel-hidden fixed rounded-tl-[20px] inset-0 z-[70] flex items-center justify-center pointer-events-none"
             >
                 <div className="relative flex flex-col w-auto max-w-xs p-6 pointer-events-auto">
                     {/* Close button */}
@@ -230,7 +254,7 @@ function MobileNav2() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="block px-4 py-3 rounded-md text-lg font-medium text-white hover:text-gray-200 hover:bg-white hover:bg-opacity-10 transition-all duration-200"
+                                className="mobile-nav-link-hidden block px-4 py-3 rounded-md text-lg font-medium text-white hover:text-gray-200 hover:bg-white hover:bg-opacity-10 transition-all duration-200"
                                 onClick={toggleMobileMenu}
                             >
                                 {link.label}

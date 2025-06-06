@@ -412,7 +412,7 @@ function Services() {
     // ]
 
     // Move the conditional returns after all hooks
-    if (loading) return <p>Loading...</p>
+    if (loading) return 
     if (error) {
         console.error("GraphQL Error:", error);
         return <p className="p-8 text-center text-red-500">Error loading hero data. Check console.</p>;

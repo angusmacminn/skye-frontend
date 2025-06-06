@@ -159,7 +159,7 @@ export default function Works() {
     }, [workItems]);
 
     // Now the conditional returns come AFTER all hooks
-    if (loading) return <p>Loading works...</p>;
+    if (loading) return 
     if (error) return <p>Error loading works: {error.message}</p>;
 
     return (

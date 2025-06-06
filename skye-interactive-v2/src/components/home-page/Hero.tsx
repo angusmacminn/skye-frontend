@@ -6,6 +6,28 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useEffect } from 'react';
 
+// Add CSS to prevent flash
+const initialStyles = `
+    .hero-initial-hidden {
+        opacity: 0;
+        transform: scale(0.2, 0.2);
+    }
+    .hero-text-initial-hidden {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    .hero-text-blur-initial-hidden {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(10px);
+    }
+    .about-card-initial-hidden {
+        opacity: 0;
+        transform: translateY(100px) scale(0.8) rotate(10deg) scaleX(0) scaleY(0);
+        filter: blur(10px);
+    }
+`;
+
 const GET_HERO_DATA = gql`
     query GetHeroData ($id: ID!, $idType: PageIdType!) {
         page(id: $id, idType: $idType) {
@@ -108,11 +130,10 @@ export default function Hero() {
                 return;
             }
 
-
-            // create timeline for multiple animations
+            // No need to remove classes - GSAP inline styles will override CSS classes
             const tl = gsap.timeline()
 
-            // set initial state (small and invisible)
+            // GSAP will override the CSS classes with inline styles
             gsap.set(hero, {
                 opacity: 0,
                 scaleX: 0.2,
@@ -201,7 +222,6 @@ export default function Hero() {
     useEffect(() => {
         if (!aboutCardItems || aboutCardItems.length === 0) return;
 
-
         const timer = setTimeout(async () => {
             // Wait for fonts to load
             if (document.fonts) {
@@ -211,6 +231,9 @@ export default function Hero() {
             const aboutCards = document.querySelectorAll('.about-card');
             
             aboutCards.forEach((card, index) => {
+                // Remove CSS class and let GSAP take control
+                card.classList.remove('about-card-initial-hidden');
+                
                 // Set initial state
                 gsap.set(card, {
                     opacity: 0,
@@ -310,7 +333,7 @@ export default function Hero() {
 
     }, [aboutCardItems])
 
-    if (loading) return <p>Loading...</p>
+    if (loading) return 
     if (error) {
         console.error("GraphQL Error:", error);
         return <p className="p-8 text-center text-red-500">Error loading hero data. Check console.</p>;
@@ -326,18 +349,18 @@ export default function Hero() {
             <section id='hero-section'
                      className='ml-[10px] mr-[10px] py-[10px] h-[100vh]'>
                 <div id='hero'
-                     className='flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
+                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
                     {acfData && 
                         <h1 className='text-left text-5xl text-skye-gray'>
                             <div className='flex flex-col gap-4'>
-                                <div id='hero-text-1'>
+                                <div id='hero-text-1' className='hero-text-initial-hidden'>
                                     {h1TextBeforeHighLight}
-                                    <span id='hero-text-2' className='text-white mb-1'>{h1TextHighlight}</span>
+                                    <span id='hero-text-2' className='hero-text-blur-initial-hidden text-white mb-1'>{h1TextHighlight}</span>
                                 </div>
             
-                                <div id='hero-text-3'>
+                                <div id='hero-text-3' className='hero-text-initial-hidden'>
                                     {h1TextAfterHighlight}
-                                    <span id='hero-text-4' className='text-white'>{h1TextHighlight2}</span>
+                                    <span id='hero-text-4' className='hero-text-blur-initial-hidden text-white'>{h1TextHighlight2}</span>
                                 </div>
                             </div>
                         </h1>
@@ -350,9 +373,8 @@ export default function Hero() {
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
                             key={index}
-                            className='about-card p-[4px] rounded-bl-[40px] rounded-br-[40px] w-full max-w-md'>
-                            <div className='rounded-bl-[38px] rounded-br-[38px] p-4 flex flex-col justify-center gap-4'
-                                >
+                            className='about-card about-card-initial-hidden p-[4px] rounded-bl-[40px] rounded-br-[40px] w-full max-w-md'>
+                            <div className='rounded-bl-[38px] rounded-br-[38px] p-4 flex flex-col justify-center gap-4'>
                                 <div className='flex justify-between'>
                                     <h2 className='card-heading text-lg text-skye-white'>
                                         {item.aboutCardHeading}
@@ -369,8 +391,6 @@ export default function Hero() {
                     ))}
                 </div>
             </section>
-
-            
         </>
     )
 }
