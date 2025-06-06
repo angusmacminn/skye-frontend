@@ -1,5 +1,4 @@
-import Link from "next/link";
-import MobileNav from "./MobileNav";
+
 import MobileNav2 from "./MobileNav2";
 
 

@@ -122,7 +122,7 @@ export default function Works() {
                 scrub: 1, // Smooth scrubbing
                 animation: horizontalScroll,
                 markers: false, // Remove this in production
-                onUpdate: (self) => {
+                onUpdate: () => {
                 }
             });
         };

@@ -1,7 +1,7 @@
 'use client'
 
-import { gql, split, useQuery } from '@apollo/client'
-import { useEffect, useState, useRef } from 'react';
+import { gql, useQuery } from '@apollo/client'
+import { useEffect, useRef } from 'react';
 import ThreeScene from '../r3f/ProcessGeometry';
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
@@ -110,6 +110,9 @@ function Services() {
     useEffect(() => {
         if (!serviceCard || serviceCard.length === 0) return;
 
+        // Copy the ref value to a variable at the start of the effect
+        const currentServiceCards = serviceCardsRef.current;
+
         // SERVICES ANIMATIONS
         const servicesSection = document.getElementById('services-section')
         const servicesContainer = document.getElementById('services-container')
@@ -131,7 +134,7 @@ function Services() {
             })
 
             // Set up hover animations for each card
-            serviceCardsRef.current.forEach((card, index) => {
+            currentServiceCards.forEach((card) => {
                 if (!card) return;
 
                 const title = card.querySelector('.service-title');
@@ -301,7 +304,7 @@ function Services() {
 
                 if (statisticCards && statisticCards.length > 0 && statCategory.length > 0 && statNumber.length > 0) {
                     // Set initial state for cards, categories and numbers
-                    statisticCards.forEach((card, index) => {
+                    statisticCards.forEach((card) => {
                         gsap.set(card, {
                             opacity: 0,
                             x: -100,
@@ -382,9 +385,9 @@ function Services() {
             }, 500);
         }
 
-        // Cleanup function
+        // Cleanup function - use the copied variable instead of the ref
         return () => {
-            serviceCardsRef.current.forEach((card) => {
+            currentServiceCards.forEach((card) => {
                 if (card) {
                     card.removeEventListener('mouseenter', () => {});
                     card.removeEventListener('mouseleave', () => {});
@@ -392,7 +395,7 @@ function Services() {
             });
         };
 
-    }, [data]); // Single dependency array
+    }, [serviceCard, statisticCard]); // Updated dependency array
 
     const cardGradientsMobile = [
         'bg-gradient-to-b from-[#FCA5A5] to-red-400', // Card 1
@@ -400,11 +403,11 @@ function Services() {
         'bg-gradient-to-b from-red-600 to-red-400' // Card 3
     ]
 
-    const cardGradients = [
-        'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
-        'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
-        'bg-gradient-to-r from-red-600 to-red-400' // Card 3
-    ]
+    // const cardGradients = [
+    //     'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
+    //     'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
+    //     'bg-gradient-to-r from-red-600 to-red-400' // Card 3
+    // ]
 
     // Move the conditional returns after all hooks
     if (loading) return <p>Loading...</p>
