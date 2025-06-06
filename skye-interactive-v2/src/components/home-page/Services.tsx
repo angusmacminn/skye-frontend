@@ -282,8 +282,9 @@ function Services() {
                             // Add ScrollTrigger for the heading
                             ScrollTrigger.create({
                                 trigger: statsHeading,
-                                start: "top 80%",
+                                start: "top 50%",
                                 end: "bottom 20%",
+                                markers: false,
                                 
                                 onEnter: () => {
                                     gsap.to(splitHeading.lines, {
@@ -308,7 +309,7 @@ function Services() {
                         gsap.set(card, {
                             opacity: 0,
                             x: -100,
-                            scale: 0.8,
+                            scale: 0.3,
                             filter: "blur(10px)",
                         });
                     });
@@ -328,7 +329,7 @@ function Services() {
                     // Create ScrollTrigger for stat cards
                     ScrollTrigger.create({
                         trigger: statisticCards[0], // Use first card as trigger
-                        start: "top 80%",
+                        start: "top 50%",
                         end: "bottom 20%",
                         markers: true,
                         onEnter: () => {
@@ -337,7 +338,7 @@ function Services() {
                                 opacity: 1,
                                 x: 0,
                                 scale: 1,
-                                duration: 0.8,
+                                duration: 0.6,
                                 filter: "blur(0px)",
                                 stagger: 0.5, 
                                 ease: "power2.out",
@@ -349,7 +350,7 @@ function Services() {
                                 y: 0,
                                 duration: 0.8,
                                 stagger: 0.2,
-                                delay: 0.1, // Small delay after cards start
+                                delay: 0.3, // Small delay after cards start
                                 ease: "power2.out",
                                 filter: "blur(0px)"
                             });

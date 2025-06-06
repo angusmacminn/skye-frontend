@@ -234,21 +234,21 @@ export default function Hero() {
                 // Remove CSS class and let GSAP take control
                 card.classList.remove('about-card-initial-hidden');
                 
-                // Set initial state
+                // // Set initial state
                 gsap.set(card, {
                     opacity: 0,
-                    y: 100,
-                    scale: 0.8,
-                    rotation: 10,
-                    filter: 'blur(10px)',
-                    scaleX: 0.0,
-                    scaleY: 0.0,
+                    // y: 100,
+                    // scale: 0.8,
+                    // rotation: 10,
+                    // filter: 'blur(10px)',
+                    // scaleX: 0.0,
+                    // scaleY: 0.0,
                 });
 
                 // Create ScrollTrigger for each card
                 ScrollTrigger.create({
                     trigger: card,
-                    start: "top 80%",
+                    start: "top 50%",
                     end: "bottom 20%",
                     markers: false,
                     onEnter: (self) => {
@@ -257,13 +257,13 @@ export default function Hero() {
                         // Animate card in
                         gsap.to(card, {
                             opacity: 1,
-                            y: 0,
-                            duration: 0.8,
-                            ease: "power2.out",
-                            rotation: 0,
-                            filter: 'blur(0px)',
-                            scaleX: 1,
-                            scaleY: 1,
+                            // y: 0,
+                            // duration: 0.5,
+                            // ease: "power2.out",
+                            // rotation: 0,
+                            // filter: 'blur(0px)',
+                            // scaleX: 1,
+                            // scaleY: 1,
                         });
 
                         // Animate text with SplitText
@@ -303,7 +303,7 @@ export default function Hero() {
                                 opacity: 1,
                                 y: 0,
                                 filter: 'blur(0px)',
-                                duration: 0.6,
+                                duration: 0.3,
                                 stagger: 0.02,
                                 ease: "power2.out",
                                 delay: 0.3
@@ -312,10 +312,10 @@ export default function Hero() {
                             gsap.to(contentSplit.words, {
                                 opacity: 1,
                                 y: 0,
-                                duration: 0.6,
+                                duration: 0.5,
                                 stagger: 0.08, // Slower stagger for words
                                 ease: "power2.out",
-                                delay: 0.5, // Slightly later delay
+                                delay: 0.9, // Slightly later delay
                                 filter: 'blur(0px)',
                             });
                         }
@@ -369,7 +369,7 @@ export default function Hero() {
             </section>
     
             <section id='about-section' className='ml-[10px] mr-[10px]'>
-                <div className='flex flex-col items-center justify-center gap-16 py-8'>
+                <div className='flex flex-col items-center justify-center gap-24 py-8'>
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
                             key={index}
