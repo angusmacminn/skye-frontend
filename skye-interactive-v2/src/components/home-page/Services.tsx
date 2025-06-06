@@ -88,7 +88,7 @@ function Services() {
     const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     // Move these BEFORE useEffect
-    const pageId = '2'
+    const pageId = '126'
     const pageIdType = 'DATABASE_ID'
 
     const { loading, error, data } = useQuery<QueryData>(GET_SERVICES_DATA, {
