@@ -71,7 +71,7 @@ gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(SplitText)
 
 export default function Hero() {
-    const pageId = '2'
+    const pageId = '126'
     const pageIdType = 'DATABASE_ID'
 
     const { loading, error, data } = useQuery<QueryData>(GET_HERO_DATA, {
