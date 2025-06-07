@@ -331,7 +331,7 @@ function Services() {
                         trigger: statisticCards[0], // Use first card as trigger
                         start: "top 50%",
                         end: "bottom 20%",
-                        markers: true,
+                        markers: false,
                         onEnter: () => {
                             // Animate the cards with stagger
                             gsap.to(statisticCards, { // Use statisticCards instead of card
@@ -474,9 +474,10 @@ function Services() {
                 </div>
             </section>
     
-            <section id='process-section'>
+            <section id='process-section'
+            className='bg-skye-white py-16'>
                 <div id='process-container'
-                className='flex flex-col items-center gap-16 mt-10 w-full max-w-lg mx-auto px-4'>
+                className='flex flex-col items-center gap-8 mt-10 w-full max-w-lg mx-auto px-4'>
                     <h2 className='text-center text-4xl font-bold'>{processHeading}</h2>
 
                     <ThreeScene />
@@ -484,9 +485,9 @@ function Services() {
                     {processSteps?.map((step, index) => (
                         <div key={index}
                              id='process-step'
-                             className='flex flex-col items-center h-screen gap-4'>
-                            <h3 className='text-center text-2xl font-bold'>{step.stepHeading}</h3>
-                            <p className='text-center text-lg'>{step.stepDescription}</p>
+                             className='flex flex-col items-left h-[80vh] gap-4'>
+                            <h3 className='text-left text-2xl font-bold'>{step.stepHeading}</h3>
+                            <p className='text-left text-lg'>{step.stepDescription}</p>
                         </div>
                     ))}
                 </div>

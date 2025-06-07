@@ -95,7 +95,7 @@ function ThreeScene() {
     return (
         <div 
         id="three-scene"
-        className="w-full h-96 relative sticky top-20 -z-10">
+        className="w-full h-96 relative sticky top-20 ">
             <Canvas
                 camera={{
                     position: [0, 0, 6],
