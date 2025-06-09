@@ -141,7 +141,7 @@ function Services() {
                 })
 
                 // Setup animations based on device type
-                currentServiceCards.forEach((card, cardIndex) => {
+                currentServiceCards.forEach((card) => {
                     if (!card) return;
 
                     const title = card.querySelector('.service-title');
@@ -171,7 +171,7 @@ function Services() {
                             trigger: card,
                             start: "top 70%",
                             end: "bottom 30%",
-                            markers: true,
+                            markers: false,
                             refreshPriority: -1, // Lower priority to run after Works section
                             onEnter: () => {
                                 // Show list container first
