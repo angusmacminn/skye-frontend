@@ -69,9 +69,10 @@ function LogoModel(){
     const currentPosition = lerpVector3(startState.position, endState.position, progress)
     const currentRotation = lerpVector3(startState.rotation, endState.rotation, progress)
 
+    // Rotate the object
     useFrame((state, delta) => {
         if(meshRef.current){
-            meshRef.current.rotation.y += delta * 0.03
+            meshRef.current.rotation.y += delta * 0.1
         }
     })
 

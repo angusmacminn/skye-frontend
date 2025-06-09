@@ -107,6 +107,7 @@ function Services() {
     const processSteps = acfData?.processSteps
 
     // NOW the useEffect can reference serviceCard
+    // SERVICES ANIMATIONS
     useEffect(() => {
         if (!serviceCard || serviceCard.length === 0) return;
 
@@ -461,6 +462,85 @@ function Services() {
             }, 500);
         }
 
+
+        // PROCESS ANIMATIONS
+        if (processSteps && processSteps.length > 0) {
+            setTimeout(() => {
+                const processSection = document.getElementById('process-section');
+                const statisticsSection = document.getElementById('statistics-section');
+
+                if ( processSection && statisticsSection) {
+                    // Set initial state for process section scaled down and positioned off-screen
+                    gsap.set(processSection, {
+                        y: 100,
+                        transformOrigin: "center bottom",
+                        position: "relative",
+                        zIndex: 100,
+                    })
+
+                    // Create the scroll-jacked animation
+                    ScrollTrigger.create({
+                        trigger: statisticsSection,
+                        start: "bottom bottom", // When bottom of stats section hits bottom of viewport
+                        end: "bottom top",      // Until bottom of stats section hits top of viewport
+                        pin: true,              // Pin the statistics section
+                        pinSpacing: false,      // Don't add extra spacing
+                        scrub: 1,               // Smooth scrubbing tied to scroll position
+                        markers: false,         // Set to true for debugging
+                        onUpdate: (self) => {
+                            // As user scrolls, animate the process section to grow in
+                            const progress = self.progress;
+
+                            gsap.to(processSection, {                                
+                                y: 100 - (100 * progress),
+                                duration: 0.1,
+                                ease: "none",
+                            })
+                        },
+                        
+                    })
+                }
+
+
+                // Process step animations
+                if (processSteps && processSteps.length > 0) {
+
+                    processSteps.forEach((step, index) => {
+                        const stepElement = document.getElementById(`process-step-${index}`);
+
+                        if (stepElement) {
+                            gsap.set(stepElement, {
+                                opacity: 0,
+                                x: 100,
+                                filter: "blur(10px)",
+
+                            })
+
+                            ScrollTrigger.create({
+                                trigger: stepElement,
+                                start: "top 50%",
+                                end: "bottom 20%",
+                                markers: true,
+                                onEnter: () => {
+                                    gsap.to(stepElement, {
+                                        opacity: 1,
+                                        x: 0,
+                                        filter: "blur(0px)",
+                                        duration: 0.8,
+                                        ease: "power2.out",
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+
+                
+
+                
+            }, 500);
+        }
+
         // Cleanup function - use the copied variable instead of the ref
         return () => {
             currentServiceCards.forEach((card) => {
@@ -553,14 +633,14 @@ function Services() {
             className='bg-skye-white py-16'>
                 <div id='process-container'
                 className='flex flex-col items-center gap-8 mt-10 w-full max-w-lg mx-auto px-4'>
-                    <h2 className='text-center text-4xl font-bold'>{processHeading}</h2>
+                    <h2 className='process-heading text-center text-4xl sticky top-20 font-bold'>{processHeading}</h2>
 
                     <ThreeScene />
                     
                     {processSteps?.map((step, index) => (
                         <div key={index}
-                             id='process-step'
-                             className='flex flex-col items-left h-[80vh] gap-4'>
+                             id={`process-step-${index}`}
+                             className='flex flex-col items-left h-[70vh] gap-4'>
                             <h3 className='text-left text-2xl font-bold'>{step.stepHeading}</h3>
                             <p className='text-left text-lg'>{step.stepDescription}</p>
                         </div>
