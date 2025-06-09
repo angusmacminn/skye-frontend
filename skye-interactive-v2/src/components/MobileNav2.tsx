@@ -5,19 +5,19 @@ import gsap from "gsap";
 import Link from "next/link";
 
 // Add CSS to prevent flash
-const initialStyles = `
-    .mobile-menu-bg-hidden {
-        display: none !important;
-    }
-    .mobile-menu-panel-hidden {
-        display: none !important;
-        opacity: 0;
-    }
-    .mobile-nav-link-hidden {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-`;
+// const initialStyles = `
+//     .mobile-menu-bg-hidden {
+//         display: none !important;
+//     }
+//     .mobile-menu-panel-hidden {
+//         display: none !important;
+//         opacity: 0;
+//     }
+//     .mobile-nav-link-hidden {
+//         opacity: 0;
+//         transform: translateY(20px);
+//     }
+// `;
 
 // Extract the SVG into a component
 function LogoIcon() {

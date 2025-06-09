@@ -7,26 +7,26 @@ import { SplitText } from 'gsap/SplitText'
 import { useEffect } from 'react';
 
 // Add CSS to prevent flash
-const initialStyles = `
-    .hero-initial-hidden {
-        opacity: 0;
-        transform: scale(0.2, 0.2);
-    }
-    .hero-text-initial-hidden {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    .hero-text-blur-initial-hidden {
-        opacity: 0;
-        transform: translateY(30px);
-        filter: blur(10px);
-    }
-    .about-card-initial-hidden {
-        opacity: 0;
-        transform: translateY(100px) scale(0.8) rotate(10deg) scaleX(0) scaleY(0);
-        filter: blur(10px);
-    }
-`;
+// const initialStyles = `
+//     .hero-initial-hidden {
+//         opacity: 0;
+//         transform: scale(0.2, 0.2);
+//     }
+//     .hero-text-initial-hidden {
+//         opacity: 0;
+//         transform: translateY(30px);
+//     }
+//     .hero-text-blur-initial-hidden {
+//         opacity: 0;
+//         transform: translateY(30px);
+//         filter: blur(10px);
+//     }
+//     .about-card-initial-hidden {
+//         opacity: 0;
+//         transform: translateY(100px) scale(0.8) rotate(10deg) scaleX(0) scaleY(0);
+//         filter: blur(10px);
+//     }
+// `;
 
 const GET_HERO_DATA = gql`
     query GetHeroData ($id: ID!, $idType: PageIdType!) {
