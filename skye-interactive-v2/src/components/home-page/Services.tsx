@@ -518,7 +518,7 @@ function Services() {
 
                             ScrollTrigger.create({
                                 trigger: stepElement,
-                                start: "top 50%",
+                                start: "top 100%",
                                 end: "bottom 20%",
                                 markers: true,
                                 onEnter: () => {
@@ -526,7 +526,7 @@ function Services() {
                                         opacity: 1,
                                         x: 0,
                                         filter: "blur(0px)",
-                                        duration: 0.8,
+                                        duration: 0.5,
                                         ease: "power2.out",
                                     })
                                 }
