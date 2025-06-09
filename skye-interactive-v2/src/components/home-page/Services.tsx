@@ -199,29 +199,29 @@ function Services() {
                                     console.log('showing list items')
                                 }
                             },
-                            onLeave: () => {
-                                // Optional: Hide when scrolling past (comment out if you want lists to stay visible)
-                                if (listItems.length > 0) {
-                                    gsap.to(listItems, {
-                                        opacity: 0,
-                                        y: -10,
-                                        scale: 0.9,
-                                        duration: 0.3,
-                                        stagger: 0.02,
-                                        ease: "power2.in"
-                                    });
-                                }
+                            // onLeave: () => {
+                            //     // Optional: Hide when scrolling past (comment out if you want lists to stay visible)
+                            //     if (listItems.length > 0) {
+                            //         gsap.to(listItems, {
+                            //             opacity: 0,
+                            //             y: -10,
+                            //             scale: 0.9,
+                            //             duration: 0.3,
+                            //             stagger: 0.02,
+                            //             ease: "power2.in"
+                            //         });
+                            //     }
 
-                                if (serviceList) {
-                                    gsap.to(serviceList, {
-                                        opacity: 0,
-                                        height: 0,
-                                        duration: 0.3,
-                                        ease: "power2.in",
-                                        delay: 0.1
-                                    });
-                                }
-                            }
+                            //     if (serviceList) {
+                            //         gsap.to(serviceList, {
+                            //             opacity: 0,
+                            //             height: 0,
+                            //             duration: 0.3,
+                            //             ease: "power2.in",
+                            //             delay: 0.1
+                            //         });
+                            //     }
+                            // }
                         });
                     } else {
                         // DESKTOP: Use hover animations
