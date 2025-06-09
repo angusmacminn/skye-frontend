@@ -509,28 +509,59 @@ function Services() {
                         const stepElement = document.getElementById(`process-step-${index}`);
 
                         if (stepElement) {
+                            // Set initial state
                             gsap.set(stepElement, {
                                 opacity: 0,
                                 x: 100,
                                 filter: "blur(10px)",
-
                             })
 
                             ScrollTrigger.create({
                                 trigger: stepElement,
-                                start: "top 100%",
-                                end: "bottom 20%",
-                                markers: true,
+                                start: "top 90%",       // When element enters viewport
+                                end: "top 30%",        // When top of element hits 30% - earlier trigger
+                                markers: true,          // Keep this true to see what's happening
                                 onEnter: () => {
+                                    
                                     gsap.to(stepElement, {
                                         opacity: 1,
                                         x: 0,
                                         filter: "blur(0px)",
-                                        duration: 0.5,
+                                        duration: 0.8,
                                         ease: "power2.out",
                                     })
+                                },
+                                onLeave: () => {
+                                    
+                                    gsap.to(stepElement, {
+                                        opacity: 0,
+                                        x: -100,
+                                        filter: "blur(10px)",
+                                        duration: 0.5,
+                                        ease: "power2.in",
+                                    })
+                                },
+                                onEnterBack: () => {
+                                    
+                                    gsap.to(stepElement, {
+                                        opacity: 1,
+                                        x: 0,
+                                        filter: "blur(0px)",
+                                        duration: 0.8,
+                                        ease: "power2.out",
+                                    })
+                                },
+                                onLeaveBack: () => {
+                                    
+                                    gsap.to(stepElement, {
+                                        opacity: 0,
+                                        x: 100,
+                                        filter: "blur(10px)",
+                                        duration: 0.5,
+                                        ease: "power2.in",
+                                    })
                                 }
-                            })
+                            });
                         }
                     })
                 }
