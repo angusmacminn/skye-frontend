@@ -113,142 +113,217 @@ function Services() {
         // Copy the ref value to a variable at the start of the effect
         const currentServiceCards = serviceCardsRef.current;
 
-        // SERVICES ANIMATIONS
-        const servicesSection = document.getElementById('services-section')
-        const servicesContainer = document.getElementById('services-container')
-        const serviceTitle = document.querySelectorAll('.service-title')
+        // Check if device is mobile
+        const isMobile = () => {
+            return window.innerWidth <= 768 || 'ontouchstart' in window;
+        };
 
-        if (servicesSection && servicesContainer) {
-            // Only animate titles initially, not the lists
-        gsap.set(serviceTitle, {
-            opacity: 0,
-            y: 100,
-        })
+        // Delay to ensure Works section ScrollTriggers are set up first
+        const initServicesAnimations = () => {
+            // SERVICES ANIMATIONS
+            const servicesSection = document.getElementById('services-section')
+            const servicesContainer = document.getElementById('services-container')
+            const serviceTitle = document.querySelectorAll('.service-title')
 
-            gsap.to(serviceTitle, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                ease: "power2.inOut",
-                stagger: 0.1
-            })
+            if (servicesSection && servicesContainer) {
+                // Only animate titles initially, not the lists
+                gsap.set(serviceTitle, {
+                    opacity: 0,
+                    y: 100,
+                })
 
-            // Set up hover animations for each card
-            currentServiceCards.forEach((card) => {
-                if (!card) return;
+                gsap.to(serviceTitle, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.inOut",
+                    stagger: 0.1
+                })
 
-                const title = card.querySelector('.service-title');
-                const listItems = card.querySelectorAll('.service-item');
-                const serviceList = card.querySelector('.service-list');
+                // Setup animations based on device type
+                currentServiceCards.forEach((card, cardIndex) => {
+                    if (!card) return;
 
-                // Set initial state for list items (hidden)
-                if (serviceList) {
-        gsap.set(serviceList, {
-            opacity: 0,
-                        height: 0,
-                        overflow: "hidden"
-                    });
-                }
+                    const title = card.querySelector('.service-title');
+                    const listItems = card.querySelectorAll('.service-item');
+                    const serviceList = card.querySelector('.service-list');
 
-                if (listItems.length > 0) {
-                    gsap.set(listItems, {
-                        opacity: 0,
-                        y: 20,
-                        scale: 0.9
-                    });
-                }
-
-                // Create hover enter animation
-                const hoverEnter = () => {
-                    // Animate card scale
-                    gsap.to(card, {
-                        scale: 1.02,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-
-                    // Animate title
-                    if (title) {
-                        gsap.to(title, {
-                            y: -10,
-                            scale: 1.05,
-                            duration: 0.3,
-                            ease: "power2.out"
-                        });
-                    }
-
-                    // Show list container first
+                    // Set initial state for list items (hidden)
                     if (serviceList) {
-                        gsap.to(serviceList, {
-                            opacity: 1,
-                            height: "auto",
-                            duration: 0.3,
-                            ease: "power2.inOut"
-                        });
-                    }
-
-                    // Then animate list items with stagger
-                    if (listItems.length > 0) {
-                        gsap.to(listItems, {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.1,
-                            stagger: 0.1,
-                            ease: "power2.inOut",
-                            delay: 0.2
-                        });
-                    }
-                };
-
-                // Create hover leave animation
-                const hoverLeave = () => {
-                    // Animate card back to normal
-                    gsap.to(card, {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-
-                    // Animate title back
-                    if (title) {
-                        gsap.to(title, {
-                            y: 0,
-                            scale: 1,
-                            duration: 0.3,
-                            ease: "power2.out"
-                        });
-                    }
-
-                    // Animate list items out first
-                    if (listItems.length > 0) {
-                        gsap.to(listItems, {
-                            opacity: 0,
-                            y: -10,
-                            scale: 0.9,
-                            duration: 0.4,
-                            stagger: 0.02,
-                            ease: "power2.in"
-                        });
-                    }
-
-                    // Then hide list container
-                    if (serviceList) {
-                        gsap.to(serviceList, {
+                        gsap.set(serviceList, {
                             opacity: 0,
                             height: 0,
-                            duration: 0.3,
-                            ease: "power2.in",
-                            delay: 0.1
+                            overflow: "hidden"
                         });
                     }
-                };
 
-                // Add event listeners
-                card.addEventListener('mouseenter', hoverEnter);
-                card.addEventListener('mouseleave', hoverLeave);
-            });
-        }
+                    if (listItems.length > 0) {
+                        gsap.set(listItems, {
+                            opacity: 0,
+                            y: 20,
+                            scale: 0.9
+                        });
+                    }
+
+                    if (isMobile()) {
+                        // MOBILE: Use ScrollTrigger instead of hover
+                        ScrollTrigger.create({
+                            trigger: card,
+                            start: "top 70%",
+                            end: "bottom 30%",
+                            markers: true,
+                            refreshPriority: -1, // Lower priority to run after Works section
+                            onEnter: () => {
+                                // Show list container first
+                                if (serviceList) {
+                                    gsap.to(serviceList, {
+                                        opacity: 1,
+                                        height: "auto",
+                                        duration: 0.4,
+                                        ease: "power2.inOut"
+                                    });
+                                    console.log('showing list')
+                                }
+
+                                // Then animate list items with stagger
+                                if (listItems.length > 0) {
+                                    gsap.to(listItems, {
+                                        opacity: 1,
+                                        y: 0,
+                                        scale: 1,
+                                        duration: 0.3,
+                                        stagger: 0.1,
+                                        ease: "power2.inOut",
+                                        delay: 0.2
+                                    });
+                                    console.log('showing list items')
+                                }
+                            },
+                            onLeave: () => {
+                                // Optional: Hide when scrolling past (comment out if you want lists to stay visible)
+                                if (listItems.length > 0) {
+                                    gsap.to(listItems, {
+                                        opacity: 0,
+                                        y: -10,
+                                        scale: 0.9,
+                                        duration: 0.3,
+                                        stagger: 0.02,
+                                        ease: "power2.in"
+                                    });
+                                }
+
+                                if (serviceList) {
+                                    gsap.to(serviceList, {
+                                        opacity: 0,
+                                        height: 0,
+                                        duration: 0.3,
+                                        ease: "power2.in",
+                                        delay: 0.1
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        // DESKTOP: Use hover animations
+                        const hoverEnter = () => {
+                            // Animate card scale
+                            gsap.to(card, {
+                                scale: 1.02,
+                                duration: 0.3,
+                                ease: "power2.out"
+                            });
+
+                            // Animate title
+                            if (title) {
+                                gsap.to(title, {
+                                    y: -10,
+                                    scale: 1.05,
+                                    duration: 0.3,
+                                    ease: "power2.out"
+                                });
+                            }
+
+                            // Show list container first
+                            if (serviceList) {
+                                gsap.to(serviceList, {
+                                    opacity: 1,
+                                    height: "auto",
+                                    duration: 0.3,
+                                    ease: "power2.inOut"
+                                });
+                            }
+
+                            // Then animate list items with stagger
+                            if (listItems.length > 0) {
+                                gsap.to(listItems, {
+                                    opacity: 1,
+                                    y: 0,
+                                    scale: 1,
+                                    duration: 0.1,
+                                    stagger: 0.1,
+                                    ease: "power2.inOut",
+                                    delay: 0.2
+                                });
+                            }
+                        };
+
+                        const hoverLeave = () => {
+                            // Animate card back to normal
+                            gsap.to(card, {
+                                scale: 1,
+                                duration: 0.3,
+                                ease: "power2.out"
+                            });
+
+                            // Animate title back
+                            if (title) {
+                                gsap.to(title, {
+                                    y: 0,
+                                    scale: 1,
+                                    duration: 0.3,
+                                    ease: "power2.out"
+                                });
+                            }
+
+                            // Animate list items out first
+                            if (listItems.length > 0) {
+                                gsap.to(listItems, {
+                                    opacity: 0,
+                                    y: -10,
+                                    scale: 0.9,
+                                    duration: 0.4,
+                                    stagger: 0.02,
+                                    ease: "power2.in"
+                                });
+                            }
+
+                            // Then hide list container
+                            if (serviceList) {
+                                gsap.to(serviceList, {
+                                    opacity: 0,
+                                    height: 0,
+                                    duration: 0.3,
+                                    ease: "power2.in",
+                                    delay: 0.1
+                                });
+                            }
+                        };
+
+                        // Add event listeners for desktop
+                        card.addEventListener('mouseenter', hoverEnter);
+                        card.addEventListener('mouseleave', hoverLeave);
+                    }
+                });
+            }
+
+            // Force ScrollTrigger to recalculate positions after Works section is set up
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 100);
+        };
+
+        // Wait for the Works section to initialize its ScrollTriggers first
+        setTimeout(initServicesAnimations, 1000);
 
         // STATS ANIMATIONS
         if (statisticCard && statisticCard.length > 0) {
