@@ -59,7 +59,7 @@ function LogoModel(){
     }
     
     const endState = {
-        scale: 1.2,
+        scale: 0.9,
         position: [-2, -2, 0] as [number, number, number], 
         rotation: [Math.PI/2, Math.PI * 4, 0] as [number, number, number]
     }

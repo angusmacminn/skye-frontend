@@ -183,7 +183,7 @@ function Services() {
                                         duration: 0.4,
                                         ease: "power2.inOut"
                                     });
-                                    console.log('showing list')
+                                    
                                 }
 
                                 // Then animate list items with stagger
@@ -197,7 +197,7 @@ function Services() {
                                         ease: "power2.inOut",
                                         delay: 0.2
                                     });
-                                    console.log('showing list items')
+                                    
                                 }
                             },
                             // onLeave: () => {
@@ -504,7 +504,6 @@ function Services() {
 
                 // Process step animations
                 if (processSteps && processSteps.length > 0) {
-
                     processSteps.forEach((step, index) => {
                         const stepElement = document.getElementById(`process-step-${index}`);
 
@@ -520,7 +519,7 @@ function Services() {
                                 trigger: stepElement,
                                 start: "top 90%",       // When element enters viewport
                                 end: "top 30%",        // When top of element hits 30% - earlier trigger
-                                markers: true,          // Keep this true to see what's happening
+                                markers: false,          // Keep this true to see what's happening
                                 onEnter: () => {
                                     
                                     gsap.to(stepElement, {
