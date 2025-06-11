@@ -175,19 +175,24 @@ body {
     border: 0px;
 }
 
-/* Prevent horizontal scroll on mobile for the entire page */
-html, body {
-    overflow-x: hidden;
-}
-
-/* Ensure the works section properly contains its horizontal scroll */
-#works-section {
+/* Target only the works grid container to prevent horizontal overflow */
+#works-grid-container {
     position: relative;
     overflow-x: hidden;
+    width: 100%;
 }
 
-#works-section-content {
-    overflow-x: hidden;
+/* Ensure the works section is properly positioned without affecting sticky elements */
+#works-section {
+    position: relative;
+    width: 100%;
+}
+
+/* Only prevent horizontal scroll on mobile devices specifically */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
 }
 
 

@@ -163,68 +163,70 @@ export default function Works() {
     if (error) return <p>Error loading works: {error.message}</p>;
 
     return (
-        <section id='works-section' className='overflow-x-hidden'>
+        <section id='works-section'>
             <div id='works-section-content'
-                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen overflow-x-hidden'>
+                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen relative'>
                 <h2 className='text-2xl text-skye-white mt-10'>
                     Selected Works
                 </h2>
 
-                <div id='works-grid'
-                    className='flex flex-row gap-8 w-full px-4 pb-4'
-                    style={{
-                        scrollbarWidth: 'none', // Firefox
-                        msOverflowStyle: 'none', // IE and Edge
-                    }}
-                >
-                    {workItems && workItems.map((workItem, index) => {
-                        const currentThumbnailUrl = workItem?.workAcf?.thumbnailImage?.node?.sourceUrl;
-                        const currentThumbnailAlt = workItem?.workAcf?.thumbnailImage?.node?.altText;
-                        const currentTitle = workItem?.title;
+                <div id='works-grid-container' className='w-full overflow-x-hidden'>
+                    <div id='works-grid'
+                        className='flex flex-row gap-8 w-full px-4 pb-4'
+                        style={{
+                            scrollbarWidth: 'none', // Firefox
+                            msOverflowStyle: 'none', // IE and Edge
+                        }}
+                    >
+                        {workItems && workItems.map((workItem, index) => {
+                            const currentThumbnailUrl = workItem?.workAcf?.thumbnailImage?.node?.sourceUrl;
+                            const currentThumbnailAlt = workItem?.workAcf?.thumbnailImage?.node?.altText;
+                            const currentTitle = workItem?.title;
 
-                        return (
-                            <div id='work-card'
-                                className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative"
-                                key={workItem?.slug || index}>
-                                <div id='work-card-content'
-                                    className='flex flex-col gap-4 relative z-10'>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        
-                                      <h3 className="text-2xl text-white">
-                                        {currentTitle || 'Untitled Work'}
-                                      </h3>
+                            return (
+                                <div id='work-card'
+                                    className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative"
+                                    key={workItem?.slug || index}>
+                                    <div id='work-card-content'
+                                        className='flex flex-col gap-4 relative z-10'>
+                                        <div className='flex flex-row justify-between items-center'>
+                                            
+                                          <h3 className="text-2xl text-white">
+                                            {currentTitle || 'Untitled Work'}
+                                          </h3>
 
-                                      <img 
-                                      src="/assets/icons/project-arrow.svg" 
-                                      alt='Project Arrow' 
-                                      className='w-4 h-4'
-                                      />
-                                    </div>
+                                          <img 
+                                          src="/assets/icons/project-arrow.svg" 
+                                          alt='Project Arrow' 
+                                          className='w-4 h-4'
+                                          />
+                                        </div>
 
-                                    <div id='work-categories'
-                                    className='flex flex-row gap-2'>
-                                        {workItem?.workCategories?.nodes?.map((category: WorkCategoryNode) => (
-                                            <p 
-                                            className='text-white border border-white bg-red-400 px-3.5 py-1 rounded-[40px] '
-                                            key={category.name}>{category.name}</p>
-                                        ))}
-                                    </div>
+                                        <div id='work-categories'
+                                        className='flex flex-row gap-2'>
+                                            {workItem?.workCategories?.nodes?.map((category: WorkCategoryNode) => (
+                                                <p 
+                                                className='text-white border border-white bg-red-400 px-3.5 py-1 rounded-[40px] '
+                                                key={category.name}>{category.name}</p>
+                                            ))}
+                                        </div>
 
-                                    <div id='work-thumbnail'
-                                        className='w-full h-full'>
-                                            {currentThumbnailUrl && (
-                                                <img className='rounded-bl-[40px] w-full object-cover'
-                                                    src={currentThumbnailUrl} 
-                                                    alt={currentThumbnailAlt || currentTitle || 'Work thumbnail'} 
-                                                />
-                                            )}
-                                        {!currentThumbnailUrl && <p>No thumbnail available.</p>}
+                                        <div id='work-thumbnail'
+                                            className='w-full h-full'>
+                                                {currentThumbnailUrl && (
+                                                    <img className='rounded-bl-[40px] w-full object-cover'
+                                                        src={currentThumbnailUrl} 
+                                                        alt={currentThumbnailAlt || currentTitle || 'Work thumbnail'} 
+                                                    />
+                                                )}
+                                            {!currentThumbnailUrl && <p>No thumbnail available.</p>}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                    {!workItems && !loading && <p>No works found.</p>}
+                            );
+                        })}
+                        {!workItems && !loading && <p>No works found.</p>}
+                    </div>
                 </div>
 
             </div>
