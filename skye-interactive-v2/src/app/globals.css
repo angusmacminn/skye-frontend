@@ -23,6 +23,7 @@ body {
   /* margin-left: 10px;
   margin-right: 10px; */
   overflow-x: hidden; /* Hide horizontal overflow globally */
+  position: relative;
 }
 
 /* GSAP Animation Initial States - Prevent Flash */
@@ -178,7 +179,9 @@ body {
 /* Target only the works grid container to prevent horizontal overflow */
 #works-grid-container {
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
+    contain: layout style paint;
+    isolation: isolate;
     width: 100%;
 }
 
@@ -186,6 +189,12 @@ body {
 #works-section {
     position: relative;
     width: 100%;
+    overflow: hidden;
+}
+
+#works-section-content {
+    width: 100%;
+    max-width: 100%;
 }
 
 /* Only prevent horizontal scroll on mobile devices specifically */
@@ -193,6 +202,11 @@ body {
     body {
         overflow-x: hidden;
     }
+}
+
+/* Prevent any horizontal overflow on the entire page */
+html {
+    overflow-x: hidden;
 }
 
 
