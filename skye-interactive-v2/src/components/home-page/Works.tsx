@@ -110,22 +110,20 @@ export default function Works() {
             const horizontalScroll = gsap.to(worksGrid, {
                 x: -scrollDistance,
                 ease: "none",
-                duration: 1,
-                force3D: true, // Use GPU acceleration
-                willChange: "transform" // Optimize for transforms
+                duration: 1
             });
 
-            // Create ScrollTrigger with better containment
+            // Create ScrollTrigger
             ScrollTrigger.create({
                 trigger: worksSection,
                 start: "top top",
-                end: `+=${scrollDistance * 2}`,
+                end: `+=${scrollDistance * 2}`, // Adjust multiplier to control scroll speed
                 pin: true,
-                scrub: 1,
+                scrub: 1, // Smooth scrubbing
                 animation: horizontalScroll,
-                markers: false,
-                invalidateOnRefresh: true, // Recalculate on resize
-                refreshPriority: -1 // Lower priority to prevent conflicts
+                markers: false, // Remove this in production
+                onUpdate: () => {
+                }
             });
         };
 
@@ -172,9 +170,7 @@ export default function Works() {
                     Selected Works
                 </h2>
 
-                <div id='works-grid-container' 
-                     className='w-full overflow-hidden relative'
-                     style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+                <div id='works-grid-container' className='w-full overflow-x-hidden'>
                     <div id='works-grid'
                         className='flex flex-row gap-8 w-full px-4 pb-4'
                         style={{
