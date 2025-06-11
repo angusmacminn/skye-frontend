@@ -175,6 +175,21 @@ body {
     border: 0px;
 }
 
+/* Prevent horizontal scroll on mobile for the entire page */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Ensure the works section properly contains its horizontal scroll */
+#works-section {
+    position: relative;
+    overflow-x: hidden;
+}
+
+#works-section-content {
+    overflow-x: hidden;
+}
+
 
 
 

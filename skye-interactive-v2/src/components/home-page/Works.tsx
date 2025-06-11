@@ -163,9 +163,9 @@ export default function Works() {
     if (error) return <p>Error loading works: {error.message}</p>;
 
     return (
-        <section id='works-section'>
+        <section id='works-section' className='overflow-x-hidden'>
             <div id='works-section-content'
-                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen'>
+                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen overflow-x-hidden'>
                 <h2 className='text-2xl text-skye-white mt-10'>
                     Selected Works
                 </h2>
