@@ -5,9 +5,8 @@ import DesktopNav from "./DesktopNav";
 
 function Header() {
     return (
-        <div 
-            className="z-50 bg-transparent"
-            style={{ position: 'sticky', top: '1.25rem '}}
+        <header 
+            className="z-50 bg-transparent sticky top-[1.25rem] md:top-0"
         >
             {/* Always render both, let CSS handle visibility */}
             <div className="md:hidden">
@@ -16,7 +15,7 @@ function Header() {
             <div className="hidden md:block">
                 <DesktopNav />
             </div>
-        </div>
+        </header>
     )
 }
 

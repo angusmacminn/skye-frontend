@@ -27,7 +27,7 @@ function LogoIcon() {
 function DesktopNav() {
     return (
         <div className='desktop-nav'>
-            <div className='desktop-nav-container container px-4 py-8 flex flex-row justify-between items-center'>
+            <div className='desktop-nav-container px-4 py-8 flex flex-row justify-between items-center text-white w-full'>
                 <nav className='desktop-nav-logo'>
                     <Link href='/'>
                         <LogoIcon />
@@ -35,10 +35,9 @@ function DesktopNav() {
                 </nav>
                 <div className='desktop-nav-links
                                 flex flex-row gap-4'>
-                    <Link href='/'>Home</Link>
-                    <Link href='/studio'>Studio</Link>
-                    <Link href='/works'>Works</Link>
-                    <Link href='/contact'>Contact</Link>
+                    <Link className='desktop-nav-link' href='/studio'>Studio</Link>
+                    <Link className='desktop-nav-link' href='/works'>Works</Link>
+                    <Link className='desktop-nav-link' href='/contact'>Contact</Link>
                 </div>
             </div>
         </div>

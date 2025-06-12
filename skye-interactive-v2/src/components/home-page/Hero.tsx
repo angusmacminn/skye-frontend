@@ -331,7 +331,7 @@ export default function Hero() {
                 <div id='hero'
                      className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
                     {acfData && 
-                        <h1 className='text-left text-5xl text-skye-gray'>
+                        <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
                             <div className='flex flex-col gap-4'>
                                 <div id='hero-text-1' className='hero-text-initial-hidden'>
                                     {h1TextBeforeHighLight}
