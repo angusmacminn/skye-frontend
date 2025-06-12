@@ -80,6 +80,7 @@ function MobileNav2() {
         }
     }, []);
 
+    // Mobile menu animation
     useEffect(() => {
         if (mobileMenuButtonRef.current && expandingBgRef.current && menuPanelRef.current && navLinksRef.current) {
             if (isMobileMenuOpen) {
@@ -179,6 +180,7 @@ function MobileNav2() {
         }
     }, [isMobileMenuOpen]);
 
+    // Logo animation on click
     useEffect(() => {
         if (isMobileMenuOpen) {
             gsap.to('.logo-rect', {

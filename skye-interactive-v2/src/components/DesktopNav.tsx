@@ -1,4 +1,6 @@
 import Link from "next/link";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 
 
@@ -25,20 +27,67 @@ function LogoIcon() {
 }
 
 function DesktopNav() {
+    const logoRef = useRef<HTMLDivElement>(null);
+    const navLinksRef = useRef(null);
+
+    useEffect(() => {
+        const logoElement = logoRef.current;
+        if (!logoElement) return;
+
+        // Debug: Check if elements are found
+        console.log('Logo element:', logoElement);
+        console.log('Logo rects found:', logoElement.querySelectorAll('.logo-rect'));
+
+        const handleMouseEnter = () => {
+            const rects = logoElement.querySelectorAll('.logo-rect');
+            console.log('Animating rects:', rects.length);
+            
+            gsap.to(rects, {
+                scale: 1.1,
+                rotation: 90,
+                transformOrigin: "center center",
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.out",
+            });
+        };
+    
+        const handleMouseLeave = () => {
+            gsap.to(logoElement.querySelectorAll('.logo-rect'), {
+                scale: 1,
+                rotation: 0,
+                duration: 0.3,
+                stagger: 0.02,
+                ease: "power2.out",
+            });
+        };
+
+        // event listeners
+        logoElement.addEventListener("mouseenter", handleMouseEnter);
+        logoElement.addEventListener("mouseleave", handleMouseLeave);
+
+        console.log(handleMouseEnter);
+        // Cleanup
+        return () => {
+            logoElement.removeEventListener("mouseenter", handleMouseEnter);
+            logoElement.removeEventListener("mouseleave", handleMouseLeave);
+        };
+    }, []);
+
     return (
         <div className='desktop-nav'>
             <div className='desktop-nav-container px-4 py-8 flex flex-row justify-between items-center text-white w-full'>
-                <nav className='desktop-nav-logo'>
+                <div className='desktop-nav-logo' ref={logoRef} style={{ cursor: 'pointer' }}>
                     <Link href='/'>
                         <LogoIcon />
                     </Link>
-                </nav>
-                <div className='desktop-nav-links
+                </div>
+                <nav className='desktop-nav-links
                                 flex flex-row gap-4'>
                     <Link className='desktop-nav-link' href='/studio'>Studio</Link>
                     <Link className='desktop-nav-link' href='/works'>Works</Link>
                     <Link className='desktop-nav-link' href='/contact'>Contact</Link>
-                </div>
+                </nav>
             </div>
         </div>
     )
