@@ -230,7 +230,7 @@ export default function Hero() {
                     trigger: card,
                     start: "top 50%",
                     end: "bottom 20%",
-                    markers: false,
+                    markers: true,
                     onEnter: (self) => {
                         console.log(`Animating card ${index}`);
                         
@@ -349,12 +349,12 @@ export default function Hero() {
             </section>
     
             <section id='about-section' className='ml-[10px] mr-[10px] border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px]'>
-                <div className='flex flex-col items-center justify-center gap-24 py-8'>
+                <div className='flex flex-col items-center justify-center py-8 divide-y-2 divide-skye-gray-light'>
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
                             key={index}
-                            className='about-card about-card-initial-hidden p-[4px] rounded-bl-[40px] rounded-br-[40px] w-full max-w-md'>
-                            <div className='rounded-bl-[38px] rounded-br-[38px] p-4 flex flex-col justify-center gap-4'>
+                            className='about-card w-full max-w-md p-[4px] py-12 md:max-w-xl'>
+                            <div className='p-4 flex flex-col justify-center gap-4'>
                                 <div className='flex justify-between'>
                                     <h2 className='card-heading text-lg text-skye-white'>
                                         {item.aboutCardHeading}

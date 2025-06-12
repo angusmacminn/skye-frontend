@@ -33,33 +33,32 @@ function DesktopNav() {
     useEffect(() => {
         const logoElement = logoRef.current;
         if (!logoElement) return;
-
-        // Debug: Check if elements are found
-        console.log('Logo element:', logoElement);
-        console.log('Logo rects found:', logoElement.querySelectorAll('.logo-rect'));
-
+        
         const handleMouseEnter = () => {
             const rects = logoElement.querySelectorAll('.logo-rect');
-            console.log('Animating rects:', rects.length);
             
             gsap.to(rects, {
-                scale: 1.1,
-                rotation: 90,
-                transformOrigin: "center center",
-                duration: 0.4,
-                stagger: 0.05,
-                ease: "power2.out",
+                x: () => gsap.utils.random(-10, 10),
+                y: () => gsap.utils.random(-10, 10),
+                rotation: () => gsap.utils.random(-30, 30),
+                duration: 0.2,
+                stagger: 0.03,
             });
+
+           
         };
     
         const handleMouseLeave = () => {
             gsap.to(logoElement.querySelectorAll('.logo-rect'), {
-                scale: 1,
+                x: 0,
+                y: 0,
                 rotation: 0,
-                duration: 0.3,
-                stagger: 0.02,
-                ease: "power2.out",
+                duration: 0.2,
+                stagger: 0.05,
             });
+
+          
+            
         };
 
         // event listeners
