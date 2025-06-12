@@ -28,12 +28,11 @@ function LogoIcon() {
 
 function DesktopNav() {
     const logoRef = useRef<HTMLDivElement>(null);
-    const navLinksRef = useRef(null);
 
     useEffect(() => {
         const logoElement = logoRef.current;
         if (!logoElement) return;
-        
+
         const handleMouseEnter = () => {
             const rects = logoElement.querySelectorAll('.logo-rect');
             
