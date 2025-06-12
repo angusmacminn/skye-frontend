@@ -85,75 +85,74 @@ export default function Works() {
 
         const worksSection = document.getElementById('works-section');
         const worksGrid = document.getElementById('works-grid');
+        const worksGridContainer = document.getElementById('works-grid-container');
 
-        if (!worksSection || !worksGrid) return;
+        if (!worksSection || !worksGrid || !worksGridContainer) return;
 
-        // Wait for images to load and then calculate widths
-        const initHorizontalScroll = () => {
-            // Get all work cards
-            const workCards = worksGrid.querySelectorAll('#work-card');
-            
-            if (workCards.length === 0) return;
+        // Use GSAP's matchMedia for responsive animations
+        const mm = gsap.matchMedia();
 
-            // Calculate total scroll distance
-            // Get the width of container and total content width
-            const containerWidth = worksGrid.offsetWidth;
-            const totalContentWidth = Array.from(workCards).reduce((total, card) => {
-                return total + (card as HTMLElement).offsetWidth + 32; // +32 for gap
-            }, 0);
-            
-            const scrollDistance = totalContentWidth - containerWidth;
-            
-          
+        // Setup for smaller screens (horizontal scroll)
+        mm.add("(max-width: 768px)", () => {
+            // This code will only run on screens smaller than 1024px
+            const initHorizontalScroll = () => {
+                // Ensure content actually overflows before creating the animation
+                const scrollDistance = worksGrid.scrollWidth - worksGridContainer.offsetWidth;
 
-            // Create the horizontal scroll animation
-            const horizontalScroll = gsap.to(worksGrid, {
-                x: -scrollDistance,
-                ease: "none",
-                duration: 1
-            });
-
-            // Create ScrollTrigger
-            ScrollTrigger.create({
-                trigger: worksSection,
-                start: "top top",
-                end: `+=${scrollDistance * 2}`, // Adjust multiplier to control scroll speed
-                pin: true,
-                scrub: 1, // Smooth scrubbing
-                animation: horizontalScroll,
-                markers: false, // Remove this in production
-                onUpdate: () => {
+                if (scrollDistance <= 0) {
+                    return; // Content fits, no scroll needed
                 }
-            });
-        };
 
-        // Wait for images to load before calculating
-        const images = worksGrid.querySelectorAll('img');
-        if (images.length > 0) {
-            let loadedImages = 0;
-            const totalImages = images.length;
+                const horizontalScroll = gsap.to(worksGrid, {
+                    x: -scrollDistance,
+                    ease: "none",
+                });
 
-            const onImageLoad = () => {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                    setTimeout(initHorizontalScroll, 100); // Small delay to ensure layout is complete
-                }
+                ScrollTrigger.create({
+                    trigger: worksSection,
+                    start: "top top",
+                    end: () => `+=${scrollDistance}`, // Scroll for the exact overflow amount
+                    pin: true,
+                    scrub: 1,
+                    animation: horizontalScroll,
+                    invalidateOnRefresh: true, // Recalculate on viewport resize
+                });
             };
 
-            images.forEach(img => {
-                if (img.complete) {
-                    onImageLoad();
-                } else {
-                    img.addEventListener('load', onImageLoad);
-                }
-            });
-        } else {
-            // No images, init immediately
-            setTimeout(initHorizontalScroll, 100);
-        }
+            const images = worksGrid.querySelectorAll('img');
+            if (images.length > 0) {
+                let loadedImages = 0;
+                const totalImages = images.length;
 
+                const onImageLoad = () => {
+                    loadedImages++;
+                    if (loadedImages === totalImages) {
+                        setTimeout(initHorizontalScroll, 100);
+                    }
+                };
+
+                images.forEach(img => {
+                    if (img.complete) {
+                        onImageLoad();
+                    } else {
+                        img.addEventListener('load', onImageLoad);
+                    }
+                });
+            } else {
+                setTimeout(initHorizontalScroll, 100);
+            }
+
+            // Cleanup function for this media query
+            return () => {
+                ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+                gsap.set(worksGrid, { clearProps: "x" }); // Reset GSAP inline styles
+            };
+        });
+
+        // For larger screens, we do nothing here, letting CSS handle the layout.
+        // The cleanup function will be called when the component unmounts
         return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            mm.revert();
         };
 
     }, [workItems]);
@@ -165,14 +164,14 @@ export default function Works() {
     return (
         <section id='works-section'>
             <div id='works-section-content'
-                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray h-screen relative'>
+                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray min-h-screen md:h-auto md:py-24 relative'>
                 <h2 className='text-2xl text-skye-white mt-10'>
                     Selected Works
                 </h2>
 
                 <div id='works-grid-container' className='w-full overflow-x-hidden'>
                     <div id='works-grid'
-                        className='flex flex-row gap-8 w-full px-4 pb-4'
+                        className='flex flex-row md:flex-wrap md:justify-center gap-8 w-full px-4 pb-4'
                         style={{
                             scrollbarWidth: 'none', // Firefox
                             msOverflowStyle: 'none', // IE and Edge
@@ -184,7 +183,7 @@ export default function Works() {
                             const currentTitle = workItem?.title;
 
                             return (
-                                <div id='work-card'
+                                <div
                                     className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative"
                                     key={workItem?.slug || index}>
                                     <div id='work-card-content'
