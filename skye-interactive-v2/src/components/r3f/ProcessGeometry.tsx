@@ -6,8 +6,6 @@ import * as THREE from "three"
 import { useGLTF } from "@react-three/drei"
 import { lerp } from "three/src/math/MathUtils.js"
 
-
-
 function useScrollProgress () {
     const [progress, setProgress] = useState(0)
 
@@ -87,33 +85,33 @@ function LogoModel(){
         )
 }
 
-
-
-
 // main r3f component
 function ThreeScene() {
+    
 
     return (
         <div 
-        id="three-scene"
-        className="w-full h-96 relative sticky top-20 ">
-            <Canvas
-                camera={{
-                    position: [0, 0, 6],
-                    fov: 75,
-                }}
-            >
-                {/* Enhanced lighting */}
-                <ambientLight intensity={0.4} />
-                <directionalLight 
-                    position={[10, 10, 5]} 
-                    intensity={0.8}
-                />
-                <pointLight position={[-10, -10, -5]} intensity={0.3} />
-
-                <LogoModel />
-            </Canvas>
+        id="process-three-scene"
+        className="w-full h-96 relative sticky top-20"
+        style={{ width: '800px', height: '600px' }}
+        >
             
+                <Canvas
+                    camera={{
+                        position: [0, 0, 6],
+                        fov: 75,
+                    }}
+                >
+                    {/* Enhanced lighting */}
+                    <ambientLight intensity={0.4} />
+                    <directionalLight 
+                        position={[10, 10, 5]} 
+                        intensity={0.8}
+                    />
+                    <pointLight position={[-10, -10, -5]} intensity={0.3} />
+
+                    <LogoModel />
+                </Canvas>
             
         </div>
     )

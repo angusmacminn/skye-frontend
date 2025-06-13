@@ -23,8 +23,6 @@ body {
   /* margin-left: 10px;
   margin-right: 10px; */
   overflow-x: hidden; /* Hide horizontal overflow globally */
-  max-width: 1500px;
-  margin: 0 auto;
 }
 
 /* GSAP Animation Initial States - Prevent Flash */

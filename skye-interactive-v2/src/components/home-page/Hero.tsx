@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useEffect } from 'react';
+import AsciiLogo from '../r3f/AsciiLogo'
 
 
 
@@ -109,18 +110,16 @@ export default function Hero() {
                 console.log('Hero elements not found:', { hero, heroText1, heroText2, heroText3, heroText4 });
                 return;
             }
-
-            // No need to remove classes - GSAP inline styles will override CSS classes
+            // create timeline
             const tl = gsap.timeline()
 
-            // GSAP will override the CSS classes with inline styles
+            // set hero to invisible and small
             gsap.set(hero, {
                 opacity: 0,
-                scaleX: 0.2,
-                scaleY: 0.2,
+                scaleX: 0.05,
+                scaleY: 0.05,
                 y: 0,
             })
-
             // set text to invisible
             gsap.set(heroText1, {
                 opacity: 0,
@@ -145,14 +144,14 @@ export default function Hero() {
                 // stage 1: fade in with small scale
                 .to(hero, {
                     opacity: 1,
-                    duration: 0.8,
-                    ease: 'power2.out',
+                    duration: 1,
+                    ease: 'power3.out',                    
                 })
                 // stage 2: grow horizontally first
                 .to(hero, {
                     scaleX: 1,
                     duration: 0.6,
-                    ease: 'power2.out',
+                    ease: 'power3.out',
                 }, "-=0.1")
                 // stage 3: then grow vertically
                 .to(hero, {
@@ -160,13 +159,23 @@ export default function Hero() {
                     duration: 0.7,
                     ease: 'power2.out',
                 }, "-=0.2")
+
+                // change border radius
+                .to(hero, {
+                    borderTopLeftRadius: '40px',
+                    borderBottomRightRadius: '40px',
+                    duration: 0.6,
+                    ease: 'power2.out',
+                }, "-=0.1")
+
+                
                 // stage 4: fade in text
                 .to(heroText1, {
                     opacity: 1,
                     y: 0,
                     duration: 0.4,
-                    ease: 'power2.out',
-                })
+                    ease: 'power2.out',    
+                },)
                 .to(heroText2, {
                     opacity: 1,
                     y: 0,
@@ -230,7 +239,7 @@ export default function Hero() {
                     trigger: card,
                     start: "top 50%",
                     end: "bottom 20%",
-                    markers: true,
+                    markers: false,
                     onEnter: (self) => {
                         console.log(`Animating card ${index}`);
                         
@@ -326,10 +335,10 @@ export default function Hero() {
 
     return (
         <>
-            <section id='hero-section'
-                     className='ml-[10px] mr-[10px] py-[10px] h-[100vh]'>
+            <section id='hero-section '
+                     className='ml-[10px] mr-[10px] py-[10px] max-w-screen-2xl mx-auto'>
                 <div id='hero'
-                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 rounded-tl-[40px] rounded-br-[40px] bg-red-400'>
+                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400'>
                     {acfData && 
                         <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
                             <div className='flex flex-col gap-4'>
@@ -347,6 +356,7 @@ export default function Hero() {
                     }
                 </div>
             </section>
+
     
             <section id='about-section' className='ml-[10px] mr-[10px] border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px]'>
                 <div className='flex flex-col items-center justify-center py-8 divide-y-2 divide-skye-gray-light'>

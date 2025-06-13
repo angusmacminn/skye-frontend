@@ -74,7 +74,7 @@ function DesktopNav() {
 
     return (
         <div className='desktop-nav'>
-            <div className='desktop-nav-container px-4 py-8 flex flex-row justify-between items-center text-white w-full'>
+            <div className='desktop-nav-container px-4 py-8 flex flex-row justify-between items-center text-skye-gray-light w-full'>
                 <div className='desktop-nav-logo' ref={logoRef} style={{ cursor: 'pointer' }}>
                     <Link href='/'>
                         <LogoIcon />
@@ -82,9 +82,9 @@ function DesktopNav() {
                 </div>
                 <nav className='desktop-nav-links
                                 flex flex-row gap-4'>
-                    <Link className='desktop-nav-link' href='/studio'>Studio</Link>
-                    <Link className='desktop-nav-link' href='/works'>Works</Link>
-                    <Link className='desktop-nav-link' href='/contact'>Contact</Link>
+                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/works'>Works</Link>
+                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/studio'>Studio</Link>
+                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/contact'>Contact</Link>
                 </nav>
             </div>
         </div>
