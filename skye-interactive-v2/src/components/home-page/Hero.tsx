@@ -336,9 +336,9 @@ export default function Hero() {
     return (
         <>
             <section id='hero-section '
-                     className='ml-[10px] mr-[10px] py-[10px] max-w-screen-2xl mx-auto'>
+                     className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
                 <div id='hero'
-                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400'>
+                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400 md: ml-[10px] mr-[10px]'>
                     {acfData && 
                         <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
                             <div className='flex flex-col gap-4'>
