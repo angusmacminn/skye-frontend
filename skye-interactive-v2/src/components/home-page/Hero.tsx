@@ -358,8 +358,8 @@ export default function Hero() {
             </section>
 
     
-            <section id='about-section' className='ml-[10px] mr-[10px] border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px]'>
-                <div className='flex flex-col items-center justify-center py-8 divide-y-2 divide-skye-gray-light'>
+            <section id='about-section' className=' border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px] md:max-w-screen-2xl md:mx-auto'>
+                <div className='flex flex-col items-center justify-center py-8 divide-y-2 divide-skye-gray-light md:max-w-screen-2xl md:mx-auto'>
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
                             key={index}

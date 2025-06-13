@@ -106,13 +106,15 @@ function Services() {
     const processHeading = acfData?.processHeading
     const processSteps = acfData?.processSteps
 
-    // NOW the useEffect can reference serviceCard
     // SERVICES ANIMATIONS
     useEffect(() => {
         if (!serviceCard || serviceCard.length === 0) return;
 
         // Copy the ref value to a variable at the start of the effect
         const currentServiceCards = serviceCardsRef.current;
+        
+        // Store event listeners for proper cleanup
+        const eventListeners = new Map();
 
         // Check if device is mobile
         const isMobile = () => {
@@ -183,7 +185,6 @@ function Services() {
                                         duration: 0.4,
                                         ease: "power2.inOut"
                                     });
-                                    
                                 }
 
                                 // Then animate list items with stagger
@@ -197,32 +198,8 @@ function Services() {
                                         ease: "power2.inOut",
                                         delay: 0.2
                                     });
-                                    
                                 }
                             },
-                            // onLeave: () => {
-                            //     // Optional: Hide when scrolling past (comment out if you want lists to stay visible)
-                            //     if (listItems.length > 0) {
-                            //         gsap.to(listItems, {
-                            //             opacity: 0,
-                            //             y: -10,
-                            //             scale: 0.9,
-                            //             duration: 0.3,
-                            //             stagger: 0.02,
-                            //             ease: "power2.in"
-                            //         });
-                            //     }
-
-                            //     if (serviceList) {
-                            //         gsap.to(serviceList, {
-                            //             opacity: 0,
-                            //             height: 0,
-                            //             duration: 0.3,
-                            //             ease: "power2.in",
-                            //             delay: 0.1
-                            //         });
-                            //     }
-                            // }
                         });
                     } else {
                         // DESKTOP: Use hover animations
@@ -260,7 +237,7 @@ function Services() {
                                     opacity: 1,
                                     y: 0,
                                     scale: 1,
-                                    duration: 0.1,
+                                    duration: 0.3,
                                     stagger: 0.1,
                                     ease: "power2.inOut",
                                     delay: 0.2
@@ -310,6 +287,9 @@ function Services() {
                             }
                         };
 
+                        // Store event listeners for proper cleanup
+                        eventListeners.set(card, { hoverEnter, hoverLeave });
+                        
                         // Add event listeners for desktop
                         card.addEventListener('mouseenter', hoverEnter);
                         card.addEventListener('mouseleave', hoverLeave);
@@ -571,14 +551,16 @@ function Services() {
             }, 500);
         }
 
-        // Cleanup function - use the copied variable instead of the ref
+        // Cleanup function - properly remove event listeners
         return () => {
             currentServiceCards.forEach((card) => {
-                if (card) {
-                    card.removeEventListener('mouseenter', () => {});
-                    card.removeEventListener('mouseleave', () => {});
+                if (card && eventListeners.has(card)) {
+                    const { hoverEnter, hoverLeave } = eventListeners.get(card);
+                    card.removeEventListener('mouseenter', hoverEnter);
+                    card.removeEventListener('mouseleave', hoverLeave);
                 }
             });
+            eventListeners.clear();
         };
 
     }, [serviceCard, statisticCard]); // Updated dependency array
@@ -614,31 +596,34 @@ function Services() {
             <section id='services-section'
                      className='bg-black py-16'>
                 <div id='services-container'
-                className='flex flex-col items-center gap-4 w-full max-w-lg mx-auto px-[20px]'>
+                     className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-[20px]'>
                     <h2 className='text-center text-4xl text-white'>{servicesHeading}</h2>
-                    {serviceCard?.map((card, index) => (
-                        <div 
-                            key={index}
-                            ref={(el) => {
-                                if (el) {
-                                    serviceCardsRef.current[index] = el;
-                                }
-                            }}
-                             id='service-card'
-                            className='service-card flex flex-col items-center w-full gap-4 border-red-400 border-r-2 p-8 min-h-[300px] bg-black  rounded-br-[0px] hover:border-r-0'
-                        >
-                            <div className='flex flex-col items-start w-full gap-2'>
-                            <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
-                                <ul className='service-list flex flex-col items-start w-full gap-2 opacity-0 overflow-hidden'>
-                                    {card.serviceList?.map((item, itemIndex) => (
-                                        <li key={itemIndex} className='service-item text-left text-white'>
-                                            {item.serviceItem}
-                                        </li>
-                                    ))}
-                                </ul>
+                    
+                    <div className='flex flex-col md:flex-row items-center md:items-stretch gap-4 w-full'>
+                        {serviceCard?.map((card, index) => (
+                            <div 
+                                key={index}
+                                ref={(el) => {
+                                    if (el) {
+                                        serviceCardsRef.current[index] = el;
+                                    }
+                                }}
+                                id='service-card'
+                                className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 border-r-2 p-8 min-h-[300px] bg-black rounded-br-[0px] hover:border-r-0'
+                            >
+                                <div className='flex flex-col items-start w-full gap-2'>
+                                <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
+                                    <ul className='service-list flex flex-col items-start w-full gap-2 opacity-0 overflow-hidden'>
+                                        {card.serviceList?.map((item, itemIndex) => (
+                                            <li key={itemIndex} className='service-item text-left text-white'>
+                                                {item.serviceItem}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </section>
 
