@@ -242,7 +242,7 @@ function Services() {
                     // Create the scroll-jacked animation
                     ScrollTrigger.create({
                         trigger: statisticsSection,
-                        start: "bottom bottom", // When bottom of stats section hits bottom of viewport
+                        start: "bottom 50%", // When bottom of stats section hits bottom of viewport
                         end: "bottom top",      // Until bottom of stats section hits top of viewport
                         pin: true,              // Pin the statistics section
                         pinSpacing: false,      // Don't add extra spacing
@@ -258,7 +258,22 @@ function Services() {
                                 ease: "none",
                             })
                         },
-                        
+                        onEnter: () => {
+                            // Change body background to black when pinning starts
+                            document.body.style.backgroundColor = '#000000';
+                        },
+                        onLeave: () => {
+                            // Restore original body background when pinning ends
+                            document.body.style.backgroundColor = 'var(--background)';
+                        },
+                        onEnterBack: () => {
+                            // Change body background to black when scrolling back
+                            document.body.style.backgroundColor = '#000000';
+                        },
+                        onLeaveBack: () => {
+                            // Restore original body background when leaving back
+                            document.body.style.backgroundColor = 'var(--background)';
+                        }
                     })
                 }
 
@@ -336,6 +351,12 @@ function Services() {
         'bg-gradient-to-b from-red-600 to-red-400' // Card 3
     ]
 
+    const cardGradientsDesktop = [
+        'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
+        'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
+        'bg-gradient-to-r from-red-600 to-red-400' // Card 3
+    ]
+
     // Move the conditional returns after all hooks
     if (loading) return null;
     if (error) {
@@ -353,18 +374,22 @@ function Services() {
             <ServiceCards />
 
             <section id='statistics-section'
-                     className='bg-black py-16'>
+                     className='bg-black py-24 relative'>
+                {/* Full viewport background to prevent gray showing */}
+                <div className='absolute inset-0 bg-black w-full h-screen'></div>
                 <div id='statistics-container'
-                className='flex flex-col items-center gap-4 w-full max-w-lg mx-auto px-4'>
+                className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
                     <h2 className='stats-heading text-center text-4xl text-white mb-8'>{statsHeading}</h2>
-                    {statisticCard?.map((card, index) => (
-                        <div key={index}
-                             id='statistic-card'
-                             className={`flex flex-col items-left justify-center w-full gap-4 p-8 min-h-[300px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'}`}>
-                            <h3 className='stat-category text-left text-2xl text-white'>{card.statCategory}</h3>
-                            <p className='stat-number text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
-                        </div>
-                    ))}
+                    <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-6'>
+                        {statisticCard?.map((card, index) => (
+                            <div key={index}
+                                 id='statistic-card'
+                                 className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'} md:${cardGradientsDesktop[index] || 'bg-gray-500'} `}>
+                                <h3 className='stat-category text-left text-2xl text-white'>{card.statCategory}</h3>
+                                <p className='stat-number text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
     

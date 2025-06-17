@@ -213,26 +213,35 @@ function ServiceCards() {
 
         /**
        * Calculates which edge of an element the mouse is closest to.
-       * @param {MouseEvent} e The mouse event.
-       * @param {HTMLElement} element The element being interacted with.
-       * @returns {number} 0 for top, 1 for right, 2 for bottom, 3 for left.
+       * @param {MouseEvent} e The mouse event containing cursor coordinates
+       * @param {HTMLElement} element The card element we're hovering over
+       * @returns {number} Direction code: 0=top, 1=right, 2=bottom, 3=left
        */
-  
+        
+        // directional hover effect
         const getDirection = (e: MouseEvent, element: HTMLElement): number => {
+          
+          // Calculate mouse position RELATIVE to the element (not the viewport)
+          // e.clientX/Y gives viewport coordinates, rect.left/top gives element position
           const rect = element.getBoundingClientRect()
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-    
+          const x = e.clientX - rect.left; // mouse x position inside the element
+          const y = e.clientY - rect.top; // mouse y position inside the element
+            
+          // get element dimensions
           const w = element.offsetWidth;
           const h = element.offsetHeight;
-    
-          const top = y;
-          const bottom = h - y;
-          const left = x;
-          const right = w - x;
+          
+          // calculate distance from mouse to each edge
+          // these represent how far the mouse is from each edge
+          const top = y;           // Distance from top edge
+          const bottom = h - y;    // Distance from bottom edge  
+          const left = x;          // Distance from left edge
+          const right = w - x;     // Distance from right edge
   
+          // Find the smallest distance - this tells us which edge is closest
           const min = Math.min(top, bottom, left, right);
   
+           // Return direction code based on which edge had the minimum distance
           switch(min){
             case top: return 0; // Top
             case right: return 1; // right
@@ -242,36 +251,42 @@ function ServiceCards() {
           }
         }
   
-        // Wait for DOM to be ready and use a longer delay
+        // Initialize the directional hover effect for all service cards
         const initDirectionalHover = () => {
-            console.log('Initializing directional hover effect'); // Debug log
             
             const cards = document.querySelectorAll('.service-card')
-            console.log('Found cards:', cards.length); // Debug log
             
-            // ✅ Store handlers so cleanup can access them
+            // Store handlers so cleanup can access them
             const cardHandlers = new Map();
       
+            // setup effect for each card
             cards.forEach((card, index) => {
+              // find empty div for animated fill
               const fill = card.querySelector('.animated-fill') as HTMLElement;
-              console.log(`Card ${index} fill element:`, fill); // Debug log
               
-              // Skip if fill element doesn't exist
+              // Skip if fill element doesn't exist (safety check)
               if (!fill) {
                 console.log(`No fill element found for card ${index}`);
                 return;
               }
 
-              // Set initial styles to ensure the fill is properly positioned
+              /**
+              * SETUP PHASE: Configure the fill element's initial styles
+              * The fill element needs to be absolutely positioned and cover the entire card
+              * Initially positioned OUTSIDE the card (translateY(-100%)) so it's invisible*/
               fill.style.position = 'absolute';
               fill.style.top = '0';
               fill.style.left = '0';
               fill.style.width = '100%';
               fill.style.height = '100%';
-              fill.style.backgroundColor = '#EF4444'; // Use direct color instead of CSS variable
+              fill.style.backgroundColor = '#EF4444'; 
               fill.style.zIndex = '1';
               fill.style.transform = 'translateY(-100%)';
         
+              /**
+                 * MOUSE ENTER HANDLER: Animates fill sliding IN from entry direction
+                 * This is where the magic happens!
+                 */
               const handleMouseEnter = (e: MouseEvent) => {
                 console.log('Mouse enter on card', index); // Debug log
                 const direction = getDirection(e, card as HTMLElement)
@@ -280,25 +295,32 @@ function ServiceCards() {
                 // remove transition to instantly position fill
                 fill.style.transition = 'none'
       
-                // position fill based on entry direction
-                switch(direction) {
-                  case 0: //top
-                    fill.style.transform = 'translateY(-100%)';
-                    break;
-      
-                  case 1: // right
-                    fill.style.transform = 'translateX(100%)'
-                    break;
-            
-                  case 2: // Bottom
-                    fill.style.transform = 'translateY(100%)';
-                    break;
-      
-                  case 3: // Left
-                    fill.style.transform = 'translateX(-100%)';
-                    break;
+                  /**
+                     * POSITIONING PHASE: Place fill element outside the card 
+                     * based on entry direction so it can slide in
+                     */
+                  switch(direction) {
+                    case 0: // Entered from TOP - position fill above the card
+                        fill.style.transform = 'translateY(-100%)';
+                        break;
+  
+                    case 1: // Entered from RIGHT - position fill to the right
+                        fill.style.transform = 'translateX(100%)'
+                        break;
+        
+                    case 2: // Entered from BOTTOM - position fill below the card
+                        fill.style.transform = 'translateY(100%)';
+                        break;
+  
+                    case 3: // Entered from LEFT - position fill to the left
+                        fill.style.transform = 'translateX(-100%)';
+                        break;
                 }
-                // animate to center
+                /**
+                     * ANIMATION PHASE: Slide the fill INTO the card
+                     * Use requestAnimationFrame to ensure the positioning happens first
+                     * then animate smoothly to cover the entire card
+                     */
                 requestAnimationFrame(() => {
                   fill.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
                   fill.style.transform = 'translate(0,0)'
@@ -347,7 +369,7 @@ function ServiceCards() {
             (window as any).directionalHoverHandlers = cardHandlers;
         }, 1500); // Increased delay
   
-        // ✅ Fixed cleanup function
+        // CLEANUP: Remove event listeners when component unmounts
         return () => {
           clearTimeout(timer);
           const cardHandlers = (window as any).directionalHoverHandlers;
