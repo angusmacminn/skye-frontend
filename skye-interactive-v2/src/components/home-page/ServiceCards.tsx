@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import './ServiceCards.css'
 
 const GET_SERVICES_DATA = gql`
     query GetServicesData ($id: ID!, $idType: PageIdType!) {
@@ -107,7 +108,6 @@ function ServiceCards() {
                 if (isMobile()) {
                     currentServiceCards.forEach((card) => {
                         if (!card) return;
-
                         const listItems = card.querySelectorAll('.service-item');
                         const serviceList = card.querySelector('.service-list');
 
@@ -119,6 +119,10 @@ function ServiceCards() {
                                 overflow: "hidden"
                             });
                         }
+
+                        gsap.set(card, {
+                            backgroundColor: "#000",
+                        })
 
                         if (listItems.length > 0) {
                             gsap.set(listItems, {
@@ -140,10 +144,16 @@ function ServiceCards() {
                                 if (serviceList) {
                                     gsap.to(serviceList, {
                                         opacity: 1,
-                                        height: "auto",
+                                        height: "auto", 
                                         duration: 0.4,
                                         ease: "power2.inOut"
                                     });
+
+                                    gsap.to(card, {
+                                        backgroundColor: "#EF4444",
+                                        duration: 0.6,
+                                        ease: "power2.inOut"
+                                    })
                                 }
 
                                 // Then animate list items with stagger
@@ -209,25 +219,26 @@ function ServiceCards() {
                 
                 <div className='services-cards-container flex flex-col md:flex-row items-center md:items-stretch gap-4 w-full'>
                     {serviceCard?.map((card, index) => (
-                        <div 
-                            key={index}
-                            ref={(el) => {
+                        <div key={index} ref={(el) => {
                                 if (el) {
                                     serviceCardsRef.current[index] = el;
                                 }
-                            }}
-                            id='service-card'
-                            className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 p-8 min-h-[300px] rounded-br-[0px]'
-                        >
-                            <div className='flex flex-col items-start w-full gap-8'>
+                            }} id='service-card' className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 p-8 min-h-[300px] rounded-br-[0px]'>
+                            {/* ANIMATION FILL */}
+                            <div className='animated-fill'></div>
+                            <div className='card-content flex flex-col items-start w-full gap-8'>
+                                {/* VISIBLE CONTENT */}
                                 <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
-                                <ul className='service-list flex flex-col items-start w-full gap-2'>
-                                    {card.serviceList?.map((item, itemIndex) => (
-                                        <li key={itemIndex} className='service-item text-left text-white'>
-                                            {item.serviceItem}
-                                        </li>
-                                    ))}
-                                </ul>
+                                {/* HIDDEN CONTENT */}
+                                <div className='hidden-content'>
+                                    <ul className='service-list flex flex-col items-start w-full gap-2'>
+                                        {card.serviceList?.map((item, itemIndex) => (
+                                            <li key={itemIndex} className='service-item text-left text-white'>
+                                                {item.serviceItem}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     ))}
