@@ -198,6 +198,170 @@ function ServiceCards() {
 
     }, [serviceCard]); // Updated dependency array
 
+        // directional hover effect
+    useEffect(() => {
+        // Check if device is mobile - only apply on desktop
+        const isMobile = () => {
+            return window.innerWidth <= 768 || 'ontouchstart' in window;
+        };
+
+        // Only run on desktop
+        if (isMobile()) return;
+
+        // Wait for serviceCard data to be available
+        if (!serviceCard || serviceCard.length === 0) return;
+
+        /**
+       * Calculates which edge of an element the mouse is closest to.
+       * @param {MouseEvent} e The mouse event.
+       * @param {HTMLElement} element The element being interacted with.
+       * @returns {number} 0 for top, 1 for right, 2 for bottom, 3 for left.
+       */
+  
+        const getDirection = (e: MouseEvent, element: HTMLElement): number => {
+          const rect = element.getBoundingClientRect()
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+    
+          const w = element.offsetWidth;
+          const h = element.offsetHeight;
+    
+          const top = y;
+          const bottom = h - y;
+          const left = x;
+          const right = w - x;
+  
+          const min = Math.min(top, bottom, left, right);
+  
+          switch(min){
+            case top: return 0; // Top
+            case right: return 1; // right
+            case bottom: return 2; // bottom
+            case left: return 3; // left
+            default: return 0; 
+          }
+        }
+  
+        // Wait for DOM to be ready and use a longer delay
+        const initDirectionalHover = () => {
+            console.log('Initializing directional hover effect'); // Debug log
+            
+            const cards = document.querySelectorAll('.service-card')
+            console.log('Found cards:', cards.length); // Debug log
+            
+            // ✅ Store handlers so cleanup can access them
+            const cardHandlers = new Map();
+      
+            cards.forEach((card, index) => {
+              const fill = card.querySelector('.animated-fill') as HTMLElement;
+              console.log(`Card ${index} fill element:`, fill); // Debug log
+              
+              // Skip if fill element doesn't exist
+              if (!fill) {
+                console.log(`No fill element found for card ${index}`);
+                return;
+              }
+
+              // Set initial styles to ensure the fill is properly positioned
+              fill.style.position = 'absolute';
+              fill.style.top = '0';
+              fill.style.left = '0';
+              fill.style.width = '100%';
+              fill.style.height = '100%';
+              fill.style.backgroundColor = '#EF4444'; // Use direct color instead of CSS variable
+              fill.style.zIndex = '1';
+              fill.style.transform = 'translateY(-100%)';
+        
+              const handleMouseEnter = (e: MouseEvent) => {
+                console.log('Mouse enter on card', index); // Debug log
+                const direction = getDirection(e, card as HTMLElement)
+                console.log('Entry direction:', direction); // Debug log
+      
+                // remove transition to instantly position fill
+                fill.style.transition = 'none'
+      
+                // position fill based on entry direction
+                switch(direction) {
+                  case 0: //top
+                    fill.style.transform = 'translateY(-100%)';
+                    break;
+      
+                  case 1: // right
+                    fill.style.transform = 'translateX(100%)'
+                    break;
+            
+                  case 2: // Bottom
+                    fill.style.transform = 'translateY(100%)';
+                    break;
+      
+                  case 3: // Left
+                    fill.style.transform = 'translateX(-100%)';
+                    break;
+                }
+                // animate to center
+                requestAnimationFrame(() => {
+                  fill.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
+                  fill.style.transform = 'translate(0,0)'
+                });
+              };
+      
+              const handleMouseLeave = (e: MouseEvent) => {
+                console.log('Mouse leave on card', index); // Debug log
+                const direction = getDirection(e, card as HTMLElement)
+                console.log('Exit direction:', direction); // Debug log
+      
+                // Animate out in exit direction
+                switch (direction) {
+                  case 0: // Top
+                    fill.style.transform = 'translateY(-100%)';
+                    break;
+                  case 1: // Right
+                    fill.style.transform = 'translateX(100%)';
+                    break;
+                  case 2: // Bottom
+                    fill.style.transform = 'translateY(100%)';
+                    break;
+                  case 3: // Left
+                    fill.style.transform = 'translateX(-100%)';
+                    break;
+                }
+              };
+      
+              // ✅ Store handlers for cleanup
+              cardHandlers.set(card, { handleMouseEnter, handleMouseLeave });
+      
+              card.addEventListener('mouseenter', handleMouseEnter as EventListener)
+              card.addEventListener('mouseleave', handleMouseLeave as EventListener)
+              
+              console.log(`Event listeners added to card ${index}`); // Debug log
+            })
+            
+            return cardHandlers;
+        };
+
+        // Initialize with a longer delay to ensure everything is rendered
+        const timer = setTimeout(() => {
+            const cardHandlers = initDirectionalHover();
+            
+            // Store the handlers for cleanup
+            (window as any).directionalHoverHandlers = cardHandlers;
+        }, 1500); // Increased delay
+  
+        // ✅ Fixed cleanup function
+        return () => {
+          clearTimeout(timer);
+          const cardHandlers = (window as any).directionalHoverHandlers;
+          if (cardHandlers) {
+            cardHandlers.forEach((handlers: any, card: Element) => {
+              card.removeEventListener('mouseenter', handlers.handleMouseEnter as EventListener)
+              card.removeEventListener('mouseleave', handlers.handleMouseLeave as EventListener)
+            })
+            delete (window as any).directionalHoverHandlers;
+          }
+        }
+  
+      }, [serviceCard]) // Add serviceCard as dependency
+
     // Move the conditional returns after all hooks
     if (loading) return null;
     if (error) {
@@ -223,7 +387,7 @@ function ServiceCards() {
                                 if (el) {
                                     serviceCardsRef.current[index] = el;
                                 }
-                            }} id='service-card' className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 p-8 min-h-[300px] rounded-br-[0px]'>
+                            }} id='service-card' className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 p-8 min-h-[400px] rounded-br-[0px]'>
                             {/* ANIMATION FILL */}
                             <div className='animated-fill'></div>
                             <div className='card-content flex flex-col items-start w-full gap-8'>
