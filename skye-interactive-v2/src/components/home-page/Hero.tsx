@@ -5,8 +5,6 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useEffect } from 'react';
-import AsciiLogo from '../r3f/AsciiLogo'
-
 
 
 const GET_HERO_DATA = gql`

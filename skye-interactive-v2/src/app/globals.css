@@ -151,12 +151,12 @@ body {
     transform: scale(1.05);
 }
 
-#service-card {
+/* #service-card {
     position: relative;
     transition: background-color 0.3s ease, border 0.3s ease, transform 0.3s ease;
-}
+} */
 
-#service-card::before {
+/* #service-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -173,7 +173,7 @@ body {
 #service-card:hover::before {
     opacity: 1;
     border: 0px;
-}
+} */
 
 /* Target only the works grid container to prevent horizontal overflow */
 #works-grid-container {

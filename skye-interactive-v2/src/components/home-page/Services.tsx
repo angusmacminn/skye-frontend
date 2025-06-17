@@ -3,6 +3,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useRef } from 'react';
 import ThreeScene from '../r3f/ProcessGeometry';
+import ServiceCards from './ServiceCards';
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -14,14 +15,6 @@ const GET_SERVICES_DATA = gql`
         page(id: $id, idType: $idType) {
             title
             homePage {
-                servicesHeading
-                serviceCard {
-                    serviceTitle
-                    serviceList {
-                        serviceItem
-                    }
-                }
-
                 statsHeading
                     statisticCard {
                         statCategory
@@ -39,12 +32,6 @@ const GET_SERVICES_DATA = gql`
         }
     }
 `
-interface ServiceCardData {
-    serviceTitle?: string;
-    serviceList?: {
-        serviceItem?: string;
-    }[];
-}   
 
 interface StatisticCardData {
     statCategory?: string;
@@ -58,13 +45,10 @@ interface ProcessStepData {
 }
 
 interface HomePageAcfData {
-    servicesHeading?: string;
-    serviceCard?: ServiceCardData[];
     processHeading?: string;
     processSteps?: ProcessStepData[];
     statsHeading?: string;
     statisticCard?: StatisticCardData[];
-
 }
 
 interface PageData {
@@ -84,9 +68,6 @@ gsap.registerPlugin(TextPlugin)
 gsap.registerPlugin(ScrambleTextPlugin) 
 
 function Services() {
-    // Add useRef for card references
-    const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
     // Move these BEFORE useEffect
     const pageId = '126'
     const pageIdType = 'DATABASE_ID'
@@ -99,214 +80,13 @@ function Services() {
     });
 
     const acfData = data?.page?.homePage
-    const servicesHeading = acfData?.servicesHeading
-    const serviceCard = acfData?.serviceCard
     const statsHeading = acfData?.statsHeading
     const statisticCard = acfData?.statisticCard    
     const processHeading = acfData?.processHeading
     const processSteps = acfData?.processSteps
 
-    // SERVICES ANIMATIONS
+    // STATS ANIMATIONS
     useEffect(() => {
-        if (!serviceCard || serviceCard.length === 0) return;
-
-        // Copy the ref value to a variable at the start of the effect
-        const currentServiceCards = serviceCardsRef.current;
-        
-        // Store event listeners for proper cleanup
-        const eventListeners = new Map();
-
-        // Check if device is mobile
-        const isMobile = () => {
-            return window.innerWidth <= 768 || 'ontouchstart' in window;
-        };
-
-        // Delay to ensure Works section ScrollTriggers are set up first
-        const initServicesAnimations = () => {
-            // SERVICES ANIMATIONS
-            const servicesSection = document.getElementById('services-section')
-            const servicesContainer = document.getElementById('services-container')
-            const serviceTitle = document.querySelectorAll('.service-title')
-
-            if (servicesSection && servicesContainer) {
-                // Only animate titles initially, not the lists
-                gsap.set(serviceTitle, {
-                    opacity: 0,
-                    y: 100,
-                })
-
-                gsap.to(serviceTitle, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.5,
-                    ease: "power2.inOut",
-                    stagger: 0.1
-                })
-
-                // Setup animations based on device type
-                currentServiceCards.forEach((card) => {
-                    if (!card) return;
-
-                    const title = card.querySelector('.service-title');
-                    const listItems = card.querySelectorAll('.service-item');
-                    const serviceList = card.querySelector('.service-list');
-
-                    // Set initial state for list items (hidden)
-                    if (serviceList) {
-                        gsap.set(serviceList, {
-                            opacity: 0,
-                            height: 0,
-                            overflow: "hidden"
-                        });
-                    }
-
-                    if (listItems.length > 0) {
-                        gsap.set(listItems, {
-                            opacity: 0,
-                            y: 20,
-                            scale: 0.9
-                        });
-                    }
-
-                    if (isMobile()) {
-                        // MOBILE: Use ScrollTrigger instead of hover
-                        ScrollTrigger.create({
-                            trigger: card,
-                            start: "top 70%",
-                            end: "bottom 30%",
-                            markers: false,
-                            refreshPriority: -1, // Lower priority to run after Works section
-                            onEnter: () => {
-                                // Show list container first
-                                if (serviceList) {
-                                    gsap.to(serviceList, {
-                                        opacity: 1,
-                                        height: "auto",
-                                        duration: 0.4,
-                                        ease: "power2.inOut"
-                                    });
-                                }
-
-                                // Then animate list items with stagger
-                                if (listItems.length > 0) {
-                                    gsap.to(listItems, {
-                                        opacity: 1,
-                                        y: 0,
-                                        scale: 1,
-                                        duration: 0.3,
-                                        stagger: 0.1,
-                                        ease: "power2.inOut",
-                                        delay: 0.2
-                                    });
-                                }
-                            },
-                        });
-                    } else {
-                        // DESKTOP: Use hover animations
-                        const hoverEnter = () => {
-                            // Animate card scale
-                            gsap.to(card, {
-                                scale: 1.02,
-                                duration: 0.3,
-                                ease: "power2.out"
-                            });
-
-                            // Animate title
-                            if (title) {
-                                gsap.to(title, {
-                                    y: -10,
-                                    scale: 1.05,
-                                    duration: 0.3,
-                                    ease: "power2.out"
-                                });
-                            }
-
-                            // Show list container first
-                            if (serviceList) {
-                                gsap.to(serviceList, {
-                                    opacity: 1,
-                                    height: "auto",
-                                    duration: 0.3,
-                                    ease: "power2.inOut"
-                                });
-                            }
-
-                            // Then animate list items with stagger
-                            if (listItems.length > 0) {
-                                gsap.to(listItems, {
-                                    opacity: 1,
-                                    y: 0,
-                                    scale: 1,
-                                    duration: 0.3,
-                                    stagger: 0.1,
-                                    ease: "power2.inOut",
-                                    delay: 0.2
-                                });
-                            }
-                        };
-
-                        const hoverLeave = () => {
-                            // Animate card back to normal
-                            gsap.to(card, {
-                                scale: 1,
-                                duration: 0.3,
-                                ease: "power2.out"
-                            });
-
-                            // Animate title back
-                            if (title) {
-                                gsap.to(title, {
-                                    y: 0,
-                                    scale: 1,
-                                    duration: 0.3,
-                                    ease: "power2.out"
-                                });
-                            }
-
-                            // Animate list items out first
-                            if (listItems.length > 0) {
-                                gsap.to(listItems, {
-                                    opacity: 0,
-                                    y: -10,
-                                    scale: 0.9,
-                                    duration: 0.4,
-                                    stagger: 0.02,
-                                    ease: "power2.in"
-                                });
-                            }
-
-                            // Then hide list container
-                            if (serviceList) {
-                                gsap.to(serviceList, {
-                                    opacity: 0,
-                                    height: 0,
-                                    duration: 0.3,
-                                    ease: "power2.in",
-                                    delay: 0.1
-                                });
-                            }
-                        };
-
-                        // Store event listeners for proper cleanup
-                        eventListeners.set(card, { hoverEnter, hoverLeave });
-                        
-                        // Add event listeners for desktop
-                        card.addEventListener('mouseenter', hoverEnter);
-                        card.addEventListener('mouseleave', hoverLeave);
-                    }
-                });
-            }
-
-            // Force ScrollTrigger to recalculate positions after Works section is set up
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 100);
-        };
-
-        // Wait for the Works section to initialize its ScrollTriggers first
-        setTimeout(initServicesAnimations, 1000);
-
-        // STATS ANIMATIONS
         if (statisticCard && statisticCard.length > 0) {
             setTimeout(() => {
                 const statsHeading = document.querySelector('.stats-heading');
@@ -441,9 +221,10 @@ function Services() {
                 }
             }, 500);
         }
+    }, [statisticCard]);
 
-
-        // PROCESS ANIMATIONS
+    // PROCESS ANIMATIONS
+    useEffect(() => {
         if (processSteps && processSteps.length > 0) {
             setTimeout(() => {
                 const processSection = document.getElementById('process-section');
@@ -544,27 +325,9 @@ function Services() {
                         }
                     })
                 }
-
-                
-
-                
             }, 500);
         }
-
-        // Cleanup function - properly remove event listeners
-        return () => {
-            currentServiceCards.forEach((card) => {
-                if (card && eventListeners.has(card)) {
-                    const { hoverEnter, hoverLeave } = eventListeners.get(card);
-                    card.removeEventListener('mouseenter', hoverEnter);
-                    card.removeEventListener('mouseleave', hoverLeave);
-                }
-            });
-            eventListeners.clear();
-        };
-
-    }, [serviceCard, statisticCard]); // Updated dependency array
-
+    }, [processSteps]);
 
     // STATS CARD GRADIENTS
     const cardGradientsMobile = [
@@ -573,14 +336,8 @@ function Services() {
         'bg-gradient-to-b from-red-600 to-red-400' // Card 3
     ]
 
-    // const cardGradients = [
-    //     'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
-    //     'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
-    //     'bg-gradient-to-r from-red-600 to-red-400' // Card 3
-    // ]
-
     // Move the conditional returns after all hooks
-    if (loading) return 
+    if (loading) return null;
     if (error) {
         console.error("GraphQL Error:", error);
         return <p className="p-8 text-center text-red-500">Error loading hero data. Check console.</p>;
@@ -593,40 +350,7 @@ function Services() {
 
     return (
         <>
-            <section id='services-section'
-                     className='bg-black py-16'>
-                <div id='services-container'
-                     className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-[20px]'>
-                    <h2 className='text-center text-4xl text-white'>{servicesHeading}</h2>
-                    
-                    <div className='flex flex-col md:flex-row items-center md:items-stretch gap-4 w-full'>
-                        {serviceCard?.map((card, index) => (
-                            <div 
-                                key={index}
-                                ref={(el) => {
-                                    if (el) {
-                                        serviceCardsRef.current[index] = el;
-                                    }
-                                }}
-                                id='service-card'
-                                className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 border-r-2 p-8 min-h-[300px] bg-black rounded-br-[0px] hover:border-r-0'
-                            >
-                                <div className='flex flex-col items-start w-full gap-2'>
-                                <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
-                                    <ul className='service-list flex flex-col items-start w-full gap-2 opacity-0 overflow-hidden'>
-                                        {card.serviceList?.map((item, itemIndex) => (
-                                            <li key={itemIndex} className='service-item text-left text-white'>
-                                                {item.serviceItem}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
+            <ServiceCards />
 
             <section id='statistics-section'
                      className='bg-black py-16'>
@@ -636,7 +360,7 @@ function Services() {
                     {statisticCard?.map((card, index) => (
                         <div key={index}
                              id='statistic-card'
-                             className={`flex flex-col items-left justify-center w-full gap-4 p-8 min-h-[200px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'}`}>
+                             className={`flex flex-col items-left justify-center w-full gap-4 p-8 min-h-[300px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'}`}>
                             <h3 className='stat-category text-left text-2xl text-white'>{card.statCategory}</h3>
                             <p className='stat-number text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
                         </div>
