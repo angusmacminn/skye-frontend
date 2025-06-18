@@ -51,7 +51,7 @@ const CursorFollowCards = () => {
                     scale: 1
                 });
 
-                cards.forEach((card, index) => {
+                cards.forEach((card) => {
                     if (!card) return;
 
                     card.addEventListener('mouseenter', () => {
@@ -96,36 +96,35 @@ const CursorFollowCards = () => {
                 <div 
                     ref={cardsContainerRef}
                     className='services-cards-container flex flex-col md:flex-row items-center md:items-stretch gap-4 w-full relative'
-                >
+                    >
                     {/* Cursor follower element */}
                     <div 
                         ref={cursorFollowerRef}
-                        className='cursor-follower absolute pointer-events-none z-10 rounded-br-[0px] border border-red-400 bg-red-400/10 backdrop-blur-sm'
-                    />
+                        className='cursor-follower absolute pointer-events-none z-10 rounded-br-[0px] border border-red-400 bg-red-400/10 backdrop-blur-sm'/>
                     
-                    {cardsData.map((card, index) => (
-                        <div 
-                            key={index}
-                            ref={(el) => {
-                                if (el) {
-                                    cardsRef.current[index] = el;
-                                }
-                            }}
-                            className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 border p-8 min-h-[300px] rounded-br-[0px] hover:border-red-300 transition-colors duration-300'
-                        >
-                            <div className='flex flex-col items-start w-full gap-8'>
-                                <h3 className='text-left text-2xl text-white font-bold'>{card.title}</h3>
-                                <p className='text-left text-white/80'>{card.description}</p>
-                                <ul className='flex flex-col items-start w-full gap-2'>
-                                    {card.items.map((item, itemIndex) => (
-                                        <li key={itemIndex} className='text-left text-white/70 text-sm'>
-                                            • {item}
-                                        </li>
-                                    ))}
-                                </ul>
+                        {cardsData.map((card, index) => (
+                            <div 
+                                key={index}
+                                ref={(el) => {
+                                    if (el) {
+                                        cardsRef.current[index] = el;
+                                    }
+                                }}
+                                className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 border p-8 min-h-[300px] rounded-br-[0px] hover:border-red-300 transition-colors duration-300'
+                            >
+                                <div className='flex flex-col items-start w-full gap-8'>
+                                    <h3 className='text-left text-2xl text-white font-bold'>{card.title}</h3>
+                                    <p className='text-left text-white/80'>{card.description}</p>
+                                    <ul className='flex flex-col items-start w-full gap-2'>
+                                        {card.items.map((item, itemIndex) => (
+                                            <li key={itemIndex} className='text-left text-white/70 text-sm'>
+                                                • {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             </div>
         </section>

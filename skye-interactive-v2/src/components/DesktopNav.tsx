@@ -2,8 +2,6 @@ import Link from "next/link";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 
-
-
 function LogoIcon() {
     return (
         <svg width="40" height="40" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +26,11 @@ function LogoIcon() {
 
 function DesktopNav() {
     const logoRef = useRef<HTMLDivElement>(null);
+    const cursorFollowerRef = useRef<HTMLDivElement | null>(null);
+    const navLinksRef = useRef<HTMLDivElement | null>(null);
+    const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
+    // Logo hover effect
     useEffect(() => {
         const logoElement = logoRef.current;
         if (!logoElement) return;
@@ -43,8 +45,6 @@ function DesktopNav() {
                 duration: 0.2,
                 stagger: 0.03,
             });
-
-           
         };
     
         const handleMouseLeave = () => {
@@ -55,21 +55,71 @@ function DesktopNav() {
                 duration: 0.2,
                 stagger: 0.05,
             });
-
-          
-            
         };
 
-        // event listeners
         logoElement.addEventListener("mouseenter", handleMouseEnter);
         logoElement.addEventListener("mouseleave", handleMouseLeave);
 
-        console.log(handleMouseEnter);
-        // Cleanup
         return () => {
             logoElement.removeEventListener("mouseenter", handleMouseEnter);
             logoElement.removeEventListener("mouseleave", handleMouseLeave);
         };
+    }, []);
+
+    // Cursor follow effect for nav links
+    useEffect(() => {
+        const isMobile = () => {
+            return window.innerWidth <= 768 || 'ontouchstart' in window;
+        };
+
+        if (!isMobile()) {
+            // call the references 
+            const navLinksContainer = navLinksRef.current;
+            const follower = cursorFollowerRef.current;
+            const links = linkRefs.current.filter(Boolean);
+
+            if (navLinksContainer && follower && links.length > 0) {
+                // Initially hide the follower
+                gsap.set(follower, {
+                    opacity: 0,
+                    scale: 0.8
+                });
+
+                links.forEach((link) => {
+                    if (!link) return;
+
+                    link.addEventListener('mouseenter', () => {
+                        const linkRect = link.getBoundingClientRect();
+                        const containerRect = navLinksContainer.getBoundingClientRect();
+                        
+                        // Calculate position relative to container
+                        const left = linkRect.left - containerRect.left;
+                        const top = linkRect.top - containerRect.top;
+                        
+                        gsap.to(follower, {
+                            left: left,
+                            top: top,
+                            width: linkRect.width,
+                            height: linkRect.height,
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "power2.out"
+                        });
+                    });
+                });
+
+                // Hide follower when leaving the nav container
+                navLinksContainer.addEventListener('mouseleave', () => {
+                    gsap.to(follower, {
+                        opacity: 0,
+                        scale: 0.8,
+                        duration: 0.2,
+                        ease: "power2.out"
+                    });
+                });
+            }
+        }
     }, []);
 
     return (
@@ -80,11 +130,37 @@ function DesktopNav() {
                         <LogoIcon />
                     </Link>
                 </div>
-                <nav className='desktop-nav-links
-                                flex flex-row gap-4'>
-                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/works'>Works</Link>
-                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/studio'>Studio</Link>
-                    <Link className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white' href='/contact'>Contact</Link>
+                <nav 
+                    ref={navLinksRef}
+                    className='desktop-nav-links flex flex-row gap-6 relative'
+                >
+                    {/* Cursor follower element */}
+                    <div 
+                        ref={cursorFollowerRef}
+                        className='cursor-follower absolute pointer-events-none z-10 rounded-tl-[20px] border border-red-400 bg-red-400/10 backdrop-blur-sm'
+                    />
+                    
+                    <Link 
+                        ref={(el) => { linkRefs.current[0] = el; }}
+                        className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white px-3 py-2 relative z-20' 
+                        href='/works'
+                    >
+                        Works
+                    </Link>
+                    <Link 
+                        ref={(el) => { linkRefs.current[1] = el; }}
+                        className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white px-3 py-2 relative z-20' 
+                        href='/studio'
+                    >
+                        Studio
+                    </Link>
+                    <Link 
+                        ref={(el) => { linkRefs.current[2] = el; }}
+                        className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white px-3 py-2 relative z-20' 
+                        href='/contact'
+                    >
+                        Contact
+                    </Link>
                 </nav>
             </div>
         </div>
