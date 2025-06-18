@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useEffect, useRef } from 'react';
 import ThreeScene from '../r3f/ProcessGeometry';
 import ServiceCards from './ServiceCards';
+import Stats from './Stats';
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -15,28 +16,16 @@ const GET_SERVICES_DATA = gql`
         page(id: $id, idType: $idType) {
             title
             homePage {
-                statsHeading
-                    statisticCard {
-                        statCategory
-                        statNumber
-                    }
-
                 processHeading
                 processSteps {
                     processNumber
                     stepHeading
                     stepDescription
                 }
-                
             }
         }
     }
 `
-
-interface StatisticCardData {
-    statCategory?: string;
-    statNumber?: string;
-}
 
 interface ProcessStepData {
     processNumber?: string;
@@ -47,8 +36,6 @@ interface ProcessStepData {
 interface HomePageAcfData {
     processHeading?: string;
     processSteps?: ProcessStepData[];
-    statsHeading?: string;
-    statisticCard?: StatisticCardData[];
 }
 
 interface PageData {
@@ -80,148 +67,8 @@ function Services() {
     });
 
     const acfData = data?.page?.homePage
-    const statsHeading = acfData?.statsHeading
-    const statisticCard = acfData?.statisticCard    
     const processHeading = acfData?.processHeading
     const processSteps = acfData?.processSteps
-
-    // STATS ANIMATIONS
-    useEffect(() => {
-        if (statisticCard && statisticCard.length > 0) {
-            setTimeout(() => {
-                const statsHeading = document.querySelector('.stats-heading');
-                const statisticCards = document.querySelectorAll('#statistic-card');
-                const statCategory = document.querySelectorAll('.stat-category');
-                const statNumber = document.querySelectorAll('.stat-number');
-
-                if (statsHeading) {
-                    const initAnimation = async () => {
-                        if (document.fonts) {
-                            await document.fonts.ready;
-                        }
-
-                        const splitHeading = new SplitText(statsHeading, { 
-                            type: "lines"
-                        });
-
-                        if (splitHeading.lines.length > 0) {
-                            // Set initial state (hidden)
-                            gsap.set(splitHeading.lines, {
-                                yPercent: 100,
-                                opacity: 0
-                            });
-
-                            gsap.set(statsHeading, {
-                                overflow: "hidden"
-                            });
-
-                            // Add ScrollTrigger for the heading
-                            ScrollTrigger.create({
-                                trigger: statsHeading,
-                                start: "top 50%",
-                                end: "bottom 20%",
-                                markers: false,
-                                
-                                onEnter: () => {
-                                    gsap.to(splitHeading.lines, {
-                                        duration: 1.5,
-                                        yPercent: 0,
-                                        opacity: 1,
-                                        stagger: 0.2,
-                                        ease: "power2.out"
-                                    });
-                                }
-                            });
-                        }
-                    };
-
-                    initAnimation();
-                }
-
-
-                if (statisticCards && statisticCards.length > 0 && statCategory.length > 0 && statNumber.length > 0) {
-                    // Set initial state for cards, categories and numbers
-                    statisticCards.forEach((card) => {
-                        gsap.set(card, {
-                            opacity: 0,
-                            x: -100,
-                            scale: 0.3,
-                            filter: "blur(10px)",
-                        });
-                    });
-                    
-                    gsap.set(statCategory, {
-                        opacity: 0,
-                        y: 50,
-                        filter: "blur(10px)"
-                    });
-                
-                    gsap.set(statNumber, {
-                        opacity: 0,
-                        y: 50,
-                        filter: "blur(10px)"
-                    });
-                
-                    // Create ScrollTrigger for stat cards
-                    ScrollTrigger.create({
-                        trigger: statisticCards[0], // Use first card as trigger
-                        start: "top 50%",
-                        end: "bottom 20%",
-                        markers: false,
-                        onEnter: () => {
-                            // Animate the cards with stagger
-                            gsap.to(statisticCards, { // Use statisticCards instead of card
-                                opacity: 1,
-                                x: 0,
-                                scale: 1,
-                                duration: 0.6,
-                                filter: "blur(0px)",
-                                stagger: 0.5, 
-                                ease: "power2.out",
-                            });
-
-                            // Animate categories in after cards start
-                            gsap.to(statCategory, {
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.8,
-                                stagger: 0.2,
-                                delay: 0.3, // Small delay after cards start
-                                ease: "power2.out",
-                                filter: "blur(0px)"
-                            });
-                
-                            // Then animate numbers with scramble effect
-                            statNumber.forEach((numberEl, index) => {
-                                const originalText = numberEl.textContent || '';
-                                
-                                gsap.to(numberEl, {
-                                    opacity: 1,
-                                    y: 0,
-                                    duration: 0.8,
-                                    delay: 0.3 + (index * 0.2),
-                                    ease: "power2.out",
-                                    filter: "blur(0px)"
-                                });
-                
-                                // Scramble text effect
-                                gsap.to(numberEl, {
-                                    duration: 2,
-                                    delay: 0.5 + (index * 0.2),
-                                    scrambleText: {
-                                        text: originalText,
-                                        chars: "0123456789+$",
-                                        revealDelay: 0.3,
-                                        speed: 0.5
-                                    }
-                                });
-                            });
-                        }
-                    });
-                }
-            }, 500);
-        }
-    }, [statisticCard]);
 
     // PROCESS ANIMATIONS
     useEffect(() => {
@@ -344,19 +191,6 @@ function Services() {
         }
     }, [processSteps]);
 
-    // STATS CARD GRADIENTS
-    const cardGradientsMobile = [
-        'bg-gradient-to-b from-[#FCA5A5] to-red-400', // Card 1
-        'bg-gradient-to-b from-red-400 to-red-600', // Card 2  
-        'bg-gradient-to-b from-red-600 to-red-400' // Card 3
-    ]
-
-    const cardGradientsDesktop = [
-        'bg-gradient-to-r from-[#FCA5A5] to-red-400', // Card 1
-        'bg-gradient-to-r from-red-400 to-red-600', // Card 2  
-        'bg-gradient-to-r from-red-600 to-red-400' // Card 3
-    ]
-
     // Move the conditional returns after all hooks
     if (loading) return null;
     if (error) {
@@ -372,27 +206,8 @@ function Services() {
     return (
         <>
             <ServiceCards />
+            <Stats />
 
-            <section id='statistics-section'
-                     className='bg-black py-24 relative'>
-                {/* Full viewport background to prevent gray showing */}
-                <div className='absolute inset-0 bg-black w-full h-screen'></div>
-                <div id='statistics-container'
-                className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
-                    <h2 className='stats-heading text-center text-4xl text-white mb-8'>{statsHeading}</h2>
-                    <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-6'>
-                        {statisticCard?.map((card, index) => (
-                            <div key={index}
-                                 id='statistic-card'
-                                 className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] rounded-lg ${cardGradientsMobile[index] || 'bg-gray-500'} md:${cardGradientsDesktop[index] || 'bg-gray-500'} `}>
-                                <h3 className='stat-category text-left text-2xl text-white'>{card.statCategory}</h3>
-                                <p className='stat-number text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-    
             <section id='process-section'
             className='bg-skye-white py-16'>
                 <div id='process-container'
