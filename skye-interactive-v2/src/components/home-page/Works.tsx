@@ -6,7 +6,7 @@ import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-
+// Get works from graphQL
 const GET_WORKS_DATA = gql`
     query GetWorksData {
         works {
@@ -30,7 +30,7 @@ const GET_WORKS_DATA = gql`
     }
 }
 `
-
+// define interface so typescript knows exactly what data is coming in 
 interface WorkCategoryNode {
   name?: string;
 }
@@ -74,9 +74,13 @@ gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(SplitText)
 
 
+
+
 export default function Works() {
+    // 1. Your GraphQL query returns data matching GetWorksQueryData
     const { loading, error, data } = useQuery<GetWorksQueryData>(GET_WORKS_DATA)
     
+    // 2. You can safely access nested properties
     const workItems = data?.works?.nodes;
 
     // Move useEffect BEFORE the early returns
@@ -184,7 +188,7 @@ export default function Works() {
 
                             return (
                                 <div
-                                    className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative"
+                                    className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative md:w-1/3"
                                     key={workItem?.slug || index}>
                                     <div id='work-card-content'
                                         className='flex flex-col gap-4 relative z-10'>
@@ -214,7 +218,7 @@ export default function Works() {
                                             className='w-full h-full'>
                                                 {currentThumbnailUrl && (
                                                     <img className='rounded-bl-[40px] w-full object-cover'
-                                                        src={currentThumbnailUrl} 
+                                                        // src={currentThumbnailUrl} 
                                                         alt={currentThumbnailAlt || currentTitle || 'Work thumbnail'} 
                                                     />
                                                 )}

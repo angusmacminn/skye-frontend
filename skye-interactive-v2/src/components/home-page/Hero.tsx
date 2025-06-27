@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { useEffect } from 'react';
+import HeroVideo from './HeroVideo'
 
 
 const GET_HERO_DATA = gql`
@@ -102,6 +103,7 @@ export default function Hero() {
             const heroText2 = document.getElementById('hero-text-2')
             const heroText3 = document.getElementById('hero-text-3')
             const heroText4 = document.getElementById('hero-text-4')
+            const heroVideo = document.getElementById('hero-video')
 
             // Check if all elements exist before animating
             if (!hero || !heroText1 || !heroText2 || !heroText3 || !heroText4) {
@@ -118,6 +120,13 @@ export default function Hero() {
                 scaleY: 0.05,
                 y: 0,
             })
+
+            // set video to invisible and blurred
+            gsap.set(heroVideo, {
+                opacity: 0,
+                filter: 'blur(10px)',
+            })
+
             // set text to invisible
             gsap.set(heroText1, {
                 opacity: 0,
@@ -194,6 +203,14 @@ export default function Hero() {
                     duration: 0.7,
                     ease: 'power2.out',
                 }, "-=0.1")
+
+                // stage 5: fade in video
+                .to(heroVideo, {
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                    duration: 0.5,
+                    ease: 'power2.out',
+                }, '-=1.0')
 
             return () => {
                 tl.kill();
@@ -353,10 +370,14 @@ export default function Hero() {
                         </h1>
                     }
                 </div>
+
+                <div className='hero-video ml-[10px] mr-[10px] pt-[10px]'>
+                    <HeroVideo/>
+                </div>
             </section>
 
     
-            <section id='about-section' className=' border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px] md:max-w-screen-2xl md:mx-auto'>
+            <section id='about-section' className=' ml-[10px] mr-[10px] border-2 border-skye-gray-light rounded-tl-[40px] rounded-tr-[40px] md:max-w-screen-2xl md:mx-auto'>
                 <div className='flex flex-col items-center justify-center py-8 divide-y-2 divide-skye-gray-light md:max-w-screen-2xl md:mx-auto'>
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
