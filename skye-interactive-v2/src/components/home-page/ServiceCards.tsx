@@ -398,12 +398,12 @@ function ServiceCards() {
 
     return (
         <section id='services-section'
-                 className='bg-black py-16'>
+                 className='bg-black py-24'>
             <div id='services-container'
                  className='mx-auto px-[10px] flex flex-col items-center gap-16 w-full max-w-6xl'>
                 <h2 className='text-center text-4xl text-white'>{servicesHeading}</h2>
                 
-                <div className='services-cards-container flex flex-col md:flex-row items-center md:items-stretch gap-4 w-full max-w-full'>
+                <div className='services-cards-container flex flex-col md:flex-row items-center md:items-stretch gap-2 w-full max-w-full'>
                     {serviceCard?.map((card, index) => (
                         <div key={index} 
                              ref={(el) => {
@@ -412,15 +412,15 @@ function ServiceCards() {
                                 }
                              }} 
                              id='service-card' 
-                             className='service-card flex flex-col items-center w-full md:w-1/3 gap-4 border-red-400 min-h-[400px] rounded-br-[0px] overflow-hidden relative'>
+                             className='service-card items-center w-full md:w-1/3 gap-2 border-red-400 min-h-[400px] rounded-br-[0px] overflow-hidden relative'>
                             {/* ANIMATION FILL */}
                             <div className='animated-fill'></div>
-                            <div className='card-content flex flex-col items-start w-full gap-8 relative z-10 p-6'>
+                            <div className='card-content w-full gap-8 relative z-10 p-6'>
                                 {/* VISIBLE CONTENT */}
                                 <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
                                 {/* HIDDEN CONTENT */}
                                 <div className='hidden-content absolute inset-6 top-16'>
-                                    <ul className='service-list flex flex-col items-start w-full gap-2'>
+                                    <ul className='service-list flex flex-col items-start w-full gap-2 py-4'>
                                         {card.serviceList?.map((item, itemIndex) => (
                                             <li key={itemIndex} className='service-item text-left text-white'>
                                                 {item.serviceItem}

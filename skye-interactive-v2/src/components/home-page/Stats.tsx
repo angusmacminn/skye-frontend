@@ -233,11 +233,11 @@ function Stats() {
             <div id='statistics-container'
             className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
                 <h2 className='stats-heading text-center text-4xl text-white mb-8'>{statsHeading}</h2>
-                <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-6'>
+                <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-2'>
                     {statisticCard?.map((card, index) => (
                         <div key={index}
                              id='statistic-card'
-                             className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] rounded-lg ${getCardGradientClass(index)}`}>
+                             className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] ${getCardGradientClass(index)}`}>
                             <h3 className='stat-category text-left text-2xl text-white'>{card.statCategory}</h3>
                             <p className='stat-number text-left text-4xl font-bold text-white drop-shadow-md'>{card.statNumber}</p>
                         </div>

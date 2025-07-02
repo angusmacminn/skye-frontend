@@ -80,7 +80,6 @@ export default function Process() {
                         y: 100,
                         transformOrigin: "center bottom",
                         position: "relative",
-                        zIndex: 100,
                     })
 
                     // Create the scroll-jacked animation
@@ -136,9 +135,9 @@ export default function Process() {
 
                             ScrollTrigger.create({
                                 trigger: stepElement,
-                                start: "top 90%",       // When element enters viewport
+                                start: "top 95%",       // When element enters viewport
                                 end: "top 30%",        // When top of element hits 30% - earlier trigger
-                                markers: false,          // Keep this true to see what's happening
+                                markers: true,          // Keep this true to see what's happening
                                 onEnter: () => {
                                     gsap.to(stepElement, {
                                         opacity: 1,
@@ -205,9 +204,9 @@ export default function Process() {
                 {processSteps?.map((step, index) => (
                     <div key={index}
                          id={`process-step-${index}`}
-                         className='flex flex-col items-left h-[70vh] gap-4'>
-                        <h3 className='text-left text-2xl font-bold'>{step.stepHeading}</h3>
-                        <p className='text-left text-lg'>{step.stepDescription}</p>
+                         className='flex flex-col items-left h-[40vh] gap-4'>
+                        <h3 className='text-left text-2xl font-bold md: text-4xl'>{step.stepHeading}</h3>
+                        <p className='text-left text-lg md: text-xl'>{step.stepDescription}</p>
                     </div>
                 ))}
             </div>

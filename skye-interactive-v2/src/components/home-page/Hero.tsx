@@ -210,7 +210,7 @@ export default function Hero() {
                     filter: 'blur(0px)',
                     duration: 0.5,
                     ease: 'power2.out',
-                }, '-=1.0')
+                }, '-=0.5')
 
             return () => {
                 tl.kill();
@@ -371,7 +371,7 @@ export default function Hero() {
                     }
                 </div>
 
-                <div className='hero-video ml-[10px] mr-[10px] pt-[10px]'>
+                <div className='hero-video ml-[10px] mr-[10px] py-[10px] md:py-24'>
                     <HeroVideo/>
                 </div>
             </section>

@@ -6,6 +6,7 @@ import * as THREE from "three"
 import { useGLTF } from "@react-three/drei"
 import { lerp } from "three/src/math/MathUtils.js"
 
+// scroll progress function
 function useScrollProgress () {
     const [progress, setProgress] = useState(0)
 
@@ -43,7 +44,7 @@ function lerpVector3(start: [number, number, number], end: [number, number, numb
 }
 
 
-
+// Logo model function for the 3d scene
 function LogoModel(){
     const meshRef = useRef<THREE.Mesh>(null!)
     const { scene } = useGLTF('/models/skye-logo.glb')
@@ -58,7 +59,7 @@ function LogoModel(){
     
     const endState = {
         scale: 0.9,
-        position: [-2, -2, 0] as [number, number, number], 
+        position: [6, -2, 0] as [number, number, number], 
         rotation: [Math.PI/2, Math.PI * 4, 0] as [number, number, number]
     }
 
@@ -70,7 +71,7 @@ function LogoModel(){
     // Rotate the object
     useFrame((state, delta) => {
         if(meshRef.current){
-            meshRef.current.rotation.y += delta * 0.1
+            meshRef.current.rotation.x += delta * 0.07
         }
     })
 
@@ -85,15 +86,15 @@ function LogoModel(){
         )
 }
 
-// main r3f component
+// main r3f component 
 function ThreeScene() {
     
 
     return (
         <div 
         id="process-three-scene"
-        className="w-full h-96 relative sticky top-20"
-        style={{ width: '800px', height: '600px' }}
+        className="w-full relative sticky top-20"
+        style={{ width: '1900px', height: '800px' }}
         >
             
                 <Canvas

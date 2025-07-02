@@ -1,7 +1,6 @@
 'use client'
 
-import { gql, useQuery } from '@apollo/client'
-import { useEffect, useRef } from 'react';
+
 import ServiceCards from './ServiceCards';
 import Stats from './Stats';
 import Process from './Process';
