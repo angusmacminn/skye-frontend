@@ -218,7 +218,7 @@ export default function Works() {
                                             className='w-full h-full'>
                                                 {currentThumbnailUrl && (
                                                     <img className='rounded-bl-[40px] w-full object-cover'
-                                                        // src={currentThumbnailUrl} 
+                                                        src={currentThumbnailUrl} 
                                                         alt={currentThumbnailAlt || currentTitle || 'Work thumbnail'} 
                                                     />
                                                 )}

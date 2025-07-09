@@ -204,13 +204,15 @@ export default function Hero() {
                     ease: 'power2.out',
                 }, "-=0.1")
 
-                // stage 5: fade in video
-                .to(heroVideo, {
+            // stage 5: fade in video (only if it exists)
+            if (heroVideo) {
+                tl.to(heroVideo, {
                     opacity: 1,
                     filter: 'blur(0px)',
                     duration: 0.5,
                     ease: 'power2.out',
                 }, '-=0.5')
+            }
 
             return () => {
                 tl.kill();
@@ -270,7 +272,8 @@ export default function Hero() {
                             // scaleY: 1,
                         });
 
-                        // Animate text with SplitText
+                        // COMMENTED OUT - This is what's causing the error:
+                        /*
                         const heading = card.querySelector('.card-heading');
                         const number = card.querySelector('.card-number');
                         const content = card.querySelector('.card-content');
@@ -323,6 +326,7 @@ export default function Hero() {
                                 filter: 'blur(0px)',
                             });
                         }
+                        */
                         
                         self.kill();
                     }
@@ -337,7 +341,7 @@ export default function Hero() {
 
     }, [aboutCardItems])
 
-    if (loading) return 
+    if (loading) return <div className="p-8 text-center">Loading...</div>
     if (error) {
         console.error("GraphQL Error:", error);
         return <p className="p-8 text-center text-red-500">Error loading hero data. Check console.</p>;
@@ -350,10 +354,10 @@ export default function Hero() {
 
     return (
         <>
-            <section id='hero-section '
+            <section id='hero-section'
                      className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
                 <div id='hero'
-                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400 md: ml-[10px] mr-[10px]'>
+                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400 md:ml-[10px] mr-[10px]'>
                     {acfData && 
                         <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
                             <div className='flex flex-col gap-4'>

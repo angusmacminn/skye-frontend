@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      {/* Move Header outside of the main container */}
       <Header />
       <main>
         <Hero />
