@@ -8,7 +8,17 @@
   --color-skye-primary-red-light: #F87171;
   --color-skye-primary-blue: #5A4FF2;
   --color-skye-primary-blue-light: #818CF8;
-  --color-skye-white: #F5F5F5;  
+  --color-skye-white: #F5F5F5;
+  
+  --text-h1-mobile: 3.125rem;
+  --text-h2-mobile: 1.5rem;
+  --text-h3-mobile: 1.25rem;
+  --text-subheading: 1.125rem;
+
+  --text-h1-desktop: 8rem; 
+  --text-h2-desktop: 3rem;
+  --text-h3-desktop: 2.5rem;
+  --text-subheading: 2.25rem;
 }
 
 :root {

@@ -357,9 +357,9 @@ export default function Hero() {
             <section id='hero-section'
                      className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
                 <div id='hero'
-                     className='hero-initial-hidden flex flex-col items-center justify-center px-8 py-4 bg-red-400 md:ml-[10px] mr-[10px]'>
+                     className='hero-initial-hidden px-[10px] flex flex-col items-center justify-center px-8 py-4 bg-red-400 md:ml-[10px] mr-[10px]'>
                     {acfData && 
-                        <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
+                        <h1 className='text-left text-h1-mobile text-skye-gray md:text-[6rem] lg:text-h1-desktop'>
                             <div className='flex flex-col gap-4'>
                                 <div id='hero-text-1' className='hero-text-initial-hidden'>
                                     {h1TextBeforeHighLight}

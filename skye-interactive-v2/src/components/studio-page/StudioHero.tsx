@@ -73,10 +73,10 @@ export default function StudioHero() {
     return (
         <section className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
             <div className='flex flex-col items-center justify-center gap-4 px-8 py-4 bg-red-400 rounded-br-[40px] rounded-tl-[40px] mx-[10px]'>
-                <h1 className='text-left text-5xl text-skye-gray md:text-[6rem]'>
+                <h1 className='text-left text-h1-mobile text-skye-gray md:text-[6rem]'>
                     {heroH1}
                 </h1>
-                <h2 className='text-lg text-skye-white'>
+                <h2 className='text-h2-mobile text-skye-gray'>
                     {heroH2}
                 </h2>
             </div>

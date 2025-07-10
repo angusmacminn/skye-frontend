@@ -17,6 +17,7 @@ const GET_STUDIO_ABOUT_DATA = gql`
                 }
                 aboutIntroHeading
                 aboutIntroParagraph
+                aboutIntroParagraph2
             }
         }
     }
@@ -34,7 +35,8 @@ interface aboutImage {
 interface studioAboutPageAcfData {
     aboutIntroParagraph?: string
     aboutIntroHeading?: string
-    aboutImage?: aboutImage
+    aboutImage1?: aboutImage
+    aboutIntroParagraph2?: string
 }
 
 interface PageData {
@@ -44,7 +46,7 @@ interface PageData {
 }
 
 interface QueryData {
-    pageData: PageData
+    page?: PageData
 }
 
 
@@ -60,27 +62,31 @@ export default function StudioAbout(){
     })
 
     // define variavbles for data
-    const acfData = data?.pageData.studioPage
-    const aboutImage = acfData?.aboutImage
+    const acfData = data?.page?.studioPage
+    const aboutImage = acfData?.aboutImage1
     const aboutImageUrl = aboutImage?.node?.sourceUrl
     const aboutImageAlt = aboutImage?.node?.altText
     const aboutHeading = acfData?.aboutIntroHeading
     const aboutParagraph = acfData?.aboutIntroParagraph
-
+    const aboutParagraph2 = acfData?.aboutIntroParagraph2
 
     return(
         <section className='about-section py-[10px] md:max-w-screen-2xl md:mx-auto'>
-            <div className='about-content'>
+            <div className='about-content mx-[10px] flex flex-col gap-8 md:flex-row'>
                 <div className='about-image'>
-                    <img src={aboutImageUrl} alt={aboutImageAlt} />
+                    <img className='max-w-[300px] mx-auto object-cover rounded-br-[40px]' src={aboutImageUrl} alt={aboutImageAlt} />
                 </div>
-                <div className='about-text'>
-                    <h3>
+                <div className='about-text flex flex-col gap-8'>
+                    <h3 className='text-white text-h3-mobile'>
                         {acfData && aboutHeading}
                     </h3>
 
-                    <p>
+                    <p className='text-white text-p-mobile'>
                         {acfData && aboutParagraph}
+                    </p>
+
+                    <p className='text-white text-p-mobile'>
+                        {acfData && aboutParagraph2}
                     </p>
                 </div>
             </div>
