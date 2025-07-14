@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import StudioHero from "@/components/studio-page/StudioHero";
 import StudioAbout from "@/components/studio-page/StudioAbout";
 import StudioApproach from "@/components/studio-page/StudioApproach";
+import StudioServices from "@/components/studio-page/StudioServices";
 
 
 
@@ -14,6 +15,7 @@ export default function StudioPage() {
         <StudioHero />
         <StudioAbout />
         <StudioApproach />
+        <StudioServices />
       </main>
     </>
     
