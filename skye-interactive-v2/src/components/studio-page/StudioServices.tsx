@@ -82,19 +82,19 @@ export default function StudioServices(){
     console.log('Full service items array:', fullServiceItem)
 
     return (
-        <section className='services-section'>
-            <div className='services-container'>
-                <h2 className='services-header'>{serviceHeader}</h2>
-                <div className='services-item'>
+        <section className='services-section py-[10px] md:max-w-screen-2xl md:mx-auto bg-white'>
+            <div className='services-container mx-[10px] flex flex-col gap-8 max-w-[500px]'>
+                <h3 className='services-header text-h3-mobile text-center md:text-h3-desktop'>{serviceHeader}</h3>
+                <div className='services-item flex flex-col gap-4'>
                     {fullServiceItem && fullServiceItem.map((item, index) => (
-                        <div key={index} className='service-item-wrapper'>
-                            <h3 className='services-item-header'>{item.serviceItemHeader}</h3>
-                            <p className='services-item-description'>{item.serviceDescription}</p>
-                            <p className='services-item-include'>{item.servicesInclude}</p>
+                        <div key={index} className='service-item-wrapper flex flex-col gap-2 border-b border-gray-200 pb-4'>
+                            <h3 className='services-item-header text-submobile text-skye-primary-red md:text-subdesktop'>{item.serviceItemHeader}</h3>
+                            <p className='services-item-description text-p-mobile md:text-p-desktop'>{item.serviceDescription}</p>
+                            <p className='services-item-include text-p-mobile md:text-p-desktop'>{item.servicesInclude}</p>
                             
                             {/* Handle the nested specificService array */}
                             {item.specificService && item.specificService.length > 0 && (
-                                <ul className='specific-services'>
+                                <ul className='specific-services pl-4 list-disc'>
                                     {item.specificService.map((service, serviceIndex) => (
                                         <li key={serviceIndex} className='services-item-type'>
                                             {service.serviceType}

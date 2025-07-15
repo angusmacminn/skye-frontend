@@ -401,7 +401,7 @@ function ServiceCards() {
                  className='bg-black py-24'>
             <div id='services-container'
                  className='mx-auto px-[10px] flex flex-col items-center gap-16 w-full max-w-6xl'>
-                <h2 className='text-center text-4xl text-white'>{servicesHeading}</h2>
+                <h3 className='text-center text-h3-mobile text-white md:text-h3-desktop'>{servicesHeading}</h3>
                 
                 <div className='services-cards-container flex flex-col md:flex-row items-center md:items-stretch gap-2 w-full max-w-full'>
                     {serviceCard?.map((card, index) => (
@@ -417,12 +417,12 @@ function ServiceCards() {
                             <div className='animated-fill'></div>
                             <div className='card-content w-full gap-8 relative z-10 p-6'>
                                 {/* VISIBLE CONTENT */}
-                                <h3 className='service-title text-left text-2xl text-white'>{card.serviceTitle}</h3>
+                                <h3 className='service-title text-left text-submobile text-white md:text-subdesktop'>{card.serviceTitle}</h3>
                                 {/* HIDDEN CONTENT */}
                                 <div className='hidden-content absolute inset-6 top-16'>
                                     <ul className='service-list flex flex-col items-start w-full gap-2 py-4'>
                                         {card.serviceList?.map((item, itemIndex) => (
-                                            <li key={itemIndex} className='service-item text-left text-white'>
+                                            <li key={itemIndex} className='service-item text-left text-white text-p-mobile md:text-p-desktop'>
                                                 {item.serviceItem}
                                             </li>
                                         ))}

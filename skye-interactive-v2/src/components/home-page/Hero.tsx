@@ -386,17 +386,17 @@ export default function Hero() {
                     {acfData && aboutCardItems?.map((item, index) => (
                         <div
                             key={index}
-                            className='about-card w-full max-w-md p-[4px] py-12 md:max-w-xl'>
+                            className='about-card w-full max-w-md p-[4px] py-12 md:max-w-[900px]'>
                             <div className='p-4 flex flex-col justify-center gap-4'>
                                 <div className='flex justify-between'>
-                                    <h2 className='card-heading text-lg text-skye-white'>
+                                    <h2 className='card-heading text-lg text-skye-primary-red md:text-subdesktop'>
                                         {item.aboutCardHeading}
                                     </h2>
-                                    <h2 className='card-number text-lg text-skye-primary-red'>
+                                    <h2 className='card-number text-lg text-skye-primary-red md:text-subdesktop'>
                                         {item.aboutCardNumber}
                                     </h2>
                                 </div>
-                                <p className='card-content text-2xl text-white drop-shadow-lg'>
+                                <p className='card-content text-2xl text-white drop-shadow-lg md:text-h2-desktop'>
                                     {item.aboutCardContent}
                                 </p>
                             </div>

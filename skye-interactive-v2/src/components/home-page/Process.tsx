@@ -137,7 +137,7 @@ export default function Process() {
                                 trigger: stepElement,
                                 start: "top 95%",       // When element enters viewport
                                 end: "top 30%",        // When top of element hits 30% - earlier trigger
-                                markers: true,          // Keep this true to see what's happening
+                                markers: false,          // Keep this true to see what's happening
                                 onEnter: () => {
                                     gsap.to(stepElement, {
                                         opacity: 1,
@@ -197,7 +197,7 @@ export default function Process() {
     return (
         <section id='process-section' className='bg-skye-white py-16'>
             <div id='process-container' className='flex flex-col items-center gap-8 mt-10 w-full max-w-lg mx-auto px-4'>
-                <h2 className='process-heading text-center text-4xl sticky top-20 font-bold'>{processHeading}</h2>
+                <h3 className='process-heading text-center text-h3-mobile sticky top-20 font-bold md:text-h3-desktop'>{processHeading}</h3>
 
                 <ThreeScene />
                 
@@ -205,8 +205,8 @@ export default function Process() {
                     <div key={index}
                          id={`process-step-${index}`}
                          className='flex flex-col items-left h-[40vh] gap-4'>
-                        <h3 className='text-left text-2xl font-bold md: text-4xl'>{step.stepHeading}</h3>
-                        <p className='text-left text-lg md: text-xl'>{step.stepDescription}</p>
+                        <h3 className='text-left text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
+                        <p className='text-left text-p-mobile md:text-p-desktop'>{step.stepDescription}</p>
                     </div>
                 ))}
             </div>

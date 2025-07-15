@@ -169,9 +169,9 @@ export default function Works() {
         <section id='works-section'>
             <div id='works-section-content'
                  className='flex flex-col justify-center items-center gap-16 bg-skye-gray min-h-screen md:h-auto md:py-24 relative'>
-                <h2 className='text-2xl text-skye-white mt-10'>
+                <h3 className='text-h3-mobile text-skye-white mt-10 md:text-h3-desktop'>
                     Selected Works
-                </h2>
+                </h3>
 
                 <div id='works-grid-container' className='w-full overflow-x-hidden'>
                     <div id='works-grid'

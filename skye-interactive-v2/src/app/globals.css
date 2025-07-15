@@ -9,22 +9,26 @@
   --color-skye-primary-blue: #5A4FF2;
   --color-skye-primary-blue-light: #818CF8;
   --color-skye-white: #F5F5F5;
-  
+
+  --color-gradient-service-card: linear-gradient(310deg, #F87171 5.38%, #EF4444 100%);
   --text-h1-mobile: 3.125rem;
   --text-h2-mobile: 1.5rem;
   --text-h3-mobile: 1.25rem;
-  --text-subheading: 1.125rem;
+  --text-submobile: 1.125rem;
+  --text-p-mobile: 1rem;
 
   --text-h1-desktop: 8rem; 
   --text-h2-desktop: 3rem;
   --text-h3-desktop: 2.5rem;
-  --text-subheading: 2.25rem;
+  --text-subdesktop: 1.75rem;
+  --text-p-desktop: 1.25rem;
 }
 
 :root {
   --background: #323737;
   --gradient-card-border: linear-gradient(256deg, #F87171 8.57%, #FFF 38.49%, #FFF 55.12%, #F87171 94.26%);
   --gradient-card-inner: linear-gradient(103deg, #F87171 9.21%, #FCA5A5 62.24%, #EF4444 107.69%);
+  --gradient-service-card: linear-gradient(310deg, #F87171 5.38%, #EF4444 100%);
 }
 
 body {
@@ -203,6 +207,11 @@ body {
     body {
         overflow-x: hidden;
     }
+}
+
+/* Gradient Classes */
+.bg-gradient-service-card {
+  background: var(--gradient-service-card);
 }
 
 

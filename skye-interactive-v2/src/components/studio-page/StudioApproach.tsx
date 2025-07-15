@@ -58,22 +58,24 @@ export default function StudioApproach(){
     const approachCardItems = acfData?.approachItems
 
     return(
-        <section>
-            <div className='approach-content flex flex-col items-center justify-center py-8'>
-                <h2 className='text-h2-mobile text-white'>
-                    {approachHeading}
-                </h2>
+        <section className='approach-section py-[10px] md:max-w-screen-2xl md:mx-auto md:py-10'>
+            <div className='approach-content mx-[10px] flex flex-col items-center justify-center gap-8 py-8'>
+                <div className='flex flex-col items-center justify-center gap-2'>
+                    <h2 className='text-submobile text-skye-primary-red text-center md:text-subdesktop'> We Bring</h2>
+                    <h2 className='text-h2-mobile text-white text-center md:text-h2-desktop'>
+                        {approachHeading}
+                    </h2>
+                </div>
 
-                <div className='approach-cards flex flex-col gap-4 '>
+                <div className='approach-cards flex flex-col gap-4 lg:flex-row'>
                     {approachCardItems?.map((card, index) => (
-                        <div key={index} className='flex flex-col gap-2'>
-                            <h3 className='text-white'>{card.approachItemHeader}</h3>
-                            <p className=''>{card.approachBody}</p>
+                        <div key={index} className='approach-card bg-gradient-service-card rounded-[5px] flex flex-col gap-2 p-4 max-w-[500px] md:max-w-[700px] md:gap-8 md:pb-8'>
+                            <h3 className='text-white text-submobile md:text-subdesktop'>{card.approachItemHeader}</h3>
+                            <p className='text-white text-p-mobile md:text-p-desktop'>{card.approachBody}</p>
                         </div>
                     ))}
                 </div>
             </div>
-
         </section>
     )
 }
