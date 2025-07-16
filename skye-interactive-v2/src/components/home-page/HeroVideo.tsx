@@ -59,9 +59,10 @@ export default function HeroVideo(){
     const videoUrl = data?.page?.homePage?.heroVideoUrl?.node?.mediaItemUrl
     const mimeType = data?.page?.homePage?.heroVideoUrl?.node?.mimeType
 
-    if (loading) return <div className="w-full h-1/3 bg-gray-200 rounded-[40px] flex items-center justify-center">Loading video...</div>
-    if (error) return <div className="w-full h-1/3 bg-red-200 rounded-[40px] flex items-center justify-center text-red-600">Error loading video</div>
-    if (!videoUrl) return <div className="w-full h-1/3 bg-gray-200 rounded-[40px] flex items-center justify-center">No video available</div>
+    // Return null for all non-success states to prevent FOUC
+    if (loading) return null
+    if (error) return null
+    if (!videoUrl) return null
 
     return (
         <>
