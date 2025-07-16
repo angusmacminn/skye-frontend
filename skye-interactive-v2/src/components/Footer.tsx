@@ -1,11 +1,23 @@
+'use client'
+
 import Link from "next/link";
-
-
+import { useState, useEffect } from 'react'
 
 function Footer() {
-    return (
-        <footer className='bg-skye-gray text-skye-white'>
+    const [isVisible, setIsVisible] = useState(false)
+    
+    useEffect(() => {
+        // Add a small delay to match your GraphQL components
+        const timer = setTimeout(() => {
+            setIsVisible(true)
+        }, 500) // Adjust this timing to match your Hero component loading
+        
+        return () => clearTimeout(timer)
+    }, [])
 
+    return (
+        <footer className={`bg-skye-gray text-skye-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+            {/* rest of your footer content stays the same */}
             <div className='container mx-auto px-4 py-8'>
                 <h2 className='text-6xl text-skye-white'>
                     Skye <br /> Interactive

@@ -97,6 +97,7 @@ export default function StudioHero() {
 
         // Set initial states
         gsap.set(hero, {
+            autoAlpha: 0,
             opacity: 0,
             scaleX: 0.01,
             scaleY: 0.01,
@@ -113,6 +114,7 @@ export default function StudioHero() {
 
         tl
             .to(hero, {
+                autoAlpha: 1,
                 opacity: 1,
                 duration: 1,
                 ease: 'power3.out',                    
@@ -165,7 +167,7 @@ export default function StudioHero() {
         <section ref={containerRef} className='py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24'>
             <div 
                 ref={heroRef}
-                className='flex flex-col items-center justify-center gap-4 px-8 py-4 bg-skye-primary-red mx-[10px]'
+                className='visibility-hidden flex flex-col items-center justify-center gap-4 px-8 py-4 bg-skye-primary-red mx-[10px]'
             >
                 <h1 
                     ref={heroText1Ref}

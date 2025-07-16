@@ -238,8 +238,8 @@ function Stats() {
                         <div key={index}
                              id='statistic-card'
                              className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] ${getCardGradientClass(index)}`}>
-                            <h3 className='stat-category text-left text-submobile text-white md:text-subdesktop'>{card.statCategory}</h3>
-                            <p className='stat-number text-left text-h2-mobile font-bold text-white drop-shadow-md md:text-h2-desktop'>{card.statNumber}</p>
+                            <h3 className='stat-category text-left text-subdesktop text-white md:text-subdesktop'>{card.statCategory}</h3>
+                            <p className='stat-number text-left text-h2-desktop font-bold text-white drop-shadow-md md:text-h2-desktop'>{card.statNumber}</p>
                         </div>
                     ))}
                 </div>

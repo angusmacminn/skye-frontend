@@ -194,7 +194,7 @@ export default function Works() {
                                         className='flex flex-col gap-4 relative z-10'>
                                         <div className='flex flex-row justify-between items-center'>
                                             
-                                          <h3 className="text-2xl text-white">
+                                          <h3 className="text-h3-mobile text-white md:text-h3-desktop">
                                             {currentTitle || 'Untitled Work'}
                                           </h3>
 
@@ -209,7 +209,7 @@ export default function Works() {
                                         className='flex flex-row gap-2'>
                                             {workItem?.workCategories?.nodes?.map((category: WorkCategoryNode) => (
                                                 <p 
-                                                className='text-white border border-white bg-red-400 px-3.5 py-1 rounded-[40px] '
+                                                className='text-white text-body-mobile border border-white bg-red-400 px-3.5 py-1 rounded-[40px] md:text-body-desktop '
                                                 key={category.name}>{category.name}</p>
                                             ))}
                                         </div>

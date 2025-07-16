@@ -211,12 +211,12 @@ export default function Hero() {
     useGSAP(() => {
         if (!aboutCardItems || aboutCardItems.length === 0) return;
 
-        const aboutCards = containerRef.current?.querySelectorAll('.about-card')
+        const aboutCards = containerRef.current?.querySelectorAll('.about-card-content')
         
         if (!aboutCards) return;
 
         aboutCards.forEach((card) => {
-            card.classList.remove('about-card-initial-hidden')
+            card.classList.remove('about-card-content-initial-hidden')
             
             gsap.set(card, { 
                 opacity: 0,
@@ -259,7 +259,7 @@ export default function Hero() {
             <section id='hero-section' className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
                 <div 
                     ref={heroRef}
-                    className='hero-initial-hidden px-[10px] flex flex-col items-center justify-center px-8 py-4 bg-skye-primary-red md:ml-[10px] mr-[10px]'
+                    className='hero-initial-hidden px-[10px] flex flex-col items-center justify-center py-4 bg-skye-primary-red ml-[10px] mr-[10px]'
                 >
                     {acfData && 
                         <h1 className='text-left text-h1-mobile text-skye-gray md:text-[6rem] lg:text-h1-desktop'>
@@ -282,37 +282,29 @@ export default function Hero() {
                     }
                 </div>
 
-                <div className='hero-video ml-[10px] mr-[10px] py-[10px] md:py-24'>
+                <div className='hero-video mx-[10px] py-[10px] md:py-24'>
                     <HeroVideo/>
                 </div>
             </section>
 
-            <section id='about-section' className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
-                <div className='about-cards-container flex flex-col gap-4 divide-y-2 divide-skye-primary-red'>
+            <section id='about-section' className='mx-[10px] md:max-w-screen-2xl md:mx-auto'>
+                <div className='about-cards-container flex flex-col gap-8 divide-y-2 divide-skye-primary-red md:gap-16 '>
                     {aboutCardItems && aboutCardItems.map((item, index) => (
-                        <div 
-                            key={index} 
-                            className='about-card about-card-initial-hidden bg-cover bg-center min-h-[300px] relative overflow-hidden'
-                            style={{ 
-                                backgroundImage: item.aboutCardBackground?.node?.sourceUrl 
-                                    ? `url(${item.aboutCardBackground.node.sourceUrl})` 
-                                    : 'none' 
-                            }}
-                        >
-                            <div className='p-4 flex flex-col justify-center gap-4'>
+                        
+                            <div key={index} className='about-card-content p-4 pb-8 flex flex-col justify-center gap-4 max-w-[800px] mx-auto md:max-w-[1200px] md:pb-16'>
                                 <div className='flex justify-between'>
-                                    <h2 className='card-heading text-lg text-skye-primary-red md:text-subdesktop'>
+                                    <h2 className='card-heading text-submobile text-skye-primary-red md:text-subdesktop'>
                                         {item.aboutCardHeading}
                                     </h2>
-                                    <h2 className='card-number text-lg text-skye-primary-red md:text-subdesktop'>
+                                    <h2 className='card-number text-submobile text-skye-primary-red md:text-subdesktop'>
                                         {item.aboutCardNumber}
                                     </h2>
                                 </div>
-                                <p className='card-content text-2xl text-white drop-shadow-lg md:text-h2-desktop'>
+                                <p className='card-content text-h2-mobile text-white drop-shadow-lg md:text-h2-desktop'>
                                     {item.aboutCardContent}
                                 </p>
                             </div>
-                        </div>
+                        
                     ))}
                 </div>
             </section>
