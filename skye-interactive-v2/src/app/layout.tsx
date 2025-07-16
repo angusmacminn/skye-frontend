@@ -4,6 +4,7 @@ import "./globals.css";
 import { ApolloWrapper } from "./apollo-provider";
 import LenisProvider from "@/components/LenisProvider";
 
+
 // Setup Radio Grotesk
 const radioGrotesk = localFont({
   variable: "--font-radio-grotesk", // CSS variable name

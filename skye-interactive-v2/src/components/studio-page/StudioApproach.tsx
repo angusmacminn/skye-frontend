@@ -46,7 +46,7 @@ export default function StudioApproach(){
     const pageId = '8'
     const pageIdType = 'DATABASE_ID'
 
-    const { loading, error, data } = useQuery<QueryData>(GET_STUDIO_APPROACH_DATA, {
+    const { data } = useQuery<QueryData>(GET_STUDIO_APPROACH_DATA, {
         variables: {
             id: pageId,
             idType: pageIdType

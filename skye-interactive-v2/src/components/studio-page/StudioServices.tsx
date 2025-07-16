@@ -56,19 +56,14 @@ export default function StudioServices(){
     const pageId = '8'
     const pageIdType = 'DATABASE_ID'
 
-    const { loading, error, data } = useQuery<QueryData>(GET_STUDIO_SERVICES_DATA, {
+    const { loading, data } = useQuery<QueryData>(GET_STUDIO_SERVICES_DATA, {
         variables: {
             id: pageId,
             idType: pageIdType
         }
     })
     
-    // Add these error handling checks BEFORE trying to access data
-    if (loading) return <div className="p-8 text-center">Loading services...</div>
-    if (error) {
-        console.error("GraphQL Error:", error);
-        return <p className="p-8 text-center text-red-500">Error loading services data. Check console.</p>;
-    }
+
 
     // defensive checks
     if (!data?.page?.studioPage && !loading) {
