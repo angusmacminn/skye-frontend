@@ -51,7 +51,7 @@ export default function ContactForm() {
           Thank you for reaching out!
         </h3>
         <p className="text-p-mobile md:text-p-desktop text-skye-gray">
-          We'll get back to you within 24 hours to discuss your project.
+          We&apos;ll get back to you within 24 hours to discuss your project.
         </p>
       </div>
     )

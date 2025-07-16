@@ -12,12 +12,12 @@ export default function ContactPage() {
           <div className="max-w-screen-2xl mx-auto px-[10px]">
             <div className="hero-content ">
               <h1 className="text-h1-mobile md:text-h1-desktop text-skye-primary-red mb-6">
-                Let's build something amazing together
+                Let&apos;s build something amazing together
               </h1>
               <p className="text-p-mobile md:text-p-desktop text-skye-gray max-w-2xl">
-                We're passionate about creating digital experiences that make a difference. 
-                Whether you're a startup with big dreams or an established company looking to innovate, 
-                we'd love to hear about your project.
+                We&apos;re passionate about creating digital experiences that make a difference. 
+                Whether you&apos;re a startup with big dreams or an established company looking to innovate, 
+                we&apos;d love to hear about your project.
               </p>
             </div>
           </div>
@@ -102,11 +102,11 @@ export default function ContactPage() {
               <div className="faq-grid space-y-8">
                 <div className="faq-item">
                   <h3 className="text-submobile md:text-subdesktop text-skye-primary-red mb-3">
-                    What's your typical project timeline?
+                    What&apos;s your typical project timeline?
                   </h3>
                   <p className="text-p-mobile md:text-p-desktop text-skye-gray">
                     Project timelines vary based on scope and complexity. A typical website project takes 6-12 weeks, 
-                    while larger applications can take 3-6 months. We'll provide a detailed timeline during our initial consultation.
+                    while larger applications can take 3-6 months. We&apos;ll provide a detailed timeline during our initial consultation.
                   </p>
                 </div>
 
@@ -122,7 +122,7 @@ export default function ContactPage() {
 
                 <div className="faq-item">
                   <h3 className="text-submobile md:text-subdesktop text-skye-primary-red mb-3">
-                    What's included in your web development services?
+                    What&apos;s included in your web development services?
                   </h3>
                   <p className="text-p-mobile md:text-p-desktop text-skye-gray">
                     Our services include strategy, UX/UI design, front-end and back-end development, testing, 

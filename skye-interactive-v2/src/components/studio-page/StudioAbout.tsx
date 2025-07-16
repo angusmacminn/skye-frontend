@@ -54,7 +54,7 @@ export default function StudioAbout(){
     const pageId = 8
     const pageIdType = 'DATABASE_ID'
 
-    const { loading, error, data } = useQuery<QueryData>(GET_STUDIO_ABOUT_DATA, {
+    const { data } = useQuery<QueryData>(GET_STUDIO_ABOUT_DATA, {
         variables: {
             id: pageId,
             idType: pageIdType

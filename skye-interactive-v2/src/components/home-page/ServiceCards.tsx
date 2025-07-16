@@ -45,6 +45,18 @@ interface QueryData {
     page?: PageData;
 }
 
+// Add these interfaces after your existing interfaces
+interface DirectionalHoverHandlers {
+  handleMouseEnter: (e: MouseEvent) => void;
+  handleMouseLeave: (e: MouseEvent) => void;
+}
+
+interface WindowWithHandlers extends Window {
+  directionalHoverHandlers?: Map<Element, DirectionalHoverHandlers>;
+}
+
+declare const window: WindowWithHandlers;
+
 // Register plugins
 gsap.registerPlugin(ScrollTrigger)
 
@@ -252,7 +264,7 @@ function ServiceCards() {
         }
   
         // Initialize the directional hover effect for all service cards
-        const initDirectionalHover = () => {
+        const initDirectionalHover = (): Map<Element, DirectionalHoverHandlers> => {
             
             const cards = document.querySelectorAll('.service-card')
             
@@ -366,19 +378,19 @@ function ServiceCards() {
             const cardHandlers = initDirectionalHover();
             
             // Store the handlers for cleanup
-            (window as any).directionalHoverHandlers = cardHandlers;
+            window.directionalHoverHandlers = cardHandlers;
         }, 1500); // Increased delay
   
         // CLEANUP: Remove event listeners when component unmounts
         return () => {
           clearTimeout(timer);
-          const cardHandlers = (window as any).directionalHoverHandlers;
+          const cardHandlers = window.directionalHoverHandlers;
           if (cardHandlers) {
-            cardHandlers.forEach((handlers: any, card: Element) => {
+            cardHandlers.forEach((handlers: DirectionalHoverHandlers, card: Element) => {
               card.removeEventListener('mouseenter', handlers.handleMouseEnter as EventListener)
               card.removeEventListener('mouseleave', handlers.handleMouseLeave as EventListener)
             })
-            delete (window as any).directionalHoverHandlers;
+            delete window.directionalHoverHandlers;
           }
         }
   

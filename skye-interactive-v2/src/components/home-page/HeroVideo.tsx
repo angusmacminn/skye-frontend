@@ -1,8 +1,7 @@
 'use client'
 
 import {gql, useQuery} from '@apollo/client'
-import gsap from 'gsap'
-import { useEffect } from 'react';
+
 
 const GET_VIDEO_DATA = gql`
     query GetVideoData ($id: ID! $idType: PageIdType!) {
@@ -57,7 +56,6 @@ export default function HeroVideo(){
     });
 
     const videoUrl = data?.page?.homePage?.heroVideoUrl?.node?.mediaItemUrl
-    const mimeType = data?.page?.homePage?.heroVideoUrl?.node?.mimeType
 
     // Return null for all non-success states to prevent FOUC
     if (loading) return null
