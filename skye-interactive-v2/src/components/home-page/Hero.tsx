@@ -213,16 +213,10 @@ export default function Hero() {
         if (!aboutCardItems || aboutCardItems.length === 0) return;
 
         const aboutCards = containerRef.current?.querySelectorAll('.about-card-content')
-        const aboutCardContent = containerRef.current?.querySelectorAll('.card-content')
-        const aboutCardHeading = containerRef.current?.querySelectorAll('.card-heading')
         
         if (!aboutCards) return;
 
-        if (aboutCardHeading) {
-            const splitHeading = new SplitText(aboutCardHeading, {
-                type: 'lines'
-            }) 
-        }
+        
 
         aboutCards.forEach((card) => {
             card.classList.remove('about-card-content-initial-hidden')
