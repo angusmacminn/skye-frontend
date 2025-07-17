@@ -85,7 +85,7 @@ export default function Process() {
                     // Create the scroll-jacked animation
                     ScrollTrigger.create({
                         trigger: statisticsSection,
-                        start: "bottom 50%", // When bottom of stats section hits bottom of viewport
+                        start: "bottom 65%", // When bottom of stats section hits bottom of viewport
                         end: "bottom top",      // Until bottom of stats section hits top of viewport
                         pin: true,              // Pin the statistics section
                         pinSpacing: false,      // Don't add extra spacing

@@ -1,7 +1,7 @@
 'use client'
 
 import { gql, useQuery } from '@apollo/client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -77,14 +77,34 @@ gsap.registerPlugin(SplitText)
 
 
 export default function Works() {
+    const [isVisible, setIsVisible] = useState(false)
+
+
     // 1. Your GraphQL query returns data matching GetWorksQueryData
     const { loading, error, data } = useQuery<GetWorksQueryData>(GET_WORKS_DATA)
     
     // 2. You can safely access nested properties
     const workItems = data?.works?.nodes;
 
+    // Add this useEffect for the opacity delay
+    useEffect(() => {
+        // Only show after data is loaded
+        if (workItems && workItems.length > 0) {
+            const timer = setTimeout(() => {
+                setIsVisible(true)
+            }, 300) // Adjust timing as needed
+            
+            return () => clearTimeout(timer)
+        }
+    }, [workItems])
+
     // Move useEffect BEFORE the early returns
     useEffect(() => {
+
+        
+
+
+        
         if (!workItems || workItems.length === 0) return;
 
         const worksSection = document.getElementById('works-section');
@@ -166,7 +186,8 @@ export default function Works() {
     if (error) return <p>Error loading works: {error.message}</p>;
 
     return (
-        <section id='works-section'>
+        <section id='works-section' 
+                 className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div id='works-section-content'
                  className='flex flex-col justify-center items-center gap-16 bg-skye-gray min-h-screen md:h-auto md:py-24 relative'>
                 <h3 className='text-h3-mobile text-skye-white mt-10 md:text-h3-desktop'>

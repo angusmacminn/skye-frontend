@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react';
 import HeroVideo from './HeroVideo'
+import { SplitText } from 'gsap/SplitText'
 
 
 const GET_HERO_DATA = gql`
@@ -69,7 +70,7 @@ interface QueryData {
     page?: PageData;
 }
 
-gsap.registerPlugin(ScrollTrigger, useGSAP)
+gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText)
 
 export default function Hero() {
     const pageId = '126'
@@ -212,8 +213,16 @@ export default function Hero() {
         if (!aboutCardItems || aboutCardItems.length === 0) return;
 
         const aboutCards = containerRef.current?.querySelectorAll('.about-card-content')
+        const aboutCardContent = containerRef.current?.querySelectorAll('.card-content')
+        const aboutCardHeading = containerRef.current?.querySelectorAll('.card-heading')
         
         if (!aboutCards) return;
+
+        if (aboutCardHeading) {
+            const splitHeading = new SplitText(aboutCardHeading, {
+                type: 'lines'
+            }) 
+        }
 
         aboutCards.forEach((card) => {
             card.classList.remove('about-card-content-initial-hidden')
@@ -223,6 +232,47 @@ export default function Hero() {
                 y: 30,
             })
 
+            // Find the content within THIS specific card
+            const aboutCardContent = card.querySelector('.card-content') // or whatever class/selector your content has
+            
+            if (aboutCardContent) {
+                // create splitText variable -- split by lines
+                const splitBody = new SplitText(aboutCardContent, {
+                    type: 'lines'
+                })
+
+                if(splitBody.lines.length > 0) {
+                    // set initial state
+                    gsap.set(splitBody.lines, {
+                        yPercent: 100,
+                        opacity: 0
+                    });
+                    // set to overflow hidden
+                    gsap.set(aboutCardContent, {
+                        overflow: 'hidden'
+                    });
+
+                    // add scrollTrigger
+                    ScrollTrigger.create({
+                        trigger: aboutCardContent,
+                        start: "top 70%",
+                        once: true,
+                        markers: true,
+
+                        onEnter: () => {
+                            gsap.to(splitBody.lines, {
+                                duration: 1,
+                                yPercent: 0,
+                                opacity: 1,
+                                stagger: 0.2,
+                                ease: "power2.out"
+                            })
+                        }
+                    })
+                }   
+            }
+
+            // Your existing card animation
             ScrollTrigger.create({
                 trigger: card,
                 start: "top 70%",
@@ -287,7 +337,7 @@ export default function Hero() {
                 </div>
             </section>
 
-            <section id='about-section' className='mx-[10px] md:max-w-screen-2xl md:mx-auto'>
+            <section id='about-section' className='mx-[10px] mt-36 md:max-w-screen-2xl md:mx-auto'>
                 <div className='about-cards-container flex flex-col gap-8 divide-y-2 divide-skye-primary-red md:gap-16 '>
                     {aboutCardItems && aboutCardItems.map((item, index) => (
                         
