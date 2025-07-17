@@ -228,22 +228,22 @@ function Stats() {
     return (
         <section id='statistics-section'
                  className='bg-black py-24 relative'>
-            {/* Full viewport background to prevent gray showing */}
-            <div className='absolute inset-0 bg-black w-full h-screen'></div>
-            <div id='statistics-container'
-            className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
-                <h3 className='stats-heading text-center text-h3-mobile text-white mb-8 md:text-h3-desktop'>{statsHeading}</h3>
-                <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-2'>
-                    {statisticCard?.map((card, index) => (
-                        <div key={index}
-                             id='statistic-card'
-                             className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] ${getCardGradientClass(index)}`}>
-                            <h3 className='stat-category text-left text-subdesktop text-white md:text-subdesktop'>{card.statCategory}</h3>
-                            <p className='stat-number text-left text-h2-desktop font-bold text-white drop-shadow-md md:text-h2-desktop'>{card.statNumber}</p>
-                        </div>
-                    ))}
+            {/* Full viewport background to prevent gray showing - extend it further */}
+            <div className='absolute inset-0 bg-black w-full min-h-[350vh]'></div>
+                <div id='statistics-container'
+                className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
+                    <h3 className='stats-heading text-center text-h3-mobile text-white mb-8 md:text-h3-desktop'>{statsHeading}</h3>
+                    <div className='flex flex-col items-center gap-4 w-full md:flex-row md:gap-2'>
+                        {statisticCard?.map((card, index) => (
+                            <div key={index}
+                                id='statistic-card'
+                                className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] ${getCardGradientClass(index)}`}>
+                                <h3 className='stat-category text-left text-subdesktop text-white md:text-subdesktop'>{card.statCategory}</h3>
+                                <p className='stat-number text-left text-h2-desktop font-bold text-white drop-shadow-md md:text-h2-desktop'>{card.statNumber}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
         </section>
     )
 }   

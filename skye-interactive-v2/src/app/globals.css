@@ -42,10 +42,12 @@ body {
   position: relative; /* Ensure proper stacking context */
 }
 
-/* Prevent any child elements from causing overflow */
-* {
-  max-width: 100%;
+main {
+  margin-top: 6rem;
 }
+
+/* Prevent any child elements from causing overflow */
+
 
 /* Specifically target the works section to contain its children */
 #works-section {

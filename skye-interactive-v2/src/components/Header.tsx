@@ -19,9 +19,8 @@ function Header() {
     return (
         <header 
             className={`
-                fixed top-0 left-0 right-0 z-50 
+                fixed left-0 right-0 z-50 
                 transition-all duration-300 ease-in-out
-                ${isScrolled ? 'bg-skye-gray/95 backdrop-blur-sm' : 'bg-transparent'}
                 max-w-screen-2xl mx-auto
             `}
         >

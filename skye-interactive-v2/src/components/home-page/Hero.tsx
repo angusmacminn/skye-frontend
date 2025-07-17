@@ -326,7 +326,7 @@ export default function Hero() {
                     }
                 </div>
 
-                <div className='hero-video mx-[10px] py-[10px] md:py-24'>
+                <div className='hero-video mt-24 mx-[10px] py-[10px] md:py-24'>
                     <HeroVideo/>
                 </div>
             </section>
@@ -335,7 +335,7 @@ export default function Hero() {
                 <div className='about-cards-container flex flex-col gap-8 divide-y-2 divide-skye-primary-red md:gap-16 '>
                     {aboutCardItems && aboutCardItems.map((item, index) => (
                         
-                            <div key={index} className='about-card-content p-4 pb-8 flex flex-col justify-center gap-4 max-w-[800px] mx-auto md:max-w-[1200px] md:pb-16'>
+                            <div key={index} className='about-card-content p-4 pb-8 flex flex-col justify-center gap-4 w-full max-w-[800px] mx-auto md:max-w-[1200px] md:pb-16'>
                                 <div className='flex justify-between'>
                                     <h2 className='card-heading text-submobile text-skye-primary-red md:text-subdesktop'>
                                         {item.aboutCardHeading}
