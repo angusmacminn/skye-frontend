@@ -208,7 +208,7 @@ export default function Process() {
                         <h3 className='text-left text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
                         <p className='text-left text-p-mobile md:text-p-desktop'>{step.stepDescription}</p>
                     </div>
-                ))}
+                ))} 
             </div>
         </section>
     )

@@ -46,7 +46,11 @@ main {
   margin-top: 6rem;
 }
 
-/* Prevent any child elements from causing overflow */
+.process-heading {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
 
 /* Specifically target the works section to contain its children */
