@@ -251,7 +251,7 @@ export default function Hero() {
                         trigger: aboutCardContent,
                         start: "top 70%",
                         once: true,
-                        markers: true,
+                        markers: false,
 
                         onEnter: () => {
                             gsap.to(splitBody.lines, {

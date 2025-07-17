@@ -31,12 +31,31 @@
   --gradient-service-card: linear-gradient(310deg, #F87171 5.38%, #EF4444 100%);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   font-family: var(--font-radio-grotesk), sans-serif;
-  /* margin-left: 10px;
-  margin-right: 10px; */
-  overflow-x: hidden; /* Hide horizontal overflow globally */
+  overflow-x: hidden;
+  position: relative; /* Ensure proper stacking context */
+}
+
+/* Prevent any child elements from causing overflow */
+* {
+  max-width: 100%;
+}
+
+/* Specifically target the works section to contain its children */
+#works-section {
+  overflow-x: hidden;
+  position: relative;
+}
+
+#works-grid-container {
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* GSAP Animation Initial States - Prevent Flash */
