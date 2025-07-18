@@ -53,27 +53,47 @@ function LogoModel(){
     const meshRef = useRef<THREE.Mesh>(null!)
     const { scene } = useGLTF('/models/skye-logo.glb')
     const progress = useScrollProgress()
+    const [isMobile, setIsMobile] = useState(false)
 
-    // Define start and end states for animation
-    const startState = {
+   
+
+    // check if mobile
+    // check if mobile and listen for resize
+    useEffect(() => {
+        const checkIsMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+        
+        return () => window.removeEventListener('resize', checkIsMobile);
+    }, [])
+
+     // Define states
+     const startState = {
         scale: 0.5,
-        position: [0, 8, 0] as [number, number, number],
+        position: [0, 5, 0] as [number, number, number],
         rotation: [0, 0, 0] as [number, number, number]
     }
-    
+
     const endState = {
         scale: 0.5,
         position: [0, -5, 0] as [number, number, number], 
         rotation: [Math.PI/2, Math.PI * 2, 0] as [number, number, number]
     }
 
-    // Interpolate values based on scroll progress
-    const currentScale = lerp(startState.scale, endState.scale, progress)
-    const currentPosition = lerpVector3(startState.position, endState.position, progress)
-    const currentRotation = lerpVector3(startState.rotation, endState.rotation, progress)
+    const mobileState = {
+        scale: 0.9,
+        position: [0, 0, 0] as [number, number, number],
+        rotation: [0, 0, 0] as [number, number, number]
+    }
 
-    console.log(currentScale)
-    console.log(currentPosition)
+    // check of mobile and interpolate values based on scroll progress
+    const currentScale = isMobile ? mobileState.scale : lerp(startState.scale, endState.scale, progress)
+    const currentPosition = isMobile ? mobileState.position : lerpVector3(startState.position, endState.position, progress)
+    const currentRotation = isMobile ? mobileState.rotation : lerpVector3(startState.rotation, endState.rotation, progress)
+
 
     // Rotate the object
     useFrame((state, delta) => {
@@ -96,6 +116,7 @@ function LogoModel(){
 // main r3f component 
 function ThreeScene() {
     const [containerHeight, setContainerHeight] = useState('100vh');
+    const isMobile = window.innerWidth < 768;
 
     useEffect(() => {
         const stepsContainer = document.querySelector('.steps-container');
@@ -131,7 +152,7 @@ function ThreeScene() {
             
                 <Canvas
                     camera={{
-                        position: [0, 0, 12],
+                        position: isMobile ? [0, 0, 10] : [0, 0, 12],
                         fov: 75,
                     }}
                 >
