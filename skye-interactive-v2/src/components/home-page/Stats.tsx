@@ -229,7 +229,7 @@ function Stats() {
         <section id='statistics-section'
                  className='bg-black py-24 relative'>
             {/* Full viewport background to prevent gray showing */}
-            <div className='absolute inset-0 bg-black w-full min-h-[150vh]'></div>
+            <div className='absolute inset-0 bg-black w-full min-h-[100vh]'></div>
                 <div id='statistics-container'
                 className='flex flex-col items-center gap-4 w-full max-w-lg md:max-w-6xl mx-auto px-4 relative z-10'>
                     <h3 className='stats-heading text-center text-h3-mobile text-white mb-8 md:text-h3-desktop'>{statsHeading}</h3>

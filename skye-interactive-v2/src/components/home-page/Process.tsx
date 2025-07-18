@@ -196,19 +196,25 @@ export default function Process() {
 
     return (
         <section id='process-section' className='bg-skye-white py-16'>
-            <div id='process-container' className='flex flex-col items-center gap-8 mt-10 w-full max-w-lg mx-auto px-4'>
+            <div id='process-container' className='flex flex-col items-center gap-32 mt-10 w-full max-w-6xl mx-auto px-4'>
                 <h3 className='process-heading text-center text-h3-mobile sticky top-20 font-bold md:text-h3-desktop'>{processHeading}</h3>
 
-                <ThreeScene />
-                
-                {processSteps?.map((step, index) => (
-                    <div key={index}
-                         id={`process-step-${index}`}
-                         className='flex flex-col items-left h-[40vh] gap-4'>
-                        <h3 className='text-left text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
-                        <p className='text-left text-p-mobile md:text-p-desktop'>{step.stepDescription}</p>
-                    </div>
-                ))} 
+                <div id='process-row' className='process-row flex flex-col md:flex-row items-center gap-8 '>
+                    <div className='steps-container sticky top-20 flex flex-col items-left gap-4 w-full md:w-1/2'>
+                        {processSteps?.map((step, index) => (
+                            <div key={index}
+                                 id={`process-step-${index}`}
+                                 className='flex flex-col items-left h-[40vh] gap-4'>
+                                <h3 className='text-left text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
+                                <p className='text-left text-p-mobile md:text-p-desktop'>{step.stepDescription}</p>
+                            </div>
+                        ))}
+                    </div> 
+
+                    <div className='three-scene-container sticky top-20 self-start h-auto w-full md:w-1/2'>
+                        <ThreeScene />
+                        </div>
+                </div>
             </div>
         </section>
     )

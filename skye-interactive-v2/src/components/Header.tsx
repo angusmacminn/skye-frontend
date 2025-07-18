@@ -19,9 +19,10 @@ function Header() {
     return (
         <header 
             className={`
-                fixed left-0 right-0 z-50 
+                ${ isScrolled ? 'fixed left-0 right-0 z-50' : 'fixed left-0 right-0 z-50'}
                 transition-all duration-300 ease-in-out
                 max-w-screen-2xl mx-auto
+                
             `}
         >
             {/* Always render both, let CSS handle visibility */}

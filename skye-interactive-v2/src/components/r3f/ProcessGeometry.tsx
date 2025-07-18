@@ -12,20 +12,24 @@ function useScrollProgress () {
 
     useEffect(() => {
         const handleScroll = () => {
-            const processSection = document.getElementById('process-section')
-            if (!processSection) return
+            const stepsContainer = document.querySelector('.steps-container');
+            if (!stepsContainer) return;
 
-            const rect = processSection.getBoundingClientRect()
-            const sectionHeight = processSection.offsetHeight
-            const windowHeight = window.innerHeight
+            const rect = stepsContainer.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const containerHeight = (stepsContainer as HTMLElement).offsetHeight;
+            const stickyOffset = 80; // Corresponds to Tailwind's `top-20` (5rem)
 
-            // calculate smooth progress through the section
-            const scrollProgress = Math.max(0, Math.min(1,
-                (windowHeight - rect.top) / (sectionHeight + windowHeight)
-            ))
+            // Calculate the range of scroll we care about
+            const scrollStart = stickyOffset;
+            const scrollEnd = windowHeight - containerHeight;
 
-            setProgress(scrollProgress)
-        }
+            // Calculate progress, clamped between 0 and 1
+            const rawProgress = (scrollStart - rect.top) / (scrollStart - scrollEnd);
+            const scrollProgress = Math.max(0, Math.min(1, rawProgress));
+
+            setProgress(scrollProgress);
+        };
 
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
@@ -52,15 +56,15 @@ function LogoModel(){
 
     // Define start and end states for animation
     const startState = {
-        scale: 0.1,
-        position: [3, 3, 0] as [number, number, number],
+        scale: 0.5,
+        position: [0, 8, 0] as [number, number, number],
         rotation: [0, 0, 0] as [number, number, number]
     }
     
     const endState = {
-        scale: 0.9,
-        position: [6, -2, 0] as [number, number, number], 
-        rotation: [Math.PI/2, Math.PI * 4, 0] as [number, number, number]
+        scale: 0.5,
+        position: [0, -5, 0] as [number, number, number], 
+        rotation: [Math.PI/2, Math.PI * 2, 0] as [number, number, number]
     }
 
     // Interpolate values based on scroll progress
@@ -68,10 +72,13 @@ function LogoModel(){
     const currentPosition = lerpVector3(startState.position, endState.position, progress)
     const currentRotation = lerpVector3(startState.rotation, endState.rotation, progress)
 
+    console.log(currentScale)
+    console.log(currentPosition)
+
     // Rotate the object
     useFrame((state, delta) => {
         if(meshRef.current){
-            meshRef.current.rotation.x += delta * 0.07
+            meshRef.current.rotation.y += delta * 0.07
         }
     })
 
@@ -88,18 +95,43 @@ function LogoModel(){
 
 // main r3f component 
 function ThreeScene() {
+    const [containerHeight, setContainerHeight] = useState('100vh');
+
+    useEffect(() => {
+        const stepsContainer = document.querySelector('.steps-container');
+
+        if (stepsContainer) {
+            const resizeObserver = new ResizeObserver(entries => {
+                if (entries[0]) {
+                    const newHeight = entries[0].contentRect.height;
+                    setContainerHeight(`${newHeight}px`);
+                }
+            });
+
+            resizeObserver.observe(stepsContainer);
+
+            const initialHeight = (stepsContainer as HTMLElement).offsetHeight;
+            if (initialHeight > 0) {
+                setContainerHeight(`${initialHeight}px`);
+            }
+
+            return () => {
+                resizeObserver.unobserve(stepsContainer);
+            };
+        }
+    }, []);
     
 
     return (
         <div 
         id="process-three-scene"
         className="w-full relative sticky top-20"
-        style={{ width: '1900px', height: '800px' }}
+        style={{ width: '100%', height: containerHeight }}
         >
             
                 <Canvas
                     camera={{
-                        position: [0, 0, 6],
+                        position: [0, 0, 12],
                         fov: 75,
                     }}
                 >
