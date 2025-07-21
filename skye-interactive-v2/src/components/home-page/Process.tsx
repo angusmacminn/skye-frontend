@@ -205,7 +205,10 @@ export default function Process() {
                             <div key={index}
                                  id={`process-step-${index}`}
                                  className='flex flex-col items-left h-[20vh] md:h-[40vh] gap-4'>
-                                <h3 className='text-left text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
+                                <div className='step-heading flex flex-row-reverse gap-4 items-center justify-between w-full'>
+                                    <h3 className='text-left text-skye-primary-red text-submobile font-bold md:text-subdesktop'>{step.processNumber}</h3>
+                                    <h3 className='text-left text-skye-primary-red text-submobile font-bold md:text-subdesktop'>{step.stepHeading}</h3>
+                                </div>
                                 <p className='text-left text-p-mobile md:text-p-desktop'>{step.stepDescription}</p>
                             </div>
                         ))}
