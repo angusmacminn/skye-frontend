@@ -24,8 +24,8 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form Section */}
-        <section className="contact-form-section bg-white">
-          <div className="py-16 md:py-24 max-w-screen-2xl mx-auto">
+        <section className="contact-form-section bg-white flex flex-col items-center justify-center">
+          <div className="py-16 md:py-24 max-w-screen-2xl md:mx-auto ">
             <div className="form-container px-[10px] max-w-4xl">
               <div className="form-header mb-12">
                 <h2 className="text-h2-mobile md:text-h2-desktop text-skye-gray mb-4">
@@ -40,60 +40,11 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Information Section */}
-        <section className="contact-info-section py-16 md:py-24">
-          <div className="max-w-screen-2xl mx-auto px-[10px]">
-            <div className="info-flex flex flex-col md:flex-row gap-8 justify-center md:justify-between">
-              
-              {/* Email */}
-              <div className="info-item flex-1 min-w-[280px] text-center md:text-left">
-                <h3 className="text-h3-mobile md:text-h3-desktop text-skye-primary-red mb-4">
-                  Email
-                </h3>
-                <p className="text-p-mobile md:text-p-desktop text-skye-gray mb-2">
-                  For project inquiries
-                </p>
-                <a 
-                  href="mailto:hello@skyeinteractive.com" 
-                  className="text-submobile md:text-subdesktop text-skye-primary-red hover:text-skye-primary-red-light transition-colors"
-                >
-                  hello@skyeinteractive.com
-                </a>
-              </div>
-
-              {/* Response Time */}
-              <div className="info-item flex-1 min-w-[280px] text-center md:text-left">
-                <h3 className="text-h3-mobile md:text-h3-desktop text-skye-primary-red mb-4">
-                  Response Time
-                </h3>
-                <p className="text-p-mobile md:text-p-desktop text-skye-gray mb-2">
-                  We typically respond within
-                </p>
-                <p className="text-submobile md:text-subdesktop text-skye-primary-red">
-                  24 hours
-                </p>
-              </div>
-
-              {/* Office Hours */}
-              <div className="info-item flex-1 min-w-[280px] text-center md:text-left">
-                <h3 className="text-h3-mobile md:text-h3-desktop text-skye-primary-red mb-4">
-                  Office Hours
-                </h3>
-                <p className="text-p-mobile md:text-p-desktop text-skye-primary-red mb-2">
-                  Monday - Friday
-                </p>
-                <p className="text-submobile md:text-subdesktop text-skye-primary-red">
-                  9:00 AM - 6:00 PM EST
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </section>
+        
 
         {/* FAQ Section */}
-        <section className="faq-section bg-white">
-          <div className="py-16 md:py-24 max-w-screen-2xl mx-auto">
+        <section className="faq-section bg-white flex flex-col items-center justify-center">
+          <div className="py-16 md:py-24 max-w-screen-2xl md:mx-auto">
             <div className="faq-container px-[10px] max-w-4xl">
               <h2 className="text-h2-mobile md:text-h2-desktop text-skye-gray mb-12 text-center">
                 Frequently Asked Questions

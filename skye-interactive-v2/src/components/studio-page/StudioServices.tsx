@@ -65,19 +65,11 @@ export default function StudioServices(){
             idType: pageIdType
         }
     })
+
     
-
-
-    // defensive checks
-    if (!data?.page?.studioPage && !loading) {
-        return <p className="p-8 text-center">Services content not found. Check ACF and query.</p>;
-    }
-
     const acfData = data?.page?.studioPage
     const serviceHeader = acfData?.serviceHeader
     const fullServiceItem = acfData?.fullServiceItem
-
-    console.log('Full service items array:', fullServiceItem)
 
     useEffect(() => {
         if (fullServiceItem && fullServiceItem.length > 0) {
@@ -88,6 +80,12 @@ export default function StudioServices(){
             return () => clearTimeout(timer)
         }
     }, [fullServiceItem])
+
+    
+    if (!data?.page?.studioPage && !loading) {
+        return <p className="p-8 text-center">Services content not found. Check ACF and query.</p>;
+    }
+
 
     return (
         <section className='services-section bg-white'>
