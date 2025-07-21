@@ -157,15 +157,12 @@ export default function Hero() {
             }, "-=0.1")
             .to(hero, {
                 scaleY: 1,
+                borderTopLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
                 duration: 0.7,
                 ease: 'power2.out',
             }, "-=0.2")
-            .to(hero, {
-                borderTopLeftRadius: '40px',
-                borderBottomRightRadius: '40px',
-                duration: 0.6,
-                ease: 'power2.out',
-            }, "-=0.1")
+            
             .to(heroText1, {
                 opacity: 1,
                 y: 0,
@@ -176,22 +173,22 @@ export default function Hero() {
                 opacity: 1,
                 y: 0,
                 filter: 'blur(0px)',
-                duration: 0.7,
+                duration: 0.5,
                 ease: 'power2.out',
-            }, "-=0.1")
+            })
             .to(heroText3, {
                 opacity: 1,
                 y: 0,
                 duration: 0.5,
                 ease: 'power2.out',
-            }, "-=0.1")
+            })
             .to(heroText4, {
                 opacity: 1,
                 y: 0,
                 filter: 'blur(0px)',
-                duration: 0.7,
+                duration: 0.5,
                 ease: 'power2.out',
-            }, "-=0.1")
+            })
 
         if (heroVideo) {
             tl.to(heroVideo, {

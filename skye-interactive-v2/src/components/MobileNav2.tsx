@@ -46,7 +46,6 @@ const navLinks = [
     { label: "Home", href: "/" },
     { label: "Studio", href: "/studio" },
     { label: "Contact", href: "/contact" },
-    { label: "Works", href: "/works" },
 ]
 
 function MobileNav2() {

@@ -6,8 +6,6 @@ import StudioServices from "@/components/studio-page/StudioServices";
 import Footer from "@/components/Footer";
 import ContactCTA from "@/components/ContactCTA";
 
-
-
 export default function StudioPage() {
   return (
     <>

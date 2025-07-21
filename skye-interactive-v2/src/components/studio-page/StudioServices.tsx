@@ -2,6 +2,7 @@
 
 import { useQuery } from '@apollo/client'
 import { gql } from '@apollo/client'
+import { useState, useEffect } from 'react'
 
 const GET_STUDIO_SERVICES_DATA = gql`
     query getStudioServicesData($id:ID!, $idType: PageIdType!){
@@ -53,6 +54,8 @@ interface QueryData {
 }
 
 export default function StudioServices(){
+    const [isVisible, setIsVisible] = useState(false)
+
     const pageId = '8'
     const pageIdType = 'DATABASE_ID'
 
@@ -76,9 +79,19 @@ export default function StudioServices(){
 
     console.log('Full service items array:', fullServiceItem)
 
+    useEffect(() => {
+        if (fullServiceItem && fullServiceItem.length > 0) {
+            const timer = setTimeout(() => {
+                setIsVisible(true)
+            }, 300)
+            
+            return () => clearTimeout(timer)
+        }
+    }, [fullServiceItem])
+
     return (
         <section className='services-section bg-white'>
-            <div className='py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24 md:px-10'>
+            <div className={`py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24 md:px-10 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <div className='services-container mx-[10px] flex flex-col gap-8 max-w-[500px] md:max-w-[800px] md:mx-auto'>
                     <h3 className='services-header text-h3-mobile text-center md:text-h3-desktop'>{serviceHeader}</h3>
                     <div className='services-item flex flex-col gap-4'>

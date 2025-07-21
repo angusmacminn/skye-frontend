@@ -143,9 +143,9 @@ function DesktopNav() {
                     <Link 
                         ref={(el) => { linkRefs.current[0] = el; }}
                         className='desktop-nav-link filter-invert transition-all duration-300 hover:text-skye-white px-3 py-2 relative z-20' 
-                        href='/works'
+                        href='/'
                     >
-                        Works
+                        Home
                     </Link>
                     <Link 
                         ref={(el) => { linkRefs.current[1] = el; }}

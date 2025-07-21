@@ -187,7 +187,7 @@ export default function Works() {
 
     return (
         <section id='works-section' 
-                 className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} overflow-x-hidden`}>
+                 className={`md:max-w-screen-2xl md:mx-auto transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} overflow-x-hidden`}>
             <div id='works-section-content'
                  className='flex flex-col justify-center items-center gap-16 bg-skye-gray min-h-screen md:h-auto md:py-24 relative overflow-x-hidden'>
                 <h3 className='text-h3-mobile text-skye-white mt-10 md:text-h3-desktop'>
@@ -197,7 +197,7 @@ export default function Works() {
                 <div id='works-grid-container' 
                      className='w-full overflow-x-hidden relative'>
                     <div id='works-grid'
-                        className='flex flex-row md:flex-wrap md:justify-center gap-8 w-full px-4 pb-4'
+                        className='flex flex-row md:justify-center gap-8 w-full px-4 pb-4'
                         style={{
                             scrollbarWidth: 'none', // Firefox
                             msOverflowStyle: 'none', // IE and Edge
@@ -210,13 +210,13 @@ export default function Works() {
 
                             return (
                                 <div
-                                    className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative md:w-1/3"
+                                    className="work-card rounded-bl-[40px] p-4 flex-shrink-0 w-80 min-w-80 relative md:w-1/4 md:flex-shrink-0"
                                     key={workItem?.slug || index}>
                                     <div id='work-card-content'
                                         className='flex flex-col gap-4 relative z-10'>
                                         <div className='flex flex-row justify-between items-center'>
                                             
-                                          <h3 className="text-h3-mobile text-white md:text-h3-desktop">
+                                          <h3 className="text-h3-mobile text-white md:text-subdesktop">
                                             {currentTitle || 'Untitled Work'}
                                           </h3>
 

@@ -126,15 +126,11 @@ export default function StudioHero() {
             }, "-=0.1")
             .to(hero, {
                 scaleY: 1,
+                borderTopLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
                 duration: 0.7,
                 ease: 'power2.out',
             }, "-=0.2")
-            .to(hero, {
-                borderTopLeftRadius: '40px',
-                borderBottomRightRadius: '40px',
-                duration: 0.6,
-                ease: 'power2.out',
-            }, "-=0.1")
             .to(heroText1, {
                 opacity: 1,
                 y: 0,
@@ -167,7 +163,7 @@ export default function StudioHero() {
         <section ref={containerRef} className='py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24'>
             <div 
                 ref={heroRef}
-                className='visibility-hidden flex flex-col items-center justify-center gap-4 px-8 py-4 bg-skye-primary-red mx-[10px]'
+                className='opacity-0 flex flex-col items-center justify-center gap-4 px-8 py-4 bg-skye-primary-red mx-[10px]'
             >
                 <h1 
                     ref={heroText1Ref}
