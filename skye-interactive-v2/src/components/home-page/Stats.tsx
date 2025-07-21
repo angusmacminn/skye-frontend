@@ -186,7 +186,7 @@ function Stats() {
                 
                                 // Scramble text effect
                                 gsap.to(numberEl, {
-                                    duration: 2,
+                                    duration: 1,
                                     delay: 0.5 + (index * 0.2),
                                     scrambleText: {
                                         text: originalText,
@@ -237,7 +237,7 @@ function Stats() {
                         {statisticCard?.map((card, index) => (
                             <div key={index}
                                 id='statistic-card'
-                                className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 min-h-[300px] ${getCardGradientClass(index)}`}>
+                                className={`flex flex-col items-left justify-center w-full md:w-1/3 gap-4 p-8 md:min-h-[300px] ${getCardGradientClass(index)}`}>
                                 <h3 className='stat-category text-left text-subdesktop text-white md:text-subdesktop'>{card.statCategory}</h3>
                                 <p className='stat-number text-left text-h2-desktop font-bold text-white drop-shadow-md md:text-h2-desktop'>{card.statNumber}</p>
                             </div>
