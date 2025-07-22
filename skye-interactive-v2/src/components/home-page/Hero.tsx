@@ -86,6 +86,7 @@ export default function Hero() {
     const heroText2Ref = useRef<HTMLSpanElement>(null)
     const heroText3Ref = useRef<HTMLDivElement>(null)
     const heroText4Ref = useRef<HTMLSpanElement>(null)
+    const discoverBtnRef = useRef<HTMLDivElement>(null) // Add this ref
 
     const { loading, error, data } = useQuery<QueryData>(GET_HERO_DATA, {
         variables: {
@@ -111,6 +112,7 @@ export default function Hero() {
         const heroText3 = heroText3Ref.current
         const heroText4 = heroText4Ref.current
         const heroVideo = document.getElementById('hero-video')
+        const discoverBtn = discoverBtnRef.current // Add this
 
         if (!hero || !heroText1 || !heroText2 || !heroText3 || !heroText4) {
             return;
@@ -139,6 +141,14 @@ export default function Hero() {
             gsap.set(heroVideo, {
                 opacity: 0,
                 filter: 'blur(10px)',
+            })
+        }
+
+        // Set initial state for button
+        if (discoverBtn) {
+            gsap.set(discoverBtn, {
+                opacity: 0,
+                y: 30,
             })
         }
 
@@ -198,6 +208,16 @@ export default function Hero() {
                 duration: 0.5,
                 ease: 'power2.out',
             }, '-=0.5')
+        }
+
+        // Add button animation to timeline
+        if (discoverBtn) {
+            tl.to(discoverBtn, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: 'power2.out',
+            }, '-=0.3') // Overlap slightly with video animation
         }
 
     }, { 
@@ -350,7 +370,7 @@ export default function Hero() {
                     ))}
                 </div>
 
-                <div className='discover-cta flex justify-center'>
+                <div ref={discoverBtnRef} className='discover-cta flex justify-center opacity-0'>
                     <Link href="/studio" className="btn-secondary bg-skye-primary-red text-skye-white mt-8 border-2 border-white rounded-bl-[20px] px-8 py-4 hover:bg-skye-white hover:text-skye-primary-red transition-all duration-300 ease-in-out">
                     More About Skye
                     </Link>
