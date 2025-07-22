@@ -89,10 +89,10 @@ export default function StudioServices(){
 
     return (
         <section className='services-section bg-white'>
-            <div className={`py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24 md:px-10 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                <div className='services-container mx-[10px] flex flex-col gap-8 max-w-[500px] md:max-w-[800px] md:mx-auto'>
+            <div className={`py-[10px] mt-24 md:max-w-screen-2xl md:mx-auto md:py-24 md:px-10 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <div className='services-container mt-16 mx-[10px] flex flex-col gap-8 max-w-[500px] md:max-w-[800px] md:mx-auto'>
                     <h3 className='services-header text-h3-mobile text-center md:text-h3-desktop'>{serviceHeader}</h3>
-                    <div className='services-item flex flex-col gap-4'>
+                    <div className='services-item mx-[10px] flex flex-col gap-4'>
                         {fullServiceItem && fullServiceItem.map((item, index) => (
                             <div key={index} className='service-item-wrapper flex flex-col gap-2 border-b border-gray-200 pb-4 md:gap-4'>
                                 <h3 className='services-item-header text-submobile text-skye-primary-red md:text-subdesktop'>{item.serviceItemHeader}</h3>

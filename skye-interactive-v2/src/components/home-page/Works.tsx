@@ -189,8 +189,8 @@ export default function Works() {
         <section id='works-section' 
                  className={`md:max-w-screen-2xl md:mx-auto transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} overflow-x-hidden`}>
             <div id='works-section-content'
-                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray min-h-screen md:h-auto md:py-24 relative overflow-x-hidden'>
-                <h3 className='text-h3-mobile text-skye-white mt-10 md:text-h3-desktop'>
+                 className='flex flex-col justify-center items-center gap-16 bg-skye-gray mt-32 md:h-auto md:py-24 relative overflow-x-hidden'>
+                <h3 className='text-h3-mobile text-skye-white md:text-h3-desktop'>
                     Selected Works
                 </h3>
 

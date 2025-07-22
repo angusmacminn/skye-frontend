@@ -7,6 +7,7 @@ import { useGSAP } from '@gsap/react'
 import { useRef } from 'react';
 import HeroVideo from './HeroVideo'
 import { SplitText } from 'gsap/SplitText'
+import Link from 'next/link'
 
 
 const GET_HERO_DATA = gql`
@@ -296,8 +297,8 @@ export default function Hero() {
     } 
 
     return (
-        <main ref={containerRef}>
-            <section id='hero-section' className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
+        <>
+            <section ref={containerRef} id='hero-section' className='py-[10px] md:max-w-screen-2xl md:mx-auto'>
                 <div 
                     ref={heroRef}
                     className='hero-initial-hidden px-[10px] flex flex-col items-center justify-center py-4 bg-skye-primary-red ml-[10px] mr-[10px]'
@@ -328,7 +329,7 @@ export default function Hero() {
                 </div>
             </section>
 
-            <section id='about-section' className='mx-[10px] mt-36 md:max-w-screen-2xl md:mx-auto'>
+            <section id='about-section' className='mx-[10px] mt-24 md:max-w-screen-2xl md:mx-auto'>
                 <div className='about-cards-container flex flex-col gap-8 divide-y-2 divide-skye-primary-red md:gap-16 '>
                     {aboutCardItems && aboutCardItems.map((item, index) => (
                         
@@ -348,8 +349,14 @@ export default function Hero() {
                         
                     ))}
                 </div>
+
+                <div className='discover-cta flex justify-center'>
+                    <Link href="/studio" className="btn-secondary bg-skye-primary-red text-skye-white mt-8 border-2 border-white rounded-bl-[20px] px-8 py-4 hover:bg-skye-white hover:text-skye-primary-red transition-all duration-300 ease-in-out">
+                    More About Skye
+                    </Link>
+                </div>
             </section>
-        </main>
+        </>
     )
 }
 

@@ -20,7 +20,7 @@ export default function ContactCTA() {
       <div className="max-w-screen-2xl mx-auto text-center flex flex-col items-center justify-center gap-8">
         <h2 className='text-h3-mobile text-white md:text-h3-desktop'>Ready to build something together?</h2>
         <p className='text-p-mobile text-white md:text-p-desktop'>We’re always open to working with thoughtful people on meaningful digital projects. Let’s start a conversation.</p>
-        <Link href="/contact" className="btn-primary bg-skye-white text-skye-primary-red mt-8 border-2 border-white rounded-bl-[20px] px-8 py-4">
+        <Link href="/contact" className="btn-primary bg-skye-white text-skye-primary-red mt-8 border-2 border-white rounded-bl-[20px] px-8 py-4 hover:bg-skye-gray hover:text-skye-white transition-all duration-300 ease-in-out">
           Contact Us
         </Link>
       </div>

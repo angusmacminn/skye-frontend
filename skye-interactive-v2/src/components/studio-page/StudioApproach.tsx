@@ -70,8 +70,8 @@ export default function StudioApproach(){
     }, [approachCardItems])
 
     return(
-        <section className='approach-section py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24'>
-            <div className={`approach-content mx-[10px] flex flex-col items-center justify-center gap-8 py-8 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <section className='approach-section mt-24 py-[10px] md:max-w-screen-2xl md:mx-auto md:py-24'>
+            <div className={`approach-content mx-[10px] flex flex-col items-center justify-center gap-8 py-4 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <div className='flex flex-col items-center justify-center gap-2'>
                     <h2 className='text-submobile text-skye-primary-red text-center md:text-subdesktop'> We Bring</h2>
                     <h2 className='text-h2-mobile text-white text-center md:text-h2-desktop'>

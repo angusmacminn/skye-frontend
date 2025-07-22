@@ -122,7 +122,7 @@ export default function StudioAbout(){
 
     return(
         <section ref={containerRef} className='about-section py-[10px] md:max-w-screen-2xl md:mx-auto md:py-10'>
-            <div ref={contentRef} className='about-content mx-[10px] flex flex-col gap-8 md:flex-row md:justify-between md:items-start'>
+            <div ref={contentRef} className='about-content mx-[10px] flex flex-col gap-16 md:flex-row md:justify-between md:items-start'>
                 <div ref={imageRef} className='about-image'>
                     <img className='max-w-[300px] mx-auto object-cover rounded-tl-[40px] md:max-w-[500px]' src={aboutImageUrl} alt={aboutImageAlt} />
                 </div>
