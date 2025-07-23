@@ -34,7 +34,7 @@ function Footer() {
                             href="/contact" 
                             className="inline-block bg-skye-primary-red text-white px-8 py-3 rounded-bl-[20px] hover:bg-white hover:text-skye-primary-red transition-all duration-300 font-medium"
                         >
-                            Let's Work Together
+                            Let&apos;s work together
                         </Link>
                     </div>
 
