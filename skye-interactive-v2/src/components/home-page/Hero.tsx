@@ -113,7 +113,6 @@ export default function Hero() {
         const heroText3 = heroText3Ref.current
         const heroText4 = heroText4Ref.current
         const heroVideo = document.getElementById('hero-video')
-        const discoverBtn = discoverBtnRef.current // Add this
 
         if (!hero || !heroText1 || !heroText2 || !heroText3 || !heroText4) {
             return;
@@ -208,7 +207,7 @@ export default function Hero() {
             return;
         }
 
-        aboutCards.forEach((card, index) => {
+        aboutCards.forEach((card) => {
             gsap.set(card, { 
                 opacity: 0,
                 y: 30,
@@ -235,7 +234,7 @@ export default function Hero() {
                     });
 
                     // add scrollTrigger for splitText content
-                    const st1 = ScrollTrigger.create({
+                    ScrollTrigger.create({
                         trigger: aboutCardContent,
                         start: "top 70%",
                         once: true,
@@ -255,7 +254,7 @@ export default function Hero() {
             }
 
             // card animation -- for heading and number
-            const st2 = ScrollTrigger.create({
+            ScrollTrigger.create({
                 trigger: card,
                 start: "top 80%",
                 once: true,
