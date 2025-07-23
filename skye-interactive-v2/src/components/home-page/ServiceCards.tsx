@@ -278,7 +278,6 @@ function ServiceCards() {
               
               // Skip if fill element doesn't exist (safety check)
               if (!fill) {
-                console.log(`No fill element found for card ${index}`);
                 return;
               }
 
@@ -300,9 +299,7 @@ function ServiceCards() {
                  * This is where the magic happens!
                  */
               const handleMouseEnter = (e: MouseEvent) => {
-                console.log('Mouse enter on card', index); // Debug log
                 const direction = getDirection(e, card as HTMLElement)
-                console.log('Entry direction:', direction); // Debug log
       
                 // remove transition to instantly position fill
                 fill.style.transition = 'none'
@@ -340,9 +337,7 @@ function ServiceCards() {
               };
       
               const handleMouseLeave = (e: MouseEvent) => {
-                console.log('Mouse leave on card', index); // Debug log
                 const direction = getDirection(e, card as HTMLElement)
-                console.log('Exit direction:', direction); // Debug log
       
                 // Animate out in exit direction
                 switch (direction) {
@@ -367,7 +362,6 @@ function ServiceCards() {
               card.addEventListener('mouseenter', handleMouseEnter as EventListener)
               card.addEventListener('mouseleave', handleMouseLeave as EventListener)
               
-              console.log(`Event listeners added to card ${index}`); // Debug log
             })
             
             return cardHandlers;

@@ -79,6 +79,7 @@ export default function Hero() {
     
     // Container ref for useGSAP scope
     const containerRef = useRef<HTMLElement>(null)
+    const aboutSectionRef = useRef<HTMLElement>(null) // Add this new ref
     
     // Element refs
     const heroRef = useRef<HTMLDivElement>(null)
@@ -86,7 +87,7 @@ export default function Hero() {
     const heroText2Ref = useRef<HTMLSpanElement>(null)
     const heroText3Ref = useRef<HTMLDivElement>(null)
     const heroText4Ref = useRef<HTMLSpanElement>(null)
-    const discoverBtnRef = useRef<HTMLDivElement>(null) // Add this ref
+    const discoverBtnRef = useRef<HTMLDivElement>(null)
 
     const { loading, error, data } = useQuery<QueryData>(GET_HERO_DATA, {
         variables: {
@@ -144,13 +145,6 @@ export default function Hero() {
             })
         }
 
-        // Set initial state for button
-        if (discoverBtn) {
-            gsap.set(discoverBtn, {
-                opacity: 0,
-                y: 30,
-            })
-        }
 
         // Create animation timeline
         const tl = gsap.timeline()
@@ -158,48 +152,31 @@ export default function Hero() {
         tl
             .to(hero, {
                 opacity: 1,
-                duration: 1,
+                duration: 0.8,
                 ease: 'power3.out',                    
             })
             .to(hero, {
                 scaleX: 1,
-                duration: 0.6,
+                duration: 0.5, 
                 ease: 'power3.out',
             }, "-=0.1")
             .to(hero, {
                 scaleY: 1,
                 borderTopLeftRadius: '40px',
                 borderBottomRightRadius: '40px',
-                duration: 0.7,
+                duration: 0.5, 
                 ease: 'power2.out',
             }, "-=0.2")
             
-            .to(heroText1, {
-                opacity: 1,
-                y: 0,
-                duration: 0.4,
-                ease: 'power2.out',    
-            })
-            .to(heroText2, {
+            // All text elements animate together right after hero animation
+            .to([heroText1, heroText2, heroText3, heroText4], {
                 opacity: 1,
                 y: 0,
                 filter: 'blur(0px)',
-                duration: 0.5,
+                duration: 0.6,
                 ease: 'power2.out',
-            })
-            .to(heroText3, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                ease: 'power2.out',
-            })
-            .to(heroText4, {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
-                duration: 0.5,
-                ease: 'power2.out',
-            })
+                stagger: 0.1, 
+            }, "-=0.1") // Start slightly before hero animation ends
 
         if (heroVideo) {
             tl.to(heroVideo, {
@@ -207,18 +184,10 @@ export default function Hero() {
                 filter: 'blur(0px)',
                 duration: 0.5,
                 ease: 'power2.out',
-            }, '-=0.5')
+            }, ) // Start with the text animation
         }
 
-        // Add button animation to timeline
-        if (discoverBtn) {
-            tl.to(discoverBtn, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                ease: 'power2.out',
-            }, '-=0.3') // Overlap slightly with video animation
-        }
+        
 
     }, { 
         scope: containerRef, 
@@ -228,24 +197,25 @@ export default function Hero() {
 
     // About cards animations with useGSAP
     useGSAP(() => {
-        if (!aboutCardItems || aboutCardItems.length === 0) return;
+        if (!aboutCardItems || aboutCardItems.length === 0) {
+            return;
+        }
 
-        const aboutCards = containerRef.current?.querySelectorAll('.about-card-content')
-        
-        if (!aboutCards) return;
+        // Search in the about section
+        const aboutCards = aboutSectionRef.current?.querySelectorAll('.about-card-content') || 
+                          document.querySelectorAll('.about-card-content')
+        if (!aboutCards || aboutCards.length === 0) {
+            return;
+        }
 
-        
-
-        aboutCards.forEach((card) => {
-            card.classList.remove('about-card-content-initial-hidden')
-            
+        aboutCards.forEach((card, index) => {
             gsap.set(card, { 
                 opacity: 0,
                 y: 30,
             })
 
             // Find the content within THIS specific card
-            const aboutCardContent = card.querySelector('.card-content') // or whatever class/selector your content has
+            const aboutCardContent = card.querySelector('.card-content')
             
             if (aboutCardContent) {
                 // create splitText variable -- split by lines
@@ -264,8 +234,8 @@ export default function Hero() {
                         overflow: 'hidden'
                     });
 
-                    // add scrollTrigger
-                    ScrollTrigger.create({
+                    // add scrollTrigger for splitText content
+                    const st1 = ScrollTrigger.create({
                         trigger: aboutCardContent,
                         start: "top 70%",
                         once: true,
@@ -284,11 +254,12 @@ export default function Hero() {
                 }   
             }
 
-            // Your existing card animation
-            ScrollTrigger.create({
+            // card animation -- for heading and number
+            const st2 = ScrollTrigger.create({
                 trigger: card,
-                start: "top 70%",
+                start: "top 80%",
                 once: true,
+                markers: false,
                 onEnter: () => {
                     gsap.to(card, {
                         opacity: 1,
@@ -300,8 +271,11 @@ export default function Hero() {
             })
         })
 
+        // Refresh ScrollTrigger after setting up all animations
+        ScrollTrigger.refresh()
+
     }, { 
-        scope: containerRef,
+        scope: aboutSectionRef, // Change scope to about section
         dependencies: [aboutCardItems],
         revertOnUpdate: true
     })
@@ -349,7 +323,7 @@ export default function Hero() {
                 </div>
             </section>
 
-            <section id='about-section' className='mx-[10px] mt-24 md:max-w-screen-2xl md:mx-auto'>
+            <section ref={aboutSectionRef} id='about-section' className='mx-[10px] mt-24 md:max-w-screen-2xl md:mx-auto'>
                 <div className='about-cards-container flex flex-col gap-8 divide-y-2 divide-skye-primary-red md:gap-16 '>
                     {aboutCardItems && aboutCardItems.map((item, index) => (
                         
