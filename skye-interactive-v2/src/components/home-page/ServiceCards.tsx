@@ -272,7 +272,7 @@ function ServiceCards() {
             const cardHandlers = new Map();
       
             // setup effect for each card
-            cards.forEach((card, index) => {
+            cards.forEach((card) => {
               // find empty div for animated fill
               const fill = card.querySelector('.animated-fill') as HTMLElement;
               
