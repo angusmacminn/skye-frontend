@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import HeroVideo from './HeroVideo'
 import { SplitText } from 'gsap/SplitText'
 import Link from 'next/link'
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 
 const GET_HERO_DATA = gql`
@@ -118,7 +119,33 @@ export default function Hero() {
             return;
         }
 
-        // Set initial states
+        // Check for reduced motion preference
+        if (prefersReducedMotion()) {
+            // Set final states immediately, no animations
+            gsap.set(hero, {
+                opacity: 1,
+                scaleX: 1,
+                scaleY: 1,
+                borderTopLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
+            })
+
+            gsap.set([heroText1, heroText2, heroText3, heroText4], {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+            })
+
+            if (heroVideo) {
+                gsap.set(heroVideo, {
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                })
+            }
+            return; // Exit early, skip animations
+        }
+
+        // if not reduced motion, set initial states
         gsap.set(hero, {
             opacity: 0,
             scaleX: 0.01,
@@ -208,14 +235,30 @@ export default function Hero() {
         }
 
         aboutCards.forEach((card) => {
+            const aboutCardContent = card.querySelector('.card-content')
+
+            // Check for reduced motion preference
+            if (prefersReducedMotion()) {
+                // Set final states immediately
+                gsap.set(card, { 
+                    opacity: 1,
+                    y: 0,
+                })
+
+                if (aboutCardContent) {
+                    gsap.set(aboutCardContent, {
+                        overflow: 'visible' // Reset overflow
+                    });
+                }
+                return; // Skip animations for this card
+            }
+
+            // Original animation code (only runs if motion is preferred)
             gsap.set(card, { 
                 opacity: 0,
                 y: 30,
             })
 
-            // Find the content within THIS specific card
-            const aboutCardContent = card.querySelector('.card-content')
-            
             if (aboutCardContent) {
                 // create splitText variable -- split by lines
                 const splitBody = new SplitText(aboutCardContent, {

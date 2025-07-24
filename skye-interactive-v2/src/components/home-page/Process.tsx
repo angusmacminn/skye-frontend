@@ -8,6 +8,7 @@ import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { TextPlugin } from 'gsap/TextPlugin'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 const GET_PROCESS_DATA = gql`
     query GetProcessData ($id: ID!, $idType: PageIdType!) {
@@ -124,6 +125,15 @@ export default function Process() {
                 if (processSteps && processSteps.length > 0) {
                     processSteps.forEach((step, index) => {
                         const stepElement = document.getElementById(`process-step-${index}`);
+
+                        if (prefersReducedMotion()) {
+                            gsap.set(stepElement, {
+                                opacity: 1,
+                                x: 0,
+                                filter: "blur(0px)",
+                            })
+                            return;
+                        }
 
                         if (stepElement) {
                             // Set initial state

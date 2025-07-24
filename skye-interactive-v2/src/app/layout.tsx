@@ -4,6 +4,7 @@ import "./globals.css";
 import { ApolloWrapper } from "./apollo-provider";
 import LenisProvider from "@/components/LenisProvider";
 import SkipLink from "@/components/SkipLink";
+import GsapProvider from "@/components/GsapProvider"; 
 
 // Setup Radio Grotesk
 const radioGrotesk = localFont({
@@ -37,6 +38,7 @@ export default function RootLayout({
         <meta name="author" content="Skye Interactive" />
       </head>
       <body className="antialiased">
+        <GsapProvider />
         <SkipLink />
         <LenisProvider />
         <ApolloWrapper>{children}</ApolloWrapper>

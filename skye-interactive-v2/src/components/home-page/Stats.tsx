@@ -7,6 +7,7 @@ import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { TextPlugin } from 'gsap/TextPlugin'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 const GET_SERVICES_DATA = gql`
     query GetServicesData ($id: ID!, $idType: PageIdType!) {
@@ -73,6 +74,29 @@ function Stats() {
                 const statisticCards = document.querySelectorAll('#statistic-card');
                 const statCategory = document.querySelectorAll('.stat-category');
                 const statNumber = document.querySelectorAll('.stat-number');
+
+                if (prefersReducedMotion()) {
+                    gsap.set(statsHeading, {
+                        opacity: 1,
+                    })
+                    gsap.set(statisticCards, {
+                        opacity: 1,
+                        x: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                    })
+                    gsap.set(statCategory, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                    })
+                    gsap.set(statNumber, {
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                    })
+                    return;
+                }
 
                 if (statsHeading) {
                     const initAnimation = async () => {

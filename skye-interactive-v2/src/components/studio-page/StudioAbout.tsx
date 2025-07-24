@@ -4,6 +4,7 @@ import {gql, useQuery} from '@apollo/client'
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 
 
@@ -84,6 +85,15 @@ export default function StudioAbout(){
 
     useGSAP(() => {
         if (!acfData) return; // Wait for data to load
+
+        if (prefersReducedMotion()) {
+            gsap.set([contentRef.current, imageRef.current, textRef.current], {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+            })
+            return;
+        }
 
         // Set initial states
         gsap.set([contentRef.current, imageRef.current, textRef.current], {

@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react';
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 
 const GET_STUDIO_HERO_DATA = gql`
@@ -79,9 +80,7 @@ export default function StudioHero() {
     const acfData = data?.page?.studioPage
     const heroH1 = acfData?.heroH1
     const heroH2 = acfData?.heroIntroParagraph
-    // const heroImage = acfData?.heroImage
-    // const heroImageUrl = heroImage?.node?.sourceUrl
-    // const heroImageAlt = heroImage?.node?.altText
+
 
     // Hero animations with useGSAP
     useGSAP(() => {
@@ -92,6 +91,23 @@ export default function StudioHero() {
         const heroText2 = heroText2Ref.current
 
         if (!hero || !heroText1 || !heroText2) {
+            return;
+        }
+
+        if (prefersReducedMotion()) {
+            gsap.set(hero, {
+                autoAlpha: 1,
+                opacity: 1,
+                scaleX: 1,
+                scaleY: 1,
+                borderTopLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
+            })
+            gsap.set([heroText1, heroText2], {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+            })
             return;
         }
 
