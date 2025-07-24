@@ -100,11 +100,6 @@ export default function Works() {
 
     // Move useEffect BEFORE the early returns
     useEffect(() => {
-
-        
-
-
-        
         if (!workItems || workItems.length === 0) return;
 
         const worksSection = document.getElementById('works-section');

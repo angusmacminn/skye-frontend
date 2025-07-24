@@ -13,8 +13,8 @@ const radioGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Skye Interactive Test",
-  description: "Testing Skye Interactive Features",
+  title: "Skye Interactive",
+  description: "Skye Interactive is a web development studio that specializes in creating custom websites and web applications for businesses and organizations.",
 };
 
 
@@ -35,7 +35,6 @@ export default function RootLayout({
         <meta name="description" content="Skye Interactive is a web development studio that specializes in creating custom websites and web applications for businesses and organizations." />
         <meta name="keywords" content="web development, web design, web development services, web design services, web development company, web design company, web development agency, web design agency, web development studio, web design studio, web development agency, web design agency, web development studio, web design studio" />
         <meta name="author" content="Skye Interactive" />
-        <title>Skye Interactive</title>
       </head>
       <body className="antialiased">
         <LenisProvider />
