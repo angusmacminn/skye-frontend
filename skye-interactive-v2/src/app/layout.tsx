@@ -5,6 +5,7 @@ import { ApolloWrapper } from "./apollo-provider";
 import LenisProvider from "@/components/LenisProvider";
 import SkipLink from "@/components/SkipLink";
 import GsapProvider from "@/components/GsapProvider"; 
+import { Analytics } from "@vercel/analytics/next"
 
 // Setup Radio Grotesk
 const radioGrotesk = localFont({
