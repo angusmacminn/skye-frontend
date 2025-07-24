@@ -39,6 +39,7 @@ export default function RootLayout({
         <meta name="author" content="Skye Interactive" />
       </head>
       <body className="antialiased">
+        <Analytics />
         <GsapProvider />
         <SkipLink />
         <LenisProvider />
