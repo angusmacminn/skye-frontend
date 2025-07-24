@@ -137,7 +137,7 @@ function DesktopNav() {
                     {/* Cursor follower element */}
                     <div 
                         ref={cursorFollowerRef}
-                        className='cursor-follower absolute pointer-events-none z-10 rounded-tl-[20px] border border-red-400 bg-red-400/10 backdrop-blur-sm'
+                        className='cursor-follower absolute pointer-events-none z-10 rounded-bl-[20px] border border-red-400 bg-red-400/10 backdrop-blur-sm'
                     />
                     
                     <Link 
