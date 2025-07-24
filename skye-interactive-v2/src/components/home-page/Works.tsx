@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 // Get works from graphQL
 const GET_WORKS_DATA = gql`
@@ -122,6 +123,22 @@ export default function Works() {
                     return; // Content fits, no scroll needed
                 }
 
+                // Check if user prefers reduced motion
+                if (prefersReducedMotion()) {
+                    // Use native CSS scroll behavior instead of GSAP
+                    worksGridContainer.style.overflowX = 'auto';
+                    worksGridContainer.style.scrollSnapType = 'x mandatory';
+                    worksGridContainer.style.scrollBehavior = 'smooth';
+                    
+                    // Apply scroll-snap-align to each work card
+                    const workCards = worksGrid.querySelectorAll('.work-card');
+                    workCards.forEach((card: Element) => {
+                        (card as HTMLElement).style.scrollSnapAlign = 'start';
+                    });
+                    
+                    return;
+                }
+                // Use GSAP for users who don't mind motion
                 const horizontalScroll = gsap.to(worksGrid, {
                     x: -scrollDistance,
                     ease: "none",
