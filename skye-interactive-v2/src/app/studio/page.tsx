@@ -10,7 +10,7 @@ export default function StudioPage() {
   return (
     <>
       <Header />
-        <main>
+        <main id="main-content">
           <StudioHero />
           <StudioAbout />
           <StudioApproach />

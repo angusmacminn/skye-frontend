@@ -61,3 +61,40 @@
     transition: opacity 0.3s ease-in;
   }
 }
+
+/* Reduced motion: Show content always, disable hover animations */
+@media (prefers-reduced-motion: reduce) and (min-width: 768px) {
+  .animated-fill {
+    display: none; /* Completely hide the animated fill */
+  }
+  
+  .hidden-content {
+    position: static; /* Remove absolute positioning */
+    opacity: 1; /* Always visible */
+    transform: none; /* No transform */
+    transition: none; /* No transitions */
+    margin-top: 1rem; /* Add some spacing */
+  }
+  
+  .service-card:hover .service-title {
+    opacity: 1; /* Keep title visible */
+    transition: none;
+  }
+  
+  .service-title {
+    transition: none;
+  }
+  
+  .service-card {
+    transition: none; /* Remove all transitions */
+    background-color: #EF4444;
+  }
+  
+  /* Make the card layout more like mobile */
+  .service-card .card-content {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

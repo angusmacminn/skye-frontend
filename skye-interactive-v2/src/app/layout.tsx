@@ -3,7 +3,7 @@ import localFont from 'next/font/local'; // Import for local fonts
 import "./globals.css";
 import { ApolloWrapper } from "./apollo-provider";
 import LenisProvider from "@/components/LenisProvider";
-
+import SkipLink from "@/components/SkipLink";
 
 // Setup Radio Grotesk
 const radioGrotesk = localFont({
@@ -37,6 +37,7 @@ export default function RootLayout({
         <meta name="author" content="Skye Interactive" />
       </head>
       <body className="antialiased">
+        <SkipLink />
         <LenisProvider />
         <ApolloWrapper>{children}</ApolloWrapper>
       </body>

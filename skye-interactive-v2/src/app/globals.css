@@ -190,29 +190,6 @@ main {
     transform: scale(1.05);
 }
 
-/* #service-card {
-    position: relative;
-    transition: background-color 0.3s ease, border 0.3s ease, transform 0.3s ease;
-} */
-
-/* #service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #EF4444;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: inherit;
-    pointer-events: none;
-}
-
-#service-card:hover::before {
-    opacity: 1;
-    border: 0px;
-} */
 
 /* Target only the works grid container to prevent horizontal overflow */
 #works-grid-container {
@@ -237,6 +214,27 @@ main {
 /* Gradient Classes */
 .bg-gradient-service-card {
   background: var(--gradient-service-card);
+}
+
+/* Skip to content link - hidden by default, visible on focus */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-skye-primary-red);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 6px;
+  outline: 2px solid white;
+  outline-offset: 2px;
 }
 
 

@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content">
         {/* Contact Hero Section */}
         <section className="contact-hero py-16 md:py-24">
           <div className="max-w-screen-2xl mx-auto px-[10px]">
