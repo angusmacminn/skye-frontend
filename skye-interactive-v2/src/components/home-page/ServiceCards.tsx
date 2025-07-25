@@ -57,9 +57,6 @@ interface WindowWithHandlers extends Window {
 
 declare const window: WindowWithHandlers;
 
-// Register plugins
-gsap.registerPlugin(ScrollTrigger)
-
 function ServiceCards() {
     // Add useRef for card references
     const serviceCardsRef = useRef<(HTMLDivElement | null)[]>([]);

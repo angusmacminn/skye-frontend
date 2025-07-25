@@ -2,7 +2,6 @@
 
 import { gql, useQuery } from '@apollo/client'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useRef } from 'react';
 import { prefersReducedMotion } from '@/app/lib/gsapConfig'
@@ -54,8 +53,6 @@ interface QueryData {
     page?: PageData
 }
 
-
-gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 export default function StudioHero() {
     const pageId = '8'

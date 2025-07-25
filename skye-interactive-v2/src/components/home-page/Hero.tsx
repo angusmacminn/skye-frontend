@@ -72,8 +72,6 @@ interface QueryData {
     page?: PageData;
 }
 
-gsap.registerPlugin(ScrollTrigger, useGSAP, SplitText)
-
 export default function Hero() {
     const pageId = '126'
     const pageIdType = 'DATABASE_ID'

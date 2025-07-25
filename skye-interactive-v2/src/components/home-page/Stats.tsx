@@ -5,8 +5,6 @@ import { useEffect } from 'react';
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import { TextPlugin } from 'gsap/TextPlugin'
-import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 const GET_SERVICES_DATA = gql`
@@ -43,12 +41,6 @@ interface PageData {
 interface QueryData {
     page?: PageData;
 }
-
-// Register plugins
-gsap.registerPlugin(SplitText)
-gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(TextPlugin)
-gsap.registerPlugin(ScrambleTextPlugin) 
 
 function Stats() {
     // Move these BEFORE useEffect

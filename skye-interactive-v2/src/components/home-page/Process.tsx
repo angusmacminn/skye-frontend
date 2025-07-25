@@ -4,10 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useEffect } from 'react';
 import ThreeScene from '../r3f/ProcessGeometry';
 import gsap from 'gsap'
-import { SplitText } from 'gsap/SplitText'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import { TextPlugin } from 'gsap/TextPlugin'
-import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
 const GET_PROCESS_DATA = gql`
@@ -46,12 +43,6 @@ interface PageData {
 interface QueryData {
     page?: PageData;
 }
-
-// Register plugins
-gsap.registerPlugin(SplitText)
-gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(TextPlugin)
-gsap.registerPlugin(ScrambleTextPlugin) 
 
 export default function Process() {
     const pageId = '126'

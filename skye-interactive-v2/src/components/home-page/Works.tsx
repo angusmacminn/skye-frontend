@@ -3,7 +3,6 @@
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import gsap from 'gsap'
-import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { prefersReducedMotion } from '@/app/lib/gsapConfig'
 
@@ -71,8 +70,7 @@ interface GetWorksQueryData {
   works?: WorksConnection;
 }
 
-gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(SplitText)
+
 
 
 
