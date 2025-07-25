@@ -79,7 +79,7 @@ export default function StudioHero() {
     // define variavbles for data
     const acfData = data?.page?.studioPage
     const heroH1 = acfData?.heroH1
-    const heroH2 = acfData?.heroIntroParagraph
+    // const heroH2 = acfData?.heroIntroParagraph
 
 
     // Hero animations with useGSAP
@@ -132,31 +132,31 @@ export default function StudioHero() {
             .to(hero, {
                 autoAlpha: 1,
                 opacity: 1,
-                duration: 1,
+                duration: 0.8,
                 ease: 'power3.out',                    
             })
             .to(hero, {
                 scaleX: 1,
-                duration: 0.6,
+                duration: 0.5,
                 ease: 'power3.out',
             }, "-=0.1")
             .to(hero, {
                 scaleY: 1,
                 borderTopLeftRadius: '40px',
                 borderBottomRightRadius: '40px',
-                duration: 0.7,
+                duration: 0.5,
                 ease: 'power2.out',
             }, "-=0.2")
             .to(heroText1, {
                 opacity: 1,
                 y: 0,
-                duration: 0.4,
+                duration: 0.3,
                 ease: 'power2.out',    
             })
             .to(heroText2, {
                 opacity: 1,
                 y: 0,
-                duration: 0.5,
+                duration: 0.3,
                 ease: 'power2.out',
             }, "-=0.1")
 
@@ -189,9 +189,9 @@ export default function StudioHero() {
                 </h1>
                 <h2 
                     ref={heroText2Ref}
-                    className='text-h2-mobile text-skye-gray'
+                    className='text-h2-mobile text-white md:text-h2-desktop'
                 >
-                    {heroH2}
+                    {/* {heroH2} */}
                 </h2>
             </div>
         </section>

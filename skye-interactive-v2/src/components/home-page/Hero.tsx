@@ -155,12 +155,12 @@ export default function Hero() {
 
         gsap.set([heroText1, heroText3], {
             opacity: 0,
-            y: 30,
+            y: 60,
         })
 
         gsap.set([heroText2, heroText4], {
             opacity: 0,
-            y: 30,
+            y: 60,
             filter: 'blur(10px)',
         })
 

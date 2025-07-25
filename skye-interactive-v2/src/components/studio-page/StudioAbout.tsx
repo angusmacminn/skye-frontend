@@ -103,25 +103,25 @@ export default function StudioAbout(){
 
         // Create timeline
         const tl = gsap.timeline({
-            delay: 2.5, // Small delay before starting
+            delay: 1.5, // Small delay before starting
         });
 
         // Animate in sequence
         tl.to(contentRef.current, {
             opacity: 1,
-            duration: 0.6,
+            duration: 0.5,
             ease: "power2.out",
         })
         .to(imageRef.current, {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.5,
             ease: "back.out(1.7)",
         }, "-=0.3") // Start 0.3s before previous ends
         .to(textRef.current, {
             opacity: 1,
             y: 0,
-            duration: 0.8,
+            duration: 0.5,  
             ease: "power2.out",
         }, "-=0.5"); // Start 0.5s before previous ends
 
