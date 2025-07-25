@@ -11,8 +11,8 @@
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.1.2",
     "@react-three/fiber": "^9.1.2",
-    "@react-three/postprocessing": "^3.0.4",
     "@studio-freight/lenis": "^1.0.42",
     "@vercel/analytics": "^1.5.0",
     "graphql": "^16.11.0",
